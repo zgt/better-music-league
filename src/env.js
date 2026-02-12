@@ -14,6 +14,8 @@ export const env = createEnv({
     BETTER_AUTH_BASE_URL: z.string().url(),
     BETTER_AUTH_DISCORD_CLIENT_ID: z.string(),
     BETTER_AUTH_DISCORD_CLIENT_SECRET: z.string(),
+    SPOTIFY_CLIENT_ID: z.string(),
+    SPOTIFY_CLIENT_SECRET: z.string(),
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -39,6 +41,8 @@ export const env = createEnv({
     BETTER_AUTH_DISCORD_CLIENT_ID: process.env.BETTER_AUTH_DISCORD_CLIENT_ID,
     BETTER_AUTH_DISCORD_CLIENT_SECRET:
       process.env.BETTER_AUTH_DISCORD_CLIENT_SECRET,
+    SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
+    SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
