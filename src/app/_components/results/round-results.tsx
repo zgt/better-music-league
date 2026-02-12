@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, ExternalLink, MessageCircle, Trophy } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  MessageCircle,
+  Trophy,
+} from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -21,26 +27,49 @@ type ResultEntry = {
   };
   submitter: { id: string; name: string; image: string | null };
   totalPoints: number;
-  votes: { voter: { id: string; name: string; image: string | null }; points: number }[];
-  comments: { commenter: { id: string; name: string; image: string | null }; text: string }[];
+  votes: {
+    voter: { id: string; name: string; image: string | null };
+    points: number;
+  }[];
+  comments: {
+    commenter: { id: string; name: string; image: string | null };
+    text: string;
+  }[];
 };
 
 const RANK_STYLES = [
-  { bg: "bg-yellow-500/15", border: "border-yellow-500/30", text: "text-yellow-500", label: "1st" },
-  { bg: "bg-gray-300/15", border: "border-gray-300/30", text: "text-gray-300", label: "2nd" },
-  { bg: "bg-amber-700/15", border: "border-amber-700/30", text: "text-amber-700", label: "3rd" },
+  {
+    bg: "bg-yellow-500/15",
+    border: "border-yellow-500/30",
+    text: "text-yellow-500",
+    label: "1st",
+  },
+  {
+    bg: "bg-gray-300/15",
+    border: "border-gray-300/30",
+    text: "text-gray-300",
+    label: "2nd",
+  },
+  {
+    bg: "bg-amber-700/15",
+    border: "border-amber-700/30",
+    text: "text-amber-700",
+    label: "3rd",
+  },
 ];
 
 export function RoundResults({ roundId }: { roundId: string }) {
-  const { data: results, isLoading } = api.vote.getResults.useQuery({ roundId });
+  const { data: results, isLoading } = api.vote.getResults.useQuery({
+    roundId,
+  });
 
   if (isLoading) {
     return (
       <div className="space-y-4">
         <div className="animate-pulse space-y-3">
-          <div className="h-40 rounded-xl bg-muted" />
-          <div className="h-24 rounded-xl bg-muted" />
-          <div className="h-24 rounded-xl bg-muted" />
+          <div className="bg-muted h-40 rounded-xl" />
+          <div className="bg-muted h-24 rounded-xl" />
+          <div className="bg-muted h-24 rounded-xl" />
         </div>
       </div>
     );
@@ -49,8 +78,10 @@ export function RoundResults({ roundId }: { roundId: string }) {
   if (!results || results.length === 0) {
     return (
       <Card>
-        <CardContent className="pt-6">
-          <p className="text-sm text-muted-foreground">No results available for this round.</p>
+        <CardContent>
+          <p className="text-muted-foreground text-sm">
+            No results available for this round.
+          </p>
         </CardContent>
       </Card>
     );
@@ -85,7 +116,11 @@ export function RoundResults({ roundId }: { roundId: string }) {
           <CardContent>
             <div className="space-y-2">
               {rest.map((entry, i) => (
-                <ResultRow key={entry.submission.id} entry={entry} rank={i + 3} />
+                <ResultRow
+                  key={entry.submission.id}
+                  entry={entry}
+                  rank={i + 3}
+                />
               ))}
             </div>
           </CardContent>
@@ -129,17 +164,21 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
 
           {/* Track info */}
           <div className="min-w-0 flex-1">
-            <p className={`font-semibold ${isWinner ? "text-lg" : "text-base"}`}>
+            <p
+              className={`font-semibold ${isWinner ? "text-lg" : "text-base"}`}
+            >
               {entry.submission.trackName}
             </p>
-            <p className="text-sm text-muted-foreground">{entry.submission.artistName}</p>
+            <p className="text-muted-foreground text-sm">
+              {entry.submission.artistName}
+            </p>
             <div className="mt-1 flex items-center gap-2">
               <Submitter user={entry.submitter} />
               <a
                 href={`https://open.spotify.com/track/${entry.submission.spotifyTrackId}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-xs"
               >
                 <ExternalLink className="h-3 w-3" />
                 Spotify
@@ -149,10 +188,12 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
 
           {/* Points */}
           <div className="text-right">
-            <p className={`font-bold ${style.text} ${isWinner ? "text-2xl" : "text-xl"}`}>
+            <p
+              className={`font-bold ${style.text} ${isWinner ? "text-2xl" : "text-xl"}`}
+            >
               {entry.totalPoints}
             </p>
-            <p className="text-xs text-muted-foreground">pts</p>
+            <p className="text-muted-foreground text-xs">pts</p>
           </div>
         </div>
       </div>
@@ -160,7 +201,7 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
       {/* Expand toggle */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-center gap-1 border-t border-border/30 py-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+        className="border-border/30 text-muted-foreground hover:text-foreground flex w-full items-center justify-center gap-1 border-t py-2 text-xs transition-colors"
       >
         {expanded ? (
           <>
@@ -182,9 +223,9 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="rounded-lg border border-border/50">
+    <div className="border-border/50 rounded-lg border">
       <div className="flex items-center gap-3 p-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
+        <span className="bg-muted text-muted-foreground flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
           {rank + 1}
         </span>
         <Image
@@ -195,8 +236,10 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
           className="shrink-0 rounded"
         />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium">{entry.submission.trackName}</p>
-          <p className="truncate text-xs text-muted-foreground">
+          <p className="truncate text-sm font-medium">
+            {entry.submission.trackName}
+          </p>
+          <p className="text-muted-foreground truncate text-xs">
             {entry.submission.artistName}
             {" \u00b7 "}
             {entry.submitter.name}
@@ -205,9 +248,13 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
         <span className="text-sm font-semibold">{entry.totalPoints} pts</span>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="rounded p-1 text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
         >
-          {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          {expanded ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          )}
         </button>
       </div>
       {expanded && <VoteAndCommentDetails entry={entry} />}
@@ -220,17 +267,17 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
   const hasComments = entry.comments.length > 0;
 
   return (
-    <div className="border-t border-border/30 px-4 py-3">
+    <div className="border-border/30 border-t px-4 py-3">
       {/* Votes */}
       <div className="mb-3">
-        <p className="mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+        <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase">
           Votes
         </p>
         <div className="flex flex-wrap gap-2">
           {sortedVotes.map((v) => (
             <div
               key={v.voter.id}
-              className="flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1"
+              className="bg-muted flex items-center gap-1.5 rounded-full px-2.5 py-1"
             >
               <Avatar className="h-4 w-4">
                 <AvatarImage src={v.voter.image ?? undefined} />
@@ -253,7 +300,7 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
             </div>
           ))}
           {sortedVotes.length === 0 && (
-            <p className="text-xs text-muted-foreground">No votes received</p>
+            <p className="text-muted-foreground text-xs">No votes received</p>
           )}
         </div>
       </div>
@@ -261,7 +308,7 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
       {/* Comments */}
       {hasComments && (
         <div>
-          <p className="mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase">
             <MessageCircle className="mr-1 inline h-3 w-3" />
             Comments
           </p>
@@ -275,8 +322,10 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1">
-                  <span className="text-xs font-medium">{c.commenter.name}</span>
-                  <p className="text-xs text-muted-foreground">{c.text}</p>
+                  <span className="text-xs font-medium">
+                    {c.commenter.name}
+                  </span>
+                  <p className="text-muted-foreground text-xs">{c.text}</p>
                 </div>
               </div>
             ))}
@@ -289,7 +338,7 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
 
 function Submitter({ user }: { user: { name: string; image: string | null } }) {
   return (
-    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+    <span className="text-muted-foreground inline-flex items-center gap-1 text-xs">
       <Avatar className="h-4 w-4">
         <AvatarImage src={user.image ?? undefined} />
         <AvatarFallback className="bg-primary text-primary-foreground text-[8px]">

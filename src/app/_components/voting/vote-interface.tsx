@@ -98,11 +98,16 @@ function TrackPreviewPlayer({
 
   return (
     <>
-      <audio ref={setRef} src={url} onEnded={() => onPlay(null)} preload="none" />
+      <audio
+        ref={setRef}
+        src={url}
+        onEnded={() => onPlay(null)}
+        preload="none"
+      />
       <button
         type="button"
         onClick={toggle}
-        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90"
+        className="bg-primary hover:bg-primary/90 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-colors"
       >
         {isPlaying ? (
           <Pause className="h-3.5 w-3.5" />
@@ -173,11 +178,7 @@ export function VoteInterface({
 
   // Point calculations
   const totalPositive = useMemo(
-    () =>
-      Object.values(points).reduce(
-        (sum, p) => sum + Math.max(0, p),
-        0,
-      ),
+    () => Object.values(points).reduce((sum, p) => sum + Math.max(0, p), 0),
     [points],
   );
 
@@ -197,7 +198,8 @@ export function VoteInterface({
         const currentPositive = Math.max(0, current);
         const newPositive = Math.max(0, newVal);
         const positiveIncrease = newPositive - currentPositive;
-        if (totalPositive + positiveIncrease > upvotePointsPerRound) return prev;
+        if (totalPositive + positiveIncrease > upvotePointsPerRound)
+          return prev;
       }
 
       return { ...prev, [submissionId]: newVal };
@@ -247,14 +249,14 @@ export function VoteInterface({
     return (
       <div className="space-y-4">
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex flex-col items-center gap-3 py-4 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-success/20">
-                <Check className="h-6 w-6 text-success" />
+              <div className="bg-success/20 flex h-12 w-12 items-center justify-center rounded-full">
+                <Check className="text-success h-6 w-6" />
               </div>
               <div>
                 <p className="font-medium">You&apos;ve voted!</p>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="text-muted-foreground mt-1 text-sm">
                   Your votes have been recorded for this round.
                 </p>
               </div>
@@ -278,7 +280,7 @@ export function VoteInterface({
                 .map((sub) => (
                   <div
                     key={sub.id}
-                    className="flex items-center gap-3 rounded-lg border border-border/50 p-2"
+                    className="border-border/50 flex items-center gap-3 rounded-lg border p-2"
                   >
                     <Image
                       src={sub.albumArtUrl}
@@ -289,7 +291,7 @@ export function VoteInterface({
                     />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm">{sub.trackName}</p>
-                      <p className="truncate text-xs text-muted-foreground">
+                      <p className="text-muted-foreground truncate text-xs">
                         {sub.artistName}
                       </p>
                     </div>
@@ -317,16 +319,16 @@ export function VoteInterface({
     <div className="space-y-4">
       {/* Points budget */}
       <Card>
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium">Points Budget</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Allocate all {upvotePointsPerRound} points to submit
               </p>
             </div>
             <div
-              className={`rounded-lg px-3 py-1.5 text-sm font-mono font-semibold ${
+              className={`rounded-lg px-3 py-1.5 font-mono text-sm font-semibold ${
                 pointsRemaining === 0
                   ? "bg-success/20 text-success"
                   : pointsRemaining <= 3
@@ -355,7 +357,7 @@ export function VoteInterface({
               return (
                 <div
                   key={sub.id}
-                  className="rounded-lg border border-border/50 p-3"
+                  className="border-border/50 rounded-lg border p-3"
                 >
                   {/* Track info row */}
                   <div className="flex items-center gap-3">
@@ -368,8 +370,8 @@ export function VoteInterface({
                         className="rounded"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded bg-muted">
-                        <Music2 className="h-5 w-5 text-muted-foreground" />
+                      <div className="bg-muted flex h-12 w-12 items-center justify-center rounded">
+                        <Music2 className="text-muted-foreground h-5 w-5" />
                       </div>
                     )}
 
@@ -377,13 +379,13 @@ export function VoteInterface({
                       <p className="truncate text-sm font-medium">
                         {sub.trackName}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
+                      <p className="text-muted-foreground truncate text-xs">
                         {sub.artistName} &middot; {sub.albumName}
                       </p>
                     </div>
 
                     {sub.trackDurationMs && (
-                      <span className="shrink-0 text-xs text-muted-foreground">
+                      <span className="text-muted-foreground shrink-0 text-xs">
                         {formatDuration(sub.trackDurationMs)}
                       </span>
                     )}
@@ -401,7 +403,7 @@ export function VoteInterface({
                       href={`https://open.spotify.com/track/${sub.spotifyTrackId}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors"
                       title="Open in Spotify"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
@@ -507,7 +509,7 @@ export function VoteInterface({
                         placeholder="Leave a comment (optional)"
                         className="resize-none"
                       />
-                      <p className="mt-1 text-right text-xs text-muted-foreground">
+                      <p className="text-muted-foreground mt-1 text-right text-xs">
                         {commentText.length}/280
                       </p>
                     </div>
@@ -530,7 +532,7 @@ export function VoteInterface({
           Review &amp; Submit Votes
         </Button>
         {!isValidAllocation && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Allocate all {upvotePointsPerRound} points to submit (
             {pointsRemaining} remaining)
           </p>
@@ -538,7 +540,12 @@ export function VoteInterface({
       </div>
 
       {/* Confirmation dialog */}
-      <Dialog open={showConfirm} onOpenChange={(open) => { if (!open) setShowConfirm(false); }}>
+      <Dialog
+        open={showConfirm}
+        onOpenChange={(open) => {
+          if (!open) setShowConfirm(false);
+        }}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Your Votes</DialogTitle>
@@ -571,16 +578,14 @@ export function VoteInterface({
             {voteableSubmissions.some(
               (sub) => (comments[sub.id] ?? "").trim().length > 0,
             ) && (
-              <div className="border-t border-border pt-2">
-                <p className="mb-1 text-xs font-medium text-muted-foreground">
+              <div className="border-border border-t pt-2">
+                <p className="text-muted-foreground mb-1 text-xs font-medium">
                   Comments:
                 </p>
                 {voteableSubmissions
-                  .filter(
-                    (sub) => (comments[sub.id] ?? "").trim().length > 0,
-                  )
+                  .filter((sub) => (comments[sub.id] ?? "").trim().length > 0)
                   .map((sub) => (
-                    <p key={sub.id} className="text-xs text-muted-foreground">
+                    <p key={sub.id} className="text-muted-foreground text-xs">
                       <span className="font-medium">{sub.trackName}:</span>{" "}
                       {comments[sub.id]}
                     </p>
@@ -588,12 +593,14 @@ export function VoteInterface({
               </div>
             )}
 
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               You cannot change votes after the voting phase ends.
             </p>
 
             {submitVotes.error && (
-              <p className="text-sm text-destructive">{submitVotes.error.message}</p>
+              <p className="text-destructive text-sm">
+                {submitVotes.error.message}
+              </p>
             )}
           </div>
           <DialogFooter>

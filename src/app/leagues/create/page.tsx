@@ -47,7 +47,7 @@ export default function CreateLeague() {
       <h1 className="mb-6 text-2xl font-bold">Create a League</h1>
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <FormInput
               id="name"
@@ -60,9 +60,7 @@ export default function CreateLeague() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="description">
-                Description
-              </Label>
+              <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
                 placeholder="What's this league about?"
@@ -74,9 +72,7 @@ export default function CreateLeague() {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="songsPerRound">
-                Songs per Round
-              </Label>
+              <Label htmlFor="songsPerRound">Songs per Round</Label>
               <Select
                 value={String(songsPerRound)}
                 onValueChange={(v) => setSongsPerRound(Number(v))}
@@ -115,7 +111,9 @@ export default function CreateLeague() {
             </div>
 
             {createLeague.error && (
-              <p className="text-sm text-destructive">{createLeague.error.message}</p>
+              <p className="text-destructive text-sm">
+                {createLeague.error.message}
+              </p>
             )}
 
             <Button type="submit" loading={createLeague.isPending}>

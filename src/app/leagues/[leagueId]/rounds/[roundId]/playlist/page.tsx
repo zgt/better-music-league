@@ -58,15 +58,15 @@ export default function PlaylistPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-            <Music2 className="h-6 w-6 text-muted-foreground" />
+          <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-full">
+            <Music2 className="text-muted-foreground h-6 w-6" />
           </div>
-          <p className="font-medium text-muted-foreground">
+          <p className="text-muted-foreground font-medium">
             Playlist not available
           </p>
           <Link
             href={`/leagues/${params.leagueId}/rounds/${params.roundId}`}
-            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
           >
             Back to round
           </Link>
@@ -80,7 +80,7 @@ export default function PlaylistPage() {
       {/* Back link */}
       <Link
         href={`/leagues/${params.leagueId}/rounds/${params.roundId}`}
-        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1 text-sm transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to round
@@ -88,18 +88,18 @@ export default function PlaylistPage() {
 
       {/* Header */}
       <div className="mb-6">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Round {data.roundNumber} Playlist
         </p>
         <h1 className="mt-1 text-2xl font-bold">{data.themeName}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="text-muted-foreground mt-1 text-sm">
           {data.tracks.length} tracks
         </p>
       </div>
 
       {/* Action buttons */}
       <Card className="mb-6">
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="secondary" size="sm" onClick={handleCopyAll}>
               {copied ? (
@@ -130,7 +130,7 @@ export default function PlaylistPage() {
       <div className="space-y-4">
         {data.tracks.map((track) => (
           <Card key={track.id}>
-            <CardContent className="pt-6">
+            <CardContent>
               {/* Track info row */}
               <div className="mb-3 flex items-center gap-3">
                 {track.albumArtUrl ? (
@@ -142,8 +142,8 @@ export default function PlaylistPage() {
                     className="rounded"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded bg-muted">
-                    <Music2 className="h-5 w-5 text-muted-foreground" />
+                  <div className="bg-muted flex h-12 w-12 items-center justify-center rounded">
+                    <Music2 className="text-muted-foreground h-5 w-5" />
                   </div>
                 )}
 
@@ -151,12 +151,12 @@ export default function PlaylistPage() {
                   <p className="truncate text-sm font-medium">
                     {track.trackName}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="text-muted-foreground truncate text-xs">
                     {track.artistName} &middot; {track.albumName}
                   </p>
                 </div>
 
-                <span className="shrink-0 text-xs text-muted-foreground">
+                <span className="text-muted-foreground shrink-0 text-xs">
                   {formatDuration(track.trackDurationMs)}
                 </span>
 
@@ -164,7 +164,7 @@ export default function PlaylistPage() {
                   href={`https://open.spotify.com/track/${track.spotifyTrackId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors"
                   title="Open in Spotify"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -188,18 +188,19 @@ export default function PlaylistPage() {
 
       {/* Manual playlist instructions */}
       <Card className="mt-6">
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
-              <ListMusic className="h-5 w-5 text-primary" />
+            <div className="bg-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+              <ListMusic className="text-primary h-5 w-5" />
             </div>
             <div>
               <p className="text-sm font-medium">Create your own playlist</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                To save these tracks as a Spotify playlist: open Spotify, create a
-                new playlist, then use &ldquo;Copy all track links&rdquo; above
-                and search for each track to add it. Or, click each
-                track&apos;s Spotify link and add it to your playlist from there.
+              <p className="text-muted-foreground mt-1 text-xs">
+                To save these tracks as a Spotify playlist: open Spotify, create
+                a new playlist, then use &ldquo;Copy all track links&rdquo;
+                above and search for each track to add it. Or, click each
+                track&apos;s Spotify link and add it to your playlist from
+                there.
               </p>
             </div>
           </div>

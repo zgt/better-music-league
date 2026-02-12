@@ -3,7 +3,17 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Copy, Check, Music2, Settings, Plus, LogOut, Trash2, Trophy, Users } from "lucide-react";
+import {
+  Copy,
+  Check,
+  Music2,
+  Settings,
+  Plus,
+  LogOut,
+  Trash2,
+  Trophy,
+  Users,
+} from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -37,7 +47,10 @@ const roleLabels: Record<string, string> = {
   MEMBER: "Member",
 };
 
-const statusToBadgePhase: Record<string, "submission" | "listening" | "voting" | "results"> = {
+const statusToBadgePhase: Record<
+  string,
+  "submission" | "listening" | "voting" | "results"
+> = {
   SUBMISSION: "submission",
   LISTENING: "listening",
   VOTING: "voting",
@@ -96,8 +109,8 @@ export default function LeagueDetail() {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-muted" />
-          <div className="h-4 w-72 rounded bg-muted" />
+          <div className="bg-muted h-8 w-48 rounded" />
+          <div className="bg-muted h-4 w-72 rounded" />
         </div>
       </div>
     );
@@ -107,18 +120,20 @@ export default function LeagueDetail() {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-            <Users className="h-6 w-6 text-muted-foreground" />
+          <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-full">
+            <Users className="text-muted-foreground h-6 w-6" />
           </div>
           <div>
-            <p className="font-medium text-muted-foreground">League not found</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="text-muted-foreground font-medium">
+              League not found
+            </p>
+            <p className="text-muted-foreground mt-1 text-sm">
               This league doesn&apos;t exist or you&apos;re not a member.
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
           >
             Back to Dashboard
           </Link>
@@ -145,15 +160,19 @@ export default function LeagueDetail() {
         <div>
           <h1 className="text-2xl font-bold">{league.name}</h1>
           {league.description && (
-            <p className="mt-1 text-muted-foreground">{league.description}</p>
+            <p className="text-muted-foreground mt-1">{league.description}</p>
           )}
-          <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-2 flex items-center gap-1.5 text-sm">
             <Users className="h-4 w-4" />
             {league._count.members} member{league._count.members !== 1 && "s"}
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="ghost" size="sm" onClick={() => setSettingsOpen(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSettingsOpen(true)}
+          >
             <Settings className="h-4 w-4" />
           </Button>
         </div>
@@ -161,11 +180,13 @@ export default function LeagueDetail() {
 
       {/* Invite Link */}
       <Card className="mb-6">
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-medium text-foreground">Invite Link</p>
-              <p className="mt-0.5 text-sm text-muted-foreground break-all">{inviteUrl}</p>
+              <p className="text-foreground text-sm font-medium">Invite Link</p>
+              <p className="text-muted-foreground mt-0.5 text-sm break-all">
+                {inviteUrl}
+              </p>
             </div>
             <div className="flex gap-2">
               <Button variant="secondary" size="sm" onClick={handleCopyInvite}>
@@ -212,55 +233,63 @@ export default function LeagueDetail() {
               {league.rounds.length > 0 ? (
                 <div className="space-y-3">
                   {league.rounds.map((round) => {
-                    const isScored = round.status === "RESULTS" || round.status === "COMPLETED";
-                    const winner = isScored ? getRoundWinner(round.submissions) : null;
+                    const isScored =
+                      round.status === "RESULTS" ||
+                      round.status === "COMPLETED";
+                    const winner = isScored
+                      ? getRoundWinner(round.submissions)
+                      : null;
                     const phase = statusToBadgePhase[round.status] ?? "results";
 
                     return (
                       <Link
                         key={round.id}
                         href={`/leagues/${league.id}/rounds/${round.id}`}
-                        className="flex items-center justify-between rounded-lg border border-border/50 p-3 transition-colors hover:bg-muted"
+                        className="border-border/50 hover:bg-muted flex items-center justify-between rounded-lg border p-3 transition-colors"
                       >
                         <div className="min-w-0 flex-1">
                           <p className="font-medium">
                             Round {round.roundNumber}: {round.themeName}
                           </p>
                           {winner && (
-                            <p className="mt-0.5 flex items-center gap-1 text-sm text-muted-foreground">
+                            <p className="text-muted-foreground mt-0.5 flex items-center gap-1 text-sm">
                               <Trophy className="h-3 w-3 text-yellow-500" />
                               {winner.userName} &middot; {winner.trackName}
                             </p>
                           )}
                           {!winner && round.themeDescription && (
-                            <p className="mt-0.5 text-sm text-muted-foreground">
+                            <p className="text-muted-foreground mt-0.5 text-sm">
                               {round.themeDescription}
                             </p>
                           )}
                         </div>
-                        <Badge variant={phase}>{phase.charAt(0).toUpperCase() + phase.slice(1)}</Badge>
+                        <Badge variant={phase}>
+                          {phase.charAt(0).toUpperCase() + phase.slice(1)}
+                        </Badge>
                       </Link>
                     );
                   })}
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-3 py-6 text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-                  <Music2 className="h-5 w-5 text-muted-foreground" />
+                  <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-full">
+                    <Music2 className="text-muted-foreground h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-sm font-medium">
+                      No rounds yet
+                    </p>
+                    <p className="text-muted-foreground mt-0.5 text-xs">
+                      Create the first round to get the competition started.
+                    </p>
+                  </div>
+                  <Link href={`/leagues/${league.id}/rounds/create`}>
+                    <Button size="sm">
+                      <Plus className="h-3.5 w-3.5" />
+                      Create First Round
+                    </Button>
+                  </Link>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">No rounds yet</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    Create the first round to get the competition started.
-                  </p>
-                </div>
-                <Link href={`/leagues/${league.id}/rounds/create`}>
-                  <Button size="sm">
-                    <Plus className="h-3.5 w-3.5" />
-                    Create First Round
-                  </Button>
-                </Link>
-              </div>
               )}
             </CardContent>
           </Card>
@@ -278,13 +307,17 @@ export default function LeagueDetail() {
                   <div key={member.id} className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={member.user.image ?? undefined} />
-                      <AvatarFallback className="bg-primary text-sm font-bold text-primary-foreground">
+                      <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">
                         {member.user.name?.charAt(0).toUpperCase() ?? "?"}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium">{member.user.name}</p>
-                      <p className="text-xs text-muted-foreground">{roleLabels[member.role]}</p>
+                      <p className="truncate text-sm font-medium">
+                        {member.user.name}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {roleLabels[member.role]}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -301,7 +334,11 @@ export default function LeagueDetail() {
         league={league}
         onLeave={() => leaveLeague.mutate({ leagueId: league.id })}
         onDelete={() => {
-          if (confirm("Are you sure you want to delete this league? This cannot be undone.")) {
+          if (
+            confirm(
+              "Are you sure you want to delete this league? This cannot be undone.",
+            )
+          ) {
             deleteLeague.mutate({ leagueId: league.id });
           }
         }}
@@ -363,7 +400,12 @@ function SettingsModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) onClose();
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>League Settings</DialogTitle>
@@ -428,7 +470,9 @@ function SettingsModal({
           </div>
 
           {updateSettings.error && (
-            <p className="text-sm text-destructive">{updateSettings.error.message}</p>
+            <p className="text-destructive text-sm">
+              {updateSettings.error.message}
+            </p>
           )}
 
           <Separator />
@@ -438,7 +482,11 @@ function SettingsModal({
               <LogOut className="h-4 w-4" />
               Leave League
             </Button>
-            <Button variant="destructive" onClick={onDelete} loading={isDeleting}>
+            <Button
+              variant="destructive"
+              onClick={onDelete}
+              loading={isDeleting}
+            >
               <Trash2 className="h-4 w-4" />
               Delete League
             </Button>

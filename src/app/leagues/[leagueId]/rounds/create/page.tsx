@@ -76,7 +76,7 @@ export default function CreateRound() {
       <h1 className="mb-6 text-2xl font-bold">Create a New Round</h1>
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="theme-name">Theme</Label>
@@ -105,7 +105,9 @@ export default function CreateRound() {
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="theme-desc">
                 Description{" "}
-                <span className="font-normal text-muted-foreground">(optional)</span>
+                <span className="text-muted-foreground font-normal">
+                  (optional)
+                </span>
               </Label>
               <Textarea
                 id="theme-desc"
@@ -133,11 +135,17 @@ export default function CreateRound() {
               required
               value={votingDeadline}
               onChange={(e) => setVotingDeadline(e.target.value)}
-              error={votingDeadline && submissionDeadline ? (validationError ?? undefined) : undefined}
+              error={
+                votingDeadline && submissionDeadline
+                  ? (validationError ?? undefined)
+                  : undefined
+              }
             />
 
             {createRound.error && (
-              <p className="text-sm text-destructive">{createRound.error.message}</p>
+              <p className="text-destructive text-sm">
+                {createRound.error.message}
+              </p>
             )}
 
             <div className="flex gap-3">
@@ -187,7 +195,12 @@ function ThemeBrowserModal({
   });
 
   return (
-    <Dialog open={open} onOpenChange={(o) => { if (!o) onClose(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        if (!o) onClose();
+      }}
+    >
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle>Browse Themes</DialogTitle>
@@ -196,7 +209,7 @@ function ThemeBrowserModal({
           <div className="max-h-[60vh] space-y-5 overflow-y-auto">
             {categories.map((cat) => (
               <div key={cat.category}>
-                <h3 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                <h3 className="text-muted-foreground mb-2 text-sm font-semibold tracking-wide uppercase">
                   {cat.category}
                 </h3>
                 <div className="grid grid-cols-1 gap-2">
@@ -205,12 +218,10 @@ function ThemeBrowserModal({
                       key={theme.name}
                       type="button"
                       onClick={() => onSelect(theme.name, theme.description)}
-                      className="cursor-pointer rounded-lg border border-border/50 p-3 text-left transition-colors hover:border-primary hover:bg-muted"
+                      className="border-border/50 hover:border-primary hover:bg-muted cursor-pointer rounded-lg border p-3 text-left transition-colors"
                     >
-                      <p className="text-sm font-medium">
-                        {theme.name}
-                      </p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
+                      <p className="text-sm font-medium">{theme.name}</p>
+                      <p className="text-muted-foreground mt-0.5 text-xs">
                         {theme.description}
                       </p>
                     </button>
@@ -221,7 +232,7 @@ function ThemeBrowserModal({
           </div>
         ) : (
           <div className="flex items-center justify-center py-8">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+            <div className="border-primary h-6 w-6 animate-spin rounded-full border-2 border-t-transparent" />
           </div>
         )}
       </DialogContent>

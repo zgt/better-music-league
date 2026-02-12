@@ -38,12 +38,12 @@ export default function ProfilePage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <p className="font-medium text-muted-foreground">
+          <p className="text-muted-foreground font-medium">
             Unable to load profile
           </p>
           <Link
             href="/dashboard"
-            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
           >
             Back to Dashboard
           </Link>
@@ -59,13 +59,13 @@ export default function ProfilePage() {
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
             <AvatarImage src={profile.image ?? undefined} />
-            <AvatarFallback className="bg-primary text-xl font-bold text-primary-foreground">
+            <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
               {profile.name?.charAt(0).toUpperCase() ?? "?"}
             </AvatarFallback>
           </Avatar>
           <div>
             <h1 className="text-xl font-bold">{profile.name}</h1>
-            <p className="text-sm text-muted-foreground">{profile.email}</p>
+            <p className="text-muted-foreground text-sm">{profile.email}</p>
           </div>
         </div>
         <Button variant="secondary" size="sm" asChild>
@@ -79,40 +79,42 @@ export default function ProfilePage() {
       {/* Stats cards */}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex flex-col items-center gap-1 text-center">
-              <Star className="h-5 w-5 text-primary" />
+              <Star className="text-primary h-5 w-5" />
               <p className="text-2xl font-bold">{profile.stats.totalPoints}</p>
-              <p className="text-xs text-muted-foreground">Total Points</p>
+              <p className="text-muted-foreground text-xs">Total Points</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex flex-col items-center gap-1 text-center">
-              <Trophy className="h-5 w-5 text-warning" />
+              <Trophy className="text-warning h-5 w-5" />
               <p className="text-2xl font-bold">{profile.stats.roundsWon}</p>
-              <p className="text-xs text-muted-foreground">Rounds Won</p>
+              <p className="text-muted-foreground text-xs">Rounds Won</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex flex-col items-center gap-1 text-center">
-              <Users className="h-5 w-5 text-success" />
-              <p className="text-2xl font-bold">{profile.stats.leaguesActive}</p>
-              <p className="text-xs text-muted-foreground">Leagues Active</p>
+              <Users className="text-success h-5 w-5" />
+              <p className="text-2xl font-bold">
+                {profile.stats.leaguesActive}
+              </p>
+              <p className="text-muted-foreground text-xs">Leagues Active</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex flex-col items-center gap-1 text-center">
-              <Music className="h-5 w-5 text-muted-foreground" />
+              <Music className="text-muted-foreground h-5 w-5" />
               <p className="text-2xl font-bold">
                 {profile.stats.submissionsMade}
               </p>
-              <p className="text-xs text-muted-foreground">Submissions</p>
+              <p className="text-muted-foreground text-xs">Submissions</p>
             </div>
           </CardContent>
         </Card>
@@ -121,11 +123,11 @@ export default function ProfilePage() {
       {/* Favorite submission */}
       {profile.favoriteSubmission && (
         <div className="mb-8">
-          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+          <h2 className="text-muted-foreground mb-3 text-sm font-medium">
             Best Submission
           </h2>
           <Card>
-            <CardContent className="pt-6">
+            <CardContent>
               <div className="flex items-center gap-4">
                 <Image
                   src={profile.favoriteSubmission.albumArtUrl}
@@ -138,19 +140,19 @@ export default function ProfilePage() {
                   <p className="truncate font-medium">
                     {profile.favoriteSubmission.trackName}
                   </p>
-                  <p className="truncate text-sm text-muted-foreground">
+                  <p className="text-muted-foreground truncate text-sm">
                     {profile.favoriteSubmission.artistName}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     {profile.favoriteSubmission.themeName} &middot;{" "}
                     {profile.favoriteSubmission.leagueName}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-lg font-bold text-primary">
+                  <p className="text-primary text-lg font-bold">
                     {profile.favoriteSubmission.points}
                   </p>
-                  <p className="text-xs text-muted-foreground">pts</p>
+                  <p className="text-muted-foreground text-xs">pts</p>
                 </div>
               </div>
             </CardContent>
@@ -161,12 +163,12 @@ export default function ProfilePage() {
       {/* Recent activity */}
       {profile.recentActivity.length > 0 && (
         <div>
-          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+          <h2 className="text-muted-foreground mb-3 text-sm font-medium">
             Recent Activity
           </h2>
           <Card>
             <CardContent className="p-0">
-              <div className="divide-y divide-border">
+              <div className="divide-border divide-y">
                 {profile.recentActivity.map((activity) => (
                   <div
                     key={activity.roundId}
@@ -176,7 +178,7 @@ export default function ProfilePage() {
                       <p className="truncate text-sm font-medium">
                         {activity.themeName}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         {activity.leagueName}
                       </p>
                     </div>

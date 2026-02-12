@@ -105,7 +105,7 @@ function PhaseProgressBar({ status }: { status: string }) {
               <span
                 className={`text-xs ${
                   isActive
-                    ? "font-medium text-foreground"
+                    ? "text-foreground font-medium"
                     : "text-muted-foreground"
                 }`}
               >
@@ -166,9 +166,9 @@ export default function RoundDetail() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-muted" />
-          <div className="h-4 w-72 rounded bg-muted" />
-          <div className="h-32 rounded-xl bg-muted" />
+          <div className="bg-muted h-8 w-48 rounded" />
+          <div className="bg-muted h-4 w-72 rounded" />
+          <div className="bg-muted h-32 rounded-xl" />
         </div>
       </div>
     );
@@ -178,18 +178,18 @@ export default function RoundDetail() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-            <Music2 className="h-6 w-6 text-muted-foreground" />
+          <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-full">
+            <Music2 className="text-muted-foreground h-6 w-6" />
           </div>
           <div>
-            <p className="font-medium text-muted-foreground">Round not found</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="text-muted-foreground font-medium">Round not found</p>
+            <p className="text-muted-foreground mt-1 text-sm">
               This round doesn&apos;t exist or you don&apos;t have access.
             </p>
           </div>
           <Link
             href={`/leagues/${params.leagueId}`}
-            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
           >
             Back to League
           </Link>
@@ -199,8 +199,7 @@ export default function RoundDetail() {
   }
 
   const isAdmin = round.userRole === "OWNER" || round.userRole === "ADMIN";
-  const canAdvance =
-    isAdmin && round.status !== "COMPLETED";
+  const canAdvance = isAdmin && round.status !== "COMPLETED";
 
   const phase = statusToBadgePhase[round.status] ?? "results";
 
@@ -209,7 +208,7 @@ export default function RoundDetail() {
       {/* Back link */}
       <Link
         href={`/leagues/${params.leagueId}`}
-        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1 text-sm transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to league
@@ -219,12 +218,14 @@ export default function RoundDetail() {
       <div className="mb-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Round {round.roundNumber} &middot; {round.leagueName}
             </p>
             <h1 className="mt-1 text-2xl font-bold">{round.themeName}</h1>
             {round.themeDescription && (
-              <p className="mt-1 text-muted-foreground">{round.themeDescription}</p>
+              <p className="text-muted-foreground mt-1">
+                {round.themeDescription}
+              </p>
             )}
           </div>
           <Badge variant={phase} className="mt-1">
@@ -235,13 +236,13 @@ export default function RoundDetail() {
 
       {/* Phase progress */}
       <Card className="mb-6">
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             <PhaseProgressBar status={round.status} />
 
             {activeDeadline && countdown !== "Ended" && (
               <div className="flex items-center gap-2 text-sm">
-                <Clock className="h-4 w-4 text-muted-foreground" />
+                <Clock className="text-muted-foreground h-4 w-4" />
                 <span className="text-muted-foreground">
                   {round.status === "SUBMISSION"
                     ? "Submissions close"
@@ -288,30 +289,26 @@ export default function RoundDetail() {
                     }
                     loading={setPlaylistUrl.isPending}
                   >
-                    {playlistUrlSaved ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      "Save"
-                    )}
+                    {playlistUrlSaved ? <Check className="h-4 w-4" /> : "Save"}
                   </Button>
                 </div>
                 {setPlaylistUrl.error && (
-                  <p className="text-xs text-destructive">
+                  <p className="text-destructive text-xs">
                     {setPlaylistUrl.error.message}
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground">
-                  Create a playlist on Spotify, then paste the link here. Members
-                  will see this on the playlist page.
+                <p className="text-muted-foreground text-xs">
+                  Create a playlist on Spotify, then paste the link here.
+                  Members will see this on the playlist page.
                 </p>
               </div>
 
               {/* Advance phase */}
               {canAdvance && (
-                <div className="flex items-center justify-between border-t border-border/50 pt-4">
+                <div className="border-border/50 flex items-center justify-between border-t pt-4">
                   <div>
                     <p className="text-sm font-medium">Advance Phase</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Move the round to the next phase
                     </p>
                   </div>
@@ -341,13 +338,13 @@ export default function RoundDetail() {
           <DialogHeader>
             <DialogTitleComp>Advance Phase?</DialogTitleComp>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             This will move the round from{" "}
             <span className="font-medium">{PHASE_LABELS[round.status]}</span> to
             the next phase. This cannot be undone.
           </p>
           {advancePhase.error && (
-            <p className="mt-2 text-sm text-destructive">
+            <p className="text-destructive mt-2 text-sm">
               {advancePhase.error.message}
             </p>
           )}
@@ -401,14 +398,14 @@ function PhaseContent({
     return (
       <div className="space-y-4">
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex items-center gap-3 py-2 text-center">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
-                <Music2 className="h-5 w-5 text-primary" />
+              <div className="bg-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                <Music2 className="text-primary h-5 w-5" />
               </div>
               <div className="text-left">
                 <p className="text-sm font-medium">Submission Phase</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   <span className="font-medium">
                     {round.submissionCount}/{round.memberCount}
                   </span>{" "}
@@ -428,17 +425,17 @@ function PhaseContent({
       <div className="space-y-4">
         {/* Playlist banner */}
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
-                  <ListMusic className="h-5 w-5 text-primary" />
+                <div className="bg-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                  <ListMusic className="text-primary h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-sm font-medium">Listening Phase</p>
-                  <p className="text-xs text-muted-foreground">
-                    Listen to all {round.submissions.length} tracks before voting
-                    begins
+                  <p className="text-muted-foreground text-xs">
+                    Listen to all {round.submissions.length} tracks before
+                    voting begins
                   </p>
                 </div>
               </div>

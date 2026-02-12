@@ -27,29 +27,35 @@ export default function JoinLeague() {
   return (
     <div className="mx-auto max-w-md px-4 py-16">
       <Card>
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex flex-col items-center gap-4 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-              <Users className="h-7 w-7 text-primary" />
+            <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full">
+              <Users className="text-primary h-7 w-7" />
             </div>
 
             <div>
               <h1 className="text-xl font-bold">Join a League</h1>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="text-muted-foreground mt-1 text-sm">
                 You&apos;ve been invited to join a music league
               </p>
             </div>
 
             {joinLeague.error && !isAlreadyMember && (
-              <p className="text-sm text-destructive">{joinLeague.error.message}</p>
+              <p className="text-destructive text-sm">
+                {joinLeague.error.message}
+              </p>
             )}
 
             {isAlreadyMember ? (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 You&apos;re already a member of this league.
               </p>
             ) : (
-              <Button onClick={handleJoin} loading={joinLeague.isPending} className="w-full">
+              <Button
+                onClick={handleJoin}
+                loading={joinLeague.isPending}
+                className="w-full"
+              >
                 Join League
               </Button>
             )}

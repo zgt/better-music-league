@@ -87,7 +87,7 @@ export default function Dashboard() {
             <div className="space-y-4">
               {[1, 2].map((i) => (
                 <Card key={i}>
-                  <CardContent className="pt-6">
+                  <CardContent>
                     <Skeleton className="h-5 w-32" />
                     <Skeleton className="mt-3 h-4 w-24" />
                   </CardContent>
@@ -100,30 +100,45 @@ export default function Dashboard() {
                 const activeRound = league.rounds[0];
                 return (
                   <Link key={league.id} href={`/leagues/${league.id}`}>
-                    <Card className="cursor-pointer transition-colors hover:border-border/80 hover:bg-accent">
-                      <CardContent className="pt-6">
+                    <Card className="hover:border-border/80 hover:bg-accent cursor-pointer transition-colors">
+                      <CardContent>
                         <div className="flex items-center justify-between">
                           <div>
                             <h3 className="font-semibold">{league.name}</h3>
-                            <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground">
+                            <div className="text-muted-foreground mt-1 flex items-center gap-3 text-sm">
                               <span className="flex items-center gap-1">
                                 <Users className="h-3.5 w-3.5" />
                                 {league._count.members}
                               </span>
                               {activeRound && (
-                                <span>
-                                  {activeRound.themeName}
-                                </span>
+                                <span>{activeRound.themeName}</span>
                               )}
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
                             {activeRound && (
-                              <Badge variant={statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results"}>
-                                {(statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results").charAt(0).toUpperCase() + (statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results").slice(1)}
+                              <Badge
+                                variant={
+                                  statusToBadgePhase[
+                                    activeRound.status as keyof typeof statusToBadgePhase
+                                  ] ?? "results"
+                                }
+                              >
+                                {(
+                                  statusToBadgePhase[
+                                    activeRound.status as keyof typeof statusToBadgePhase
+                                  ] ?? "results"
+                                )
+                                  .charAt(0)
+                                  .toUpperCase() +
+                                  (
+                                    statusToBadgePhase[
+                                      activeRound.status as keyof typeof statusToBadgePhase
+                                    ] ?? "results"
+                                  ).slice(1)}
                               </Badge>
                             )}
-                            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                            <ArrowRight className="text-muted-foreground h-4 w-4" />
                           </div>
                         </div>
                       </CardContent>
@@ -134,14 +149,16 @@ export default function Dashboard() {
             </div>
           ) : (
             <Card>
-              <CardContent className="pt-6">
+              <CardContent>
                 <div className="flex flex-col items-center gap-4 py-8 text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-                    <TicketCheck className="h-6 w-6 text-muted-foreground" />
+                  <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-full">
+                    <TicketCheck className="text-muted-foreground h-6 w-6" />
                   </div>
                   <div>
-                    <p className="font-medium text-muted-foreground">No leagues yet</p>
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="text-muted-foreground font-medium">
+                      No leagues yet
+                    </p>
+                    <p className="text-muted-foreground mt-1 text-sm">
                       Create one or join with an invite code.
                     </p>
                   </div>
@@ -168,7 +185,9 @@ export default function Dashboard() {
                   onChange={(e) => setInviteCode(e.target.value)}
                 />
                 {joinLeague.error && (
-                  <p className="text-sm text-destructive">{joinLeague.error.message}</p>
+                  <p className="text-destructive text-sm">
+                    {joinLeague.error.message}
+                  </p>
                 )}
                 <Button
                   type="submit"
@@ -194,14 +213,17 @@ export default function Dashboard() {
                     <Link
                       key={d.roundId}
                       href={`/leagues/${d.leagueId}`}
-                      className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-muted"
+                      className="hover:bg-muted flex items-start gap-3 rounded-lg p-2 transition-colors"
                     >
-                      <Clock className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                      <Clock className="text-muted-foreground mt-0.5 h-4 w-4 shrink-0" />
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-medium">{d.themeName}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {d.leagueName} &middot; {d.status === "SUBMISSION" ? "Submit" : "Vote"} &middot;{" "}
-                          {formatDeadline(d.deadline)}
+                        <p className="truncate text-sm font-medium">
+                          {d.themeName}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
+                          {d.leagueName} &middot;{" "}
+                          {d.status === "SUBMISSION" ? "Submit" : "Vote"}{" "}
+                          &middot; {formatDeadline(d.deadline)}
                         </p>
                       </div>
                     </Link>

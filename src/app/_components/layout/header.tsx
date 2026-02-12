@@ -27,14 +27,14 @@ function UserDropdown({ session }: { session: Session }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex cursor-pointer items-center gap-2 rounded-lg p-1 transition-colors hover:bg-accent">
+        <button className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-lg p-1 transition-colors">
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? undefined} />
-            <AvatarFallback className="bg-primary text-xs font-bold text-primary-foreground">
+            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
               {session.user.name?.charAt(0).toUpperCase() ?? "?"}
             </AvatarFallback>
           </Avatar>
-          <span className="hidden text-sm text-muted-foreground sm:inline">
+          <span className="text-muted-foreground hidden text-sm sm:inline">
             {session.user.name}
           </span>
         </button>
@@ -77,7 +77,7 @@ function MobileNav({ session: _session }: { session: Session }) {
       </SheetTrigger>
       <SheetContent side="right" className="w-64">
         <SheetHeader>
-          <SheetTitle className="text-sm font-medium text-muted-foreground">
+          <SheetTitle className="text-muted-foreground text-sm font-medium">
             Menu
           </SheetTitle>
         </SheetHeader>
@@ -85,28 +85,28 @@ function MobileNav({ session: _session }: { session: Session }) {
           <Link
             href="/dashboard"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             Dashboard
           </Link>
           <Link
             href="/leagues"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             Leagues
           </Link>
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             Profile
           </Link>
           <Link
             href="/settings"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             Settings
           </Link>
@@ -116,7 +116,7 @@ function MobileNav({ session: _session }: { session: Session }) {
               setOpen(false);
               void authClient.signOut();
             }}
-            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             <LogOut className="h-4 w-4" />
             Sign out
@@ -129,14 +129,14 @@ function MobileNav({ session: _session }: { session: Session }) {
 
 export function Header({ session }: { session: Session | null }) {
   return (
-    <header className="border-b border-border bg-card/80 backdrop-blur-sm">
+    <header className="border-border bg-card/80 border-b backdrop-blur-sm">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link
             href="/"
             className="flex items-center gap-2 font-bold tracking-tight"
           >
-            <Music className="h-5 w-5 text-primary" />
+            <Music className="text-primary h-5 w-5" />
             <span>Better Music League</span>
           </Link>
 
@@ -144,15 +144,9 @@ export function Header({ session }: { session: Session | null }) {
             <nav className="hidden items-center gap-4 sm:flex">
               <Link
                 href="/dashboard"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
                 Dashboard
-              </Link>
-              <Link
-                href="/leagues"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Leagues
               </Link>
             </nav>
           )}

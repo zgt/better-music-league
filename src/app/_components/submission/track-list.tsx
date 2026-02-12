@@ -4,12 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { ExternalLink, Music2, Pause, Play } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 
 interface TrackItem {
   id: string;
@@ -71,12 +66,12 @@ function TrackPreviewPlayer({
       <button
         type="button"
         onClick={toggle}
-        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90"
+        className="bg-primary hover:bg-primary/90 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-colors"
       >
         {isPlaying ? (
           <Pause className="h-3.5 w-3.5" />
         ) : (
-          <Play className="h-3.5 w-3.5 ml-0.5" />
+          <Play className="ml-0.5 h-3.5 w-3.5" />
         )}
       </button>
     </>
@@ -89,10 +84,12 @@ export function TrackList({ tracks }: { tracks: TrackItem[] }) {
   if (tracks.length === 0) {
     return (
       <Card>
-        <CardContent className="pt-6">
+        <CardContent>
           <div className="flex flex-col items-center gap-3 py-4 text-center">
-            <Music2 className="h-8 w-8 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">No tracks submitted yet.</p>
+            <Music2 className="text-muted-foreground h-8 w-8" />
+            <p className="text-muted-foreground text-sm">
+              No tracks submitted yet.
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -109,7 +106,7 @@ export function TrackList({ tracks }: { tracks: TrackItem[] }) {
           {tracks.map((track) => (
             <div
               key={track.id}
-              className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
+              className="border-border/50 flex items-center gap-3 rounded-lg border p-3"
             >
               {track.albumArtUrl ? (
                 <Image
@@ -120,19 +117,21 @@ export function TrackList({ tracks }: { tracks: TrackItem[] }) {
                   className="rounded"
                 />
               ) : (
-                <div className="flex h-12 w-12 items-center justify-center rounded bg-muted">
-                  <Music2 className="h-5 w-5 text-muted-foreground" />
+                <div className="bg-muted flex h-12 w-12 items-center justify-center rounded">
+                  <Music2 className="text-muted-foreground h-5 w-5" />
                 </div>
               )}
 
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{track.trackName}</p>
-                <p className="truncate text-xs text-muted-foreground">
+                <p className="truncate text-sm font-medium">
+                  {track.trackName}
+                </p>
+                <p className="text-muted-foreground truncate text-xs">
                   {track.artistName} &middot; {track.albumName}
                 </p>
               </div>
 
-              <span className="shrink-0 text-xs text-muted-foreground">
+              <span className="text-muted-foreground shrink-0 text-xs">
                 {formatDuration(track.trackDurationMs)}
               </span>
 
@@ -149,14 +148,14 @@ export function TrackList({ tracks }: { tracks: TrackItem[] }) {
                 href={`https://open.spotify.com/track/${track.spotifyTrackId}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors"
                 title="Open in Spotify"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
 
               {track.isOwn && (
-                <span className="text-xs text-muted-foreground">(yours)</span>
+                <span className="text-muted-foreground text-xs">(yours)</span>
               )}
             </div>
           ))}

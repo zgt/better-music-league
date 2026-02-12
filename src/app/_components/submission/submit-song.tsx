@@ -55,12 +55,12 @@ function PreviewPlayer({ url }: { url: string }) {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90"
+        className="bg-primary hover:bg-primary/90 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-colors"
       >
         {playing ? (
           <Pause className="h-3.5 w-3.5" />
         ) : (
-          <Play className="h-3.5 w-3.5 ml-0.5" />
+          <Play className="ml-0.5 h-3.5 w-3.5" />
         )}
       </button>
     </>
@@ -157,14 +157,16 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
       {mySubmissions && mySubmissions.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Your Submissions ({submissionCount}/{songsPerRound})</CardTitle>
+            <CardTitle>
+              Your Submissions ({submissionCount}/{songsPerRound})
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {mySubmissions.map((sub) => (
                 <div
                   key={sub.id}
-                  className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
+                  className="border-border/50 flex items-center gap-3 rounded-lg border p-3"
                 >
                   {sub.albumArtUrl && (
                     <Image
@@ -179,20 +181,22 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                     <p className="truncate text-sm font-medium">
                       {sub.trackName}
                     </p>
-                    <p className="truncate text-xs text-muted-foreground">
+                    <p className="text-muted-foreground truncate text-xs">
                       {sub.artistName} &middot; {sub.albumName}
                     </p>
                   </div>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-muted-foreground text-xs">
                     {formatDuration(sub.trackDurationMs)}
                   </span>
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => deleteMutation.mutate({ submissionId: sub.id })}
+                    onClick={() =>
+                      deleteMutation.mutate({ submissionId: sub.id })
+                    }
                     loading={deleteMutation.isPending}
                   >
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 className="text-destructive h-4 w-4" />
                   </Button>
                 </div>
               ))}
@@ -204,16 +208,16 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
       {/* Search + submit interface */}
       {canSubmit && !selectedTrack && (
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Music2 className="h-5 w-5 text-primary" />
+                <Music2 className="text-primary h-5 w-5" />
                 <p className="text-sm font-medium">Search for a song</p>
               </div>
 
               <div ref={dropdownRef} className="relative">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                   <input
                     type="text"
                     value={query}
@@ -223,20 +227,20 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                     }}
                     onFocus={() => setShowResults(true)}
                     placeholder="Search Spotify for a track..."
-                    className="w-full rounded-lg border border-border bg-muted py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:ring-ring focus:outline-none focus-visible:ring-1"
+                    className="border-border bg-muted text-foreground placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-lg border py-2 pr-3 pl-9 text-sm transition-colors focus:outline-none focus-visible:ring-1"
                   />
                 </div>
 
                 {/* Search results dropdown */}
                 {showResults && debouncedQuery.length > 0 && (
-                  <div className="absolute z-20 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-border bg-card shadow-lg">
+                  <div className="border-border bg-card absolute z-20 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border shadow-lg">
                     {isSearching && (
-                      <div className="px-4 py-3 text-sm text-muted-foreground">
+                      <div className="text-muted-foreground px-4 py-3 text-sm">
                         Searching...
                       </div>
                     )}
                     {!isSearching && searchResults?.length === 0 && (
-                      <div className="px-4 py-3 text-sm text-muted-foreground">
+                      <div className="text-muted-foreground px-4 py-3 text-sm">
                         No results found
                       </div>
                     )}
@@ -245,7 +249,7 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                         key={track.spotifyTrackId}
                         type="button"
                         onClick={() => handleSelect(track)}
-                        className="flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-muted"
+                        className="hover:bg-muted flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left transition-colors"
                       >
                         {track.albumArtUrl ? (
                           <Image
@@ -256,19 +260,19 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                             className="rounded"
                           />
                         ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded bg-muted">
-                            <Music2 className="h-4 w-4 text-muted-foreground" />
+                          <div className="bg-muted flex h-10 w-10 items-center justify-center rounded">
+                            <Music2 className="text-muted-foreground h-4 w-4" />
                           </div>
                         )}
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-medium">
                             {track.trackName}
                           </p>
-                          <p className="truncate text-xs text-muted-foreground">
+                          <p className="text-muted-foreground truncate text-xs">
                             {track.artistName} &middot; {track.albumName}
                           </p>
                         </div>
-                        <span className="shrink-0 text-xs text-muted-foreground">
+                        <span className="text-muted-foreground shrink-0 text-xs">
                           {formatDuration(track.trackDurationMs)}
                         </span>
                       </button>
@@ -284,7 +288,7 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
       {/* Selected track confirmation */}
       {selectedTrack && (
         <Card>
-          <CardContent className="pt-6">
+          <CardContent>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 {selectedTrack.albumArtUrl ? (
@@ -296,19 +300,21 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                     className="rounded-lg"
                   />
                 ) : (
-                  <div className="flex h-[120px] w-[120px] items-center justify-center rounded-lg bg-muted">
-                    <Music2 className="h-8 w-8 text-muted-foreground" />
+                  <div className="bg-muted flex h-[120px] w-[120px] items-center justify-center rounded-lg">
+                    <Music2 className="text-muted-foreground h-8 w-8" />
                   </div>
                 )}
                 <div className="min-w-0 flex-1 space-y-1">
-                  <p className="text-lg font-semibold">{selectedTrack.trackName}</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-lg font-semibold">
+                    {selectedTrack.trackName}
+                  </p>
+                  <p className="text-muted-foreground text-sm">
                     {selectedTrack.artistName}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     {selectedTrack.albumName}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     {formatDuration(selectedTrack.trackDurationMs)}
                   </p>
                   {selectedTrack.previewUrl && (
@@ -320,7 +326,7 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
               </div>
 
               {submitMutation.error && (
-                <p className="text-sm text-destructive">
+                <p className="text-destructive text-sm">
                   {submitMutation.error.message}
                 </p>
               )}
@@ -332,10 +338,7 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
                 >
                   Submit
                 </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => setSelectedTrack(null)}
-                >
+                <Button variant="ghost" onClick={() => setSelectedTrack(null)}>
                   <X className="h-4 w-4" />
                   Cancel
                 </Button>
@@ -346,11 +349,14 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
       )}
 
       {/* All slots filled message */}
-      {!canSubmit && mySubmissions && mySubmissions.length > 0 && !selectedTrack && (
-        <p className="text-center text-sm text-muted-foreground">
-          You&apos;ve submitted all {songsPerRound} song(s) for this round.
-        </p>
-      )}
+      {!canSubmit &&
+        mySubmissions &&
+        mySubmissions.length > 0 &&
+        !selectedTrack && (
+          <p className="text-muted-foreground text-center text-sm">
+            You&apos;ve submitted all {songsPerRound} song(s) for this round.
+          </p>
+        )}
     </div>
   );
 }
