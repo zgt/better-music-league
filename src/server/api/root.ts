@@ -4,6 +4,7 @@ import { roundRouter } from "~/server/api/routers/round";
 import { spotifyRouter } from "~/server/api/routers/spotify";
 import { submissionRouter } from "~/server/api/routers/submission";
 import { themeRouter } from "~/server/api/routers/theme";
+import { userRouter } from "~/server/api/routers/user";
 import { voteRouter } from "~/server/api/routers/vote";
 
 /**
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   spotify: spotifyRouter,
   submission: submissionRouter,
   theme: themeRouter,
+  user: userRouter,
   vote: voteRouter,
 });
 
