@@ -142,7 +142,29 @@ export default function RoundDetail() {
     );
   }
 
-  if (!round) return null;
+  if (!round) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <div className="flex flex-col items-center gap-4 py-16 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary">
+            <Music2 className="h-6 w-6 text-text-muted" />
+          </div>
+          <div>
+            <p className="font-medium text-text-secondary">Round not found</p>
+            <p className="mt-1 text-sm text-text-muted">
+              This round doesn&apos;t exist or you don&apos;t have access.
+            </p>
+          </div>
+          <Link
+            href={`/leagues/${params.leagueId}`}
+            className="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            Back to League
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const isAdmin = round.userRole === "OWNER" || round.userRole === "ADMIN";
   const canAdvance =

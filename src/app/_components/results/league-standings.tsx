@@ -28,7 +28,13 @@ export function LeagueStandings({ leagueId }: { leagueId: string }) {
   if (!standings || standings.length === 0) {
     return (
       <Card header="Standings">
-        <p className="text-sm text-text-muted">No scored rounds yet.</p>
+        <div className="flex flex-col items-center gap-2 py-4 text-center">
+          <Trophy className="h-6 w-6 text-text-muted" />
+          <p className="text-sm text-text-muted">
+            No scored rounds yet. Standings will appear after the first round is
+            complete.
+          </p>
+        </div>
       </Card>
     );
   }

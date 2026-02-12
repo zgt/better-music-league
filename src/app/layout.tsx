@@ -7,9 +7,29 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { HeaderServer } from "./_components/layout/header-server";
 
 export const metadata: Metadata = {
-  title: "Better Music League",
-  description: "A social music competition platform",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: {
+    default: "Better Music League",
+    template: "%s | Better Music League",
+  },
+  description:
+    "Compete with friends to find the best music. Create leagues, submit songs, vote on tracks, and crown the champion.",
+  icons: [{ rel: "icon", url: "/favicon.svg", type: "image/svg+xml" }],
+  openGraph: {
+    title: "Better Music League",
+    description:
+      "Compete with friends to find the best music. Create leagues, submit songs, vote on tracks, and crown the champion.",
+    type: "website",
+    siteName: "Better Music League",
+  },
+  twitter: {
+    card: "summary",
+    title: "Better Music League",
+    description:
+      "Compete with friends to find the best music. Create leagues, submit songs, vote on tracks, and crown the champion.",
+  },
+  metadataBase: new URL(
+    process.env.BETTER_AUTH_BASE_URL ?? "http://localhost:3000",
+  ),
 };
 
 const geist = Geist({

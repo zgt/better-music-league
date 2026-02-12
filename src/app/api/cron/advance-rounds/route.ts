@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+import { env } from "~/env";
 import { db } from "~/server/db";
 import {
   notifyVotingOpen,
@@ -8,12 +9,9 @@ import {
 } from "~/server/email/notifications";
 
 export async function GET(req: NextRequest) {
-  // Optionally verify a cron secret to prevent unauthorized access
+  // Verify cron secret to prevent unauthorized access
   const authHeader = req.headers.get("authorization");
-  if (
-    process.env.CRON_SECRET &&
-    authHeader !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
+  if (env.CRON_SECRET && authHeader !== `Bearer ${env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

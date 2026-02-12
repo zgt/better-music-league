@@ -405,7 +405,7 @@ export function VoteInterface({
                           )
                         }
                         disabled={currentPoints <= downvotePointValue}
-                        className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-border bg-bg-tertiary text-text-secondary transition-colors hover:bg-bg-elevated disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border bg-bg-tertiary text-text-secondary transition-colors hover:bg-bg-elevated disabled:cursor-not-allowed disabled:opacity-40 sm:h-8 sm:w-8"
                       >
                         <Minus className="h-4 w-4" />
                       </button>
@@ -415,7 +415,7 @@ export function VoteInterface({
                         type="button"
                         onClick={() => updatePoints(sub.id, -1)}
                         disabled={currentPoints <= 0}
-                        className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-border bg-bg-tertiary text-text-secondary transition-colors hover:bg-bg-elevated disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border bg-bg-tertiary text-text-secondary transition-colors hover:bg-bg-elevated disabled:cursor-not-allowed disabled:opacity-40 sm:h-8 sm:w-8"
                       >
                         <ChevronDown className="h-4 w-4" />
                       </button>

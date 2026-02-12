@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Copy, Check, Settings, Plus, LogOut, Trash2, Trophy, Users } from "lucide-react";
+import { Copy, Check, Music2, Settings, Plus, LogOut, Trash2, Trophy, Users } from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { Card } from "~/app/_components/ui/card";
@@ -86,7 +86,29 @@ export default function LeagueDetail() {
     );
   }
 
-  if (!league) return null;
+  if (!league) {
+    return (
+      <div className="mx-auto max-w-4xl px-4 py-8">
+        <div className="flex flex-col items-center gap-4 py-16 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary">
+            <Users className="h-6 w-6 text-text-muted" />
+          </div>
+          <div>
+            <p className="font-medium text-text-secondary">League not found</p>
+            <p className="mt-1 text-sm text-text-muted">
+              This league doesn&apos;t exist or you&apos;re not a member.
+            </p>
+          </div>
+          <Link
+            href="/dashboard"
+            className="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            Back to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const inviteUrl =
     typeof window !== "undefined"
@@ -102,7 +124,7 @@ export default function LeagueDetail() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       {/* Header */}
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">{league.name}</h1>
           {league.description && (
@@ -202,7 +224,23 @@ export default function LeagueDetail() {
                 })}
               </div>
             ) : (
-              <p className="text-sm text-text-muted">No rounds yet. Create the first one!</p>
+              <div className="flex flex-col items-center gap-3 py-6 text-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-bg-tertiary">
+                <Music2 className="h-5 w-5 text-text-muted" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-text-secondary">No rounds yet</p>
+                <p className="mt-0.5 text-xs text-text-muted">
+                  Create the first round to get the competition started.
+                </p>
+              </div>
+              <Link href={`/leagues/${league.id}/rounds/create`}>
+                <Button size="sm">
+                  <Plus className="h-3.5 w-3.5" />
+                  Create First Round
+                </Button>
+              </Link>
+            </div>
             )}
           </Card>
         </div>

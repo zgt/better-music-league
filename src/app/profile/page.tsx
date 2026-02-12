@@ -32,7 +32,23 @@ export default function ProfilePage() {
     );
   }
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <div className="flex flex-col items-center gap-4 py-16 text-center">
+          <p className="font-medium text-text-secondary">
+            Unable to load profile
+          </p>
+          <Link
+            href="/dashboard"
+            className="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            Back to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">

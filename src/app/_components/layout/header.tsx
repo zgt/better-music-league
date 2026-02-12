@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LogOut, Music, User, Settings } from "lucide-react";
+import { LogOut, Menu, Music, User, Settings, X } from "lucide-react";
 import { authClient, type Session } from "~/server/better-auth/client";
 
 function UserDropdown({ session }: { session: Session }) {
@@ -79,7 +79,93 @@ function UserDropdown({ session }: { session: Session }) {
   );
 }
 
+function MobileNav({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  if (!open) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      {/* Panel */}
+      <div className="fixed inset-y-0 right-0 z-50 w-64 border-l border-border bg-bg-secondary p-6 shadow-xl">
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-sm font-medium text-text-muted">Menu</span>
+          <button
+            onClick={onClose}
+            className="cursor-pointer rounded-lg p-1 text-text-muted transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <nav className="flex flex-col gap-1">
+          <Link
+            href="/dashboard"
+            onClick={onClose}
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            Dashboard
+          </Link>
+          <Link
+            href="/leagues"
+            onClick={onClose}
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            Leagues
+          </Link>
+          <Link
+            href="/profile"
+            onClick={onClose}
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            Profile
+          </Link>
+          <Link
+            href="/settings"
+            onClick={onClose}
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            Settings
+          </Link>
+          <div className="my-2 border-t border-border" />
+          <button
+            onClick={() => {
+              onClose();
+              void authClient.signOut();
+            }}
+            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign out
+          </button>
+        </nav>
+      </div>
+    </>
+  );
+}
+
 export function Header({ session }: { session: Session | null }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <header className="border-b border-border bg-bg-secondary/80 backdrop-blur-sm">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
@@ -112,7 +198,21 @@ export function Header({ session }: { session: Session | null }) {
 
         <div className="flex items-center gap-3">
           {session ? (
-            <UserDropdown session={session} />
+            <>
+              <div className="hidden sm:block">
+                <UserDropdown session={session} />
+              </div>
+              <button
+                onClick={() => setMobileOpen(true)}
+                className="flex cursor-pointer items-center justify-center rounded-lg p-1.5 text-text-secondary transition-colors hover:bg-bg-tertiary sm:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+              <MobileNav
+                open={mobileOpen}
+                onClose={() => setMobileOpen(false)}
+              />
+            </>
           ) : (
             <Link
               href="/"
