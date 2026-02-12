@@ -139,6 +139,82 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.LeagueScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  status: 'status',
+  inviteCode: 'inviteCode',
+  songsPerRound: 'songsPerRound',
+  maxMembers: 'maxMembers',
+  allowDownvotes: 'allowDownvotes',
+  downvotePointValue: 'downvotePointValue',
+  upvotePointsPerRound: 'upvotePointsPerRound',
+  isPublic: 'isPublic',
+  creatorId: 'creatorId'
+};
+
+exports.Prisma.LeagueMemberScalarFieldEnum = {
+  id: 'id',
+  joinedAt: 'joinedAt',
+  role: 'role',
+  leagueId: 'leagueId',
+  userId: 'userId'
+};
+
+exports.Prisma.RoundScalarFieldEnum = {
+  id: 'id',
+  roundNumber: 'roundNumber',
+  themeName: 'themeName',
+  themeDescription: 'themeDescription',
+  status: 'status',
+  submissionDeadline: 'submissionDeadline',
+  votingDeadline: 'votingDeadline',
+  playlistUrl: 'playlistUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  leagueId: 'leagueId'
+};
+
+exports.Prisma.SubmissionScalarFieldEnum = {
+  id: 'id',
+  spotifyTrackId: 'spotifyTrackId',
+  trackName: 'trackName',
+  artistName: 'artistName',
+  albumName: 'albumName',
+  albumArtUrl: 'albumArtUrl',
+  previewUrl: 'previewUrl',
+  trackDurationMs: 'trackDurationMs',
+  createdAt: 'createdAt',
+  roundId: 'roundId',
+  userId: 'userId'
+};
+
+exports.Prisma.VoteScalarFieldEnum = {
+  id: 'id',
+  points: 'points',
+  roundId: 'roundId',
+  voterId: 'voterId',
+  submissionId: 'submissionId'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  createdAt: 'createdAt',
+  submissionId: 'submissionId',
+  userId: 'userId'
+};
+
+exports.Prisma.ThemeTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -153,13 +229,38 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.LeagueStatus = exports.$Enums.LeagueStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
 
+exports.MemberRole = exports.$Enums.MemberRole = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+};
+
+exports.RoundStatus = exports.$Enums.RoundStatus = {
+  SUBMISSION: 'SUBMISSION',
+  LISTENING: 'LISTENING',
+  VOTING: 'VOTING',
+  RESULTS: 'RESULTS',
+  COMPLETED: 'COMPLETED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  League: 'League',
+  LeagueMember: 'LeagueMember',
+  Round: 'Round',
+  Submission: 'Submission',
+  Vote: 'Vote',
+  Comment: 'Comment',
+  ThemeTemplate: 'ThemeTemplate'
 };
 /**
  * Create the Client
@@ -200,7 +301,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -209,13 +309,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// Prisma schema for Better Auth\n// learn more: https://better-auth.com/docs/concepts/database\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\n// NOTE: When using mysql or sqlserver, uncomment the //@db.Text annotations in model Account below\n// Further reading:\n// https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id\n  name          String //@db.Text\n  email         String\n  emailVerified Boolean   @default(false)\n  image         String? //@db.Text\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @default(now()) @updatedAt\n  sessions      Session[]\n  accounts      Account[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String? //@db.Text\n  userAgent String? //@db.Text\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String //@db.Text\n  providerId            String //@db.Text\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String? //@db.Text\n  refreshToken          String? //@db.Text\n  idToken               String? //@db.Text\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String? //@db.Text\n  password              String? //@db.Text\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String //@db.Text\n  value      String //@db.Text\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @default(now()) @updatedAt\n\n  @@map(\"verification\")\n}\n",
-  "inlineSchemaHash": "e05b21f900b6e027c65e2b61a15a9c5a436281796ec36936713d3cf34a7fc888",
+  "inlineSchema": "// Prisma schema for Better Auth\n// learn more: https://better-auth.com/docs/concepts/database\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\n// NOTE: When using mysql or sqlserver, uncomment the //@db.Text annotations in model Account below\n// Further reading:\n// https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id\n  name          String //@db.Text\n  email         String\n  emailVerified Boolean   @default(false)\n  image         String? //@db.Text\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @default(now()) @updatedAt\n  sessions      Session[]\n  accounts      Account[]\n\n  // Music league relations\n  createdLeagues    League[]\n  leagueMemberships LeagueMember[]\n  submissions       Submission[]\n  votes             Vote[]\n  comments          Comment[]\n\n  @@unique([email])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String? //@db.Text\n  userAgent String? //@db.Text\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String //@db.Text\n  providerId            String //@db.Text\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String? //@db.Text\n  refreshToken          String? //@db.Text\n  idToken               String? //@db.Text\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String? //@db.Text\n  password              String? //@db.Text\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String //@db.Text\n  value      String //@db.Text\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @default(now()) @updatedAt\n\n  @@map(\"verification\")\n}\n\n// ─── Music League Models ─────────────────────────────────\n\nenum LeagueStatus {\n  ACTIVE\n  COMPLETED\n  ARCHIVED\n}\n\nenum MemberRole {\n  OWNER\n  ADMIN\n  MEMBER\n}\n\nenum RoundStatus {\n  SUBMISSION\n  LISTENING\n  VOTING\n  RESULTS\n  COMPLETED\n}\n\nmodel League {\n  id          String       @id @default(cuid())\n  name        String\n  description String?\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @updatedAt\n  status      LeagueStatus @default(ACTIVE)\n  inviteCode  String       @unique\n\n  // Settings\n  songsPerRound        Int     @default(1)\n  maxMembers           Int     @default(20)\n  allowDownvotes       Boolean @default(false)\n  downvotePointValue   Int     @default(-1)\n  upvotePointsPerRound Int     @default(10)\n  isPublic             Boolean @default(false)\n\n  // Relations\n  creatorId String\n  creator   User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)\n  members   LeagueMember[]\n  rounds    Round[]\n\n  @@index([creatorId])\n  @@index([inviteCode])\n  @@map(\"league\")\n}\n\nmodel LeagueMember {\n  id       String     @id @default(cuid())\n  joinedAt DateTime   @default(now())\n  role     MemberRole @default(MEMBER)\n\n  leagueId String\n  league   League @relation(fields: [leagueId], references: [id], onDelete: Cascade)\n  userId   String\n  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([leagueId, userId])\n  @@index([userId])\n  @@map(\"league_member\")\n}\n\nmodel Round {\n  id                 String      @id @default(cuid())\n  roundNumber        Int\n  themeName          String\n  themeDescription   String?\n  status             RoundStatus @default(SUBMISSION)\n  submissionDeadline DateTime\n  votingDeadline     DateTime\n  playlistUrl        String?\n  createdAt          DateTime    @default(now())\n  updatedAt          DateTime    @updatedAt\n\n  leagueId    String\n  league      League       @relation(fields: [leagueId], references: [id], onDelete: Cascade)\n  submissions Submission[]\n\n  @@index([leagueId])\n  @@map(\"round\")\n}\n\nmodel Submission {\n  id              String   @id @default(cuid())\n  spotifyTrackId  String\n  trackName       String\n  artistName      String\n  albumName       String\n  albumArtUrl     String\n  previewUrl      String?\n  trackDurationMs Int\n  createdAt       DateTime @default(now())\n\n  roundId  String\n  round    Round     @relation(fields: [roundId], references: [id], onDelete: Cascade)\n  userId   String\n  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  votes    Vote[]\n  comments Comment[]\n\n  @@unique([roundId, userId, spotifyTrackId])\n  @@index([roundId])\n  @@index([userId])\n  @@map(\"submission\")\n}\n\nmodel Vote {\n  id     String @id @default(cuid())\n  points Int\n\n  roundId      String\n  voterId      String\n  voter        User       @relation(fields: [voterId], references: [id], onDelete: Cascade)\n  submissionId String\n  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)\n\n  @@unique([roundId, voterId, submissionId])\n  @@index([submissionId])\n  @@index([voterId])\n  @@map(\"vote\")\n}\n\nmodel Comment {\n  id        String   @id @default(cuid())\n  text      String\n  createdAt DateTime @default(now())\n\n  submissionId String\n  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)\n  userId       String\n  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([submissionId, userId])\n  @@index([submissionId])\n  @@index([userId])\n  @@map(\"comment\")\n}\n\nmodel ThemeTemplate {\n  id          String @id @default(cuid())\n  name        String\n  description String\n  category    String\n\n  @@map(\"theme_template\")\n}\n",
+  "inlineSchemaHash": "9e6a3d9914e066137bb509b05e811170877f102f794b9864a5597be7a5ca1a1b",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"}],\"dbName\":\"user\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"session\"},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"accessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accessTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refreshTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"account\"},\"Verification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verification\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"createdLeagues\",\"kind\":\"object\",\"type\":\"League\",\"relationName\":\"LeagueToUser\"},{\"name\":\"leagueMemberships\",\"kind\":\"object\",\"type\":\"LeagueMember\",\"relationName\":\"LeagueMemberToUser\"},{\"name\":\"submissions\",\"kind\":\"object\",\"type\":\"Submission\",\"relationName\":\"SubmissionToUser\"},{\"name\":\"votes\",\"kind\":\"object\",\"type\":\"Vote\",\"relationName\":\"UserToVote\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToUser\"}],\"dbName\":\"user\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"session\"},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"accessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accessTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refreshTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"account\"},\"Verification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verification\"},\"League\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"LeagueStatus\"},{\"name\":\"inviteCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"songsPerRound\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"maxMembers\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"allowDownvotes\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"downvotePointValue\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"upvotePointsPerRound\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isPublic\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"creatorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creator\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LeagueToUser\"},{\"name\":\"members\",\"kind\":\"object\",\"type\":\"LeagueMember\",\"relationName\":\"LeagueToLeagueMember\"},{\"name\":\"rounds\",\"kind\":\"object\",\"type\":\"Round\",\"relationName\":\"LeagueToRound\"}],\"dbName\":\"league\"},\"LeagueMember\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"joinedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"MemberRole\"},{\"name\":\"leagueId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"league\",\"kind\":\"object\",\"type\":\"League\",\"relationName\":\"LeagueToLeagueMember\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LeagueMemberToUser\"}],\"dbName\":\"league_member\"},\"Round\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"roundNumber\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"themeName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"themeDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"RoundStatus\"},{\"name\":\"submissionDeadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"votingDeadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"playlistUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"leagueId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"league\",\"kind\":\"object\",\"type\":\"League\",\"relationName\":\"LeagueToRound\"},{\"name\":\"submissions\",\"kind\":\"object\",\"type\":\"Submission\",\"relationName\":\"RoundToSubmission\"}],\"dbName\":\"round\"},\"Submission\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"spotifyTrackId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"trackName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"artistName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"albumName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"albumArtUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"previewUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"trackDurationMs\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"roundId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"round\",\"kind\":\"object\",\"type\":\"Round\",\"relationName\":\"RoundToSubmission\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SubmissionToUser\"},{\"name\":\"votes\",\"kind\":\"object\",\"type\":\"Vote\",\"relationName\":\"SubmissionToVote\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToSubmission\"}],\"dbName\":\"submission\"},\"Vote\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"roundId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"voterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"voter\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToVote\"},{\"name\":\"submissionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"submission\",\"kind\":\"object\",\"type\":\"Submission\",\"relationName\":\"SubmissionToVote\"}],\"dbName\":\"vote\"},\"Comment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"submissionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"submission\",\"kind\":\"object\",\"type\":\"Submission\",\"relationName\":\"CommentToSubmission\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CommentToUser\"}],\"dbName\":\"comment\"},\"ThemeTemplate\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"theme_template\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

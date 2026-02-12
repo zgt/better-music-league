@@ -33,6 +33,87 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  * 
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
+/**
+ * Model League
+ * 
+ */
+export type League = $Result.DefaultSelection<Prisma.$LeaguePayload>
+/**
+ * Model LeagueMember
+ * 
+ */
+export type LeagueMember = $Result.DefaultSelection<Prisma.$LeagueMemberPayload>
+/**
+ * Model Round
+ * 
+ */
+export type Round = $Result.DefaultSelection<Prisma.$RoundPayload>
+/**
+ * Model Submission
+ * 
+ */
+export type Submission = $Result.DefaultSelection<Prisma.$SubmissionPayload>
+/**
+ * Model Vote
+ * 
+ */
+export type Vote = $Result.DefaultSelection<Prisma.$VotePayload>
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
+/**
+ * Model ThemeTemplate
+ * 
+ */
+export type ThemeTemplate = $Result.DefaultSelection<Prisma.$ThemeTemplatePayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const LeagueStatus: {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+export type LeagueStatus = (typeof LeagueStatus)[keyof typeof LeagueStatus]
+
+
+export const MemberRole: {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+};
+
+export type MemberRole = (typeof MemberRole)[keyof typeof MemberRole]
+
+
+export const RoundStatus: {
+  SUBMISSION: 'SUBMISSION',
+  LISTENING: 'LISTENING',
+  VOTING: 'VOTING',
+  RESULTS: 'RESULTS',
+  COMPLETED: 'COMPLETED'
+};
+
+export type RoundStatus = (typeof RoundStatus)[keyof typeof RoundStatus]
+
+}
+
+export type LeagueStatus = $Enums.LeagueStatus
+
+export const LeagueStatus: typeof $Enums.LeagueStatus
+
+export type MemberRole = $Enums.MemberRole
+
+export const MemberRole: typeof $Enums.MemberRole
+
+export type RoundStatus = $Enums.RoundStatus
+
+export const RoundStatus: typeof $Enums.RoundStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -191,6 +272,76 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.league`: Exposes CRUD operations for the **League** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Leagues
+    * const leagues = await prisma.league.findMany()
+    * ```
+    */
+  get league(): Prisma.LeagueDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.leagueMember`: Exposes CRUD operations for the **LeagueMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LeagueMembers
+    * const leagueMembers = await prisma.leagueMember.findMany()
+    * ```
+    */
+  get leagueMember(): Prisma.LeagueMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.round`: Exposes CRUD operations for the **Round** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rounds
+    * const rounds = await prisma.round.findMany()
+    * ```
+    */
+  get round(): Prisma.RoundDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submission`: Exposes CRUD operations for the **Submission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Submissions
+    * const submissions = await prisma.submission.findMany()
+    * ```
+    */
+  get submission(): Prisma.SubmissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vote`: Exposes CRUD operations for the **Vote** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Votes
+    * const votes = await prisma.vote.findMany()
+    * ```
+    */
+  get vote(): Prisma.VoteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comments
+    * const comments = await prisma.comment.findMany()
+    * ```
+    */
+  get comment(): Prisma.CommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.themeTemplate`: Exposes CRUD operations for the **ThemeTemplate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ThemeTemplates
+    * const themeTemplates = await prisma.themeTemplate.findMany()
+    * ```
+    */
+  get themeTemplate(): Prisma.ThemeTemplateDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -635,7 +786,14 @@ export namespace Prisma {
     User: 'User',
     Session: 'Session',
     Account: 'Account',
-    Verification: 'Verification'
+    Verification: 'Verification',
+    League: 'League',
+    LeagueMember: 'LeagueMember',
+    Round: 'Round',
+    Submission: 'Submission',
+    Vote: 'Vote',
+    Comment: 'Comment',
+    ThemeTemplate: 'ThemeTemplate'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -654,7 +812,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification"
+      modelProps: "user" | "session" | "account" | "verification" | "league" | "leagueMember" | "round" | "submission" | "vote" | "comment" | "themeTemplate"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -954,6 +1112,524 @@ export namespace Prisma {
           }
         }
       }
+      League: {
+        payload: Prisma.$LeaguePayload<ExtArgs>
+        fields: Prisma.LeagueFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LeagueFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LeagueFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          findFirst: {
+            args: Prisma.LeagueFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LeagueFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          findMany: {
+            args: Prisma.LeagueFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>[]
+          }
+          create: {
+            args: Prisma.LeagueCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          createMany: {
+            args: Prisma.LeagueCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LeagueCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>[]
+          }
+          delete: {
+            args: Prisma.LeagueDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          update: {
+            args: Prisma.LeagueUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          deleteMany: {
+            args: Prisma.LeagueDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LeagueUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LeagueUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>[]
+          }
+          upsert: {
+            args: Prisma.LeagueUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeaguePayload>
+          }
+          aggregate: {
+            args: Prisma.LeagueAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLeague>
+          }
+          groupBy: {
+            args: Prisma.LeagueGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LeagueGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LeagueCountArgs<ExtArgs>
+            result: $Utils.Optional<LeagueCountAggregateOutputType> | number
+          }
+        }
+      }
+      LeagueMember: {
+        payload: Prisma.$LeagueMemberPayload<ExtArgs>
+        fields: Prisma.LeagueMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LeagueMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LeagueMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.LeagueMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LeagueMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          findMany: {
+            args: Prisma.LeagueMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>[]
+          }
+          create: {
+            args: Prisma.LeagueMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          createMany: {
+            args: Prisma.LeagueMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LeagueMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.LeagueMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          update: {
+            args: Prisma.LeagueMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.LeagueMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LeagueMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LeagueMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.LeagueMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LeagueMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.LeagueMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLeagueMember>
+          }
+          groupBy: {
+            args: Prisma.LeagueMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LeagueMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LeagueMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<LeagueMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      Round: {
+        payload: Prisma.$RoundPayload<ExtArgs>
+        fields: Prisma.RoundFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RoundFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RoundFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          findFirst: {
+            args: Prisma.RoundFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RoundFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          findMany: {
+            args: Prisma.RoundFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>[]
+          }
+          create: {
+            args: Prisma.RoundCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          createMany: {
+            args: Prisma.RoundCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RoundCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>[]
+          }
+          delete: {
+            args: Prisma.RoundDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          update: {
+            args: Prisma.RoundUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          deleteMany: {
+            args: Prisma.RoundDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RoundUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RoundUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>[]
+          }
+          upsert: {
+            args: Prisma.RoundUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RoundPayload>
+          }
+          aggregate: {
+            args: Prisma.RoundAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRound>
+          }
+          groupBy: {
+            args: Prisma.RoundGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RoundGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RoundCountArgs<ExtArgs>
+            result: $Utils.Optional<RoundCountAggregateOutputType> | number
+          }
+        }
+      }
+      Submission: {
+        payload: Prisma.$SubmissionPayload<ExtArgs>
+        fields: Prisma.SubmissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          findFirst: {
+            args: Prisma.SubmissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          findMany: {
+            args: Prisma.SubmissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+          }
+          create: {
+            args: Prisma.SubmissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          createMany: {
+            args: Prisma.SubmissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+          }
+          delete: {
+            args: Prisma.SubmissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          update: {
+            args: Prisma.SubmissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+          }
+          aggregate: {
+            args: Prisma.SubmissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmission>
+          }
+          groupBy: {
+            args: Prisma.SubmissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmissionCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Vote: {
+        payload: Prisma.$VotePayload<ExtArgs>
+        fields: Prisma.VoteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VoteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VoteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          findFirst: {
+            args: Prisma.VoteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VoteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          findMany: {
+            args: Prisma.VoteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          create: {
+            args: Prisma.VoteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          createMany: {
+            args: Prisma.VoteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VoteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          delete: {
+            args: Prisma.VoteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          update: {
+            args: Prisma.VoteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          deleteMany: {
+            args: Prisma.VoteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VoteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VoteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>[]
+          }
+          upsert: {
+            args: Prisma.VoteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VotePayload>
+          }
+          aggregate: {
+            args: Prisma.VoteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVote>
+          }
+          groupBy: {
+            args: Prisma.VoteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VoteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VoteCountArgs<ExtArgs>
+            result: $Utils.Optional<VoteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Comment: {
+        payload: Prisma.$CommentPayload<ExtArgs>
+        fields: Prisma.CommentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CommentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CommentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          findFirst: {
+            args: Prisma.CommentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CommentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          findMany: {
+            args: Prisma.CommentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          create: {
+            args: Prisma.CommentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          createMany: {
+            args: Prisma.CommentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CommentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          delete: {
+            args: Prisma.CommentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          update: {
+            args: Prisma.CommentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CommentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CommentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CommentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          upsert: {
+            args: Prisma.CommentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          aggregate: {
+            args: Prisma.CommentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateComment>
+          }
+          groupBy: {
+            args: Prisma.CommentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CommentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CommentCountArgs<ExtArgs>
+            result: $Utils.Optional<CommentCountAggregateOutputType> | number
+          }
+        }
+      }
+      ThemeTemplate: {
+        payload: Prisma.$ThemeTemplatePayload<ExtArgs>
+        fields: Prisma.ThemeTemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ThemeTemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ThemeTemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.ThemeTemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ThemeTemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          findMany: {
+            args: Prisma.ThemeTemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>[]
+          }
+          create: {
+            args: Prisma.ThemeTemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          createMany: {
+            args: Prisma.ThemeTemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ThemeTemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.ThemeTemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          update: {
+            args: Prisma.ThemeTemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.ThemeTemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ThemeTemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ThemeTemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.ThemeTemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemeTemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.ThemeTemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateThemeTemplate>
+          }
+          groupBy: {
+            args: Prisma.ThemeTemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ThemeTemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ThemeTemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<ThemeTemplateCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1054,6 +1730,13 @@ export namespace Prisma {
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
+    league?: LeagueOmit
+    leagueMember?: LeagueMemberOmit
+    round?: RoundOmit
+    submission?: SubmissionOmit
+    vote?: VoteOmit
+    comment?: CommentOmit
+    themeTemplate?: ThemeTemplateOmit
   }
 
   /* Types for Logging */
@@ -1136,11 +1819,21 @@ export namespace Prisma {
   export type UserCountOutputType = {
     sessions: number
     accounts: number
+    createdLeagues: number
+    leagueMemberships: number
+    submissions: number
+    votes: number
+    comments: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+    createdLeagues?: boolean | UserCountOutputTypeCountCreatedLeaguesArgs
+    leagueMemberships?: boolean | UserCountOutputTypeCountLeagueMembershipsArgs
+    submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
+    votes?: boolean | UserCountOutputTypeCountVotesArgs
+    comments?: boolean | UserCountOutputTypeCountCommentsArgs
   }
 
   // Custom InputTypes
@@ -1166,6 +1859,152 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedLeaguesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeagueWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLeagueMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeagueMemberWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+  }
+
+
+  /**
+   * Count Type LeagueCountOutputType
+   */
+
+  export type LeagueCountOutputType = {
+    members: number
+    rounds: number
+  }
+
+  export type LeagueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | LeagueCountOutputTypeCountMembersArgs
+    rounds?: boolean | LeagueCountOutputTypeCountRoundsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LeagueCountOutputType without action
+   */
+  export type LeagueCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueCountOutputType
+     */
+    select?: LeagueCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LeagueCountOutputType without action
+   */
+  export type LeagueCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeagueMemberWhereInput
+  }
+
+  /**
+   * LeagueCountOutputType without action
+   */
+  export type LeagueCountOutputTypeCountRoundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoundWhereInput
+  }
+
+
+  /**
+   * Count Type RoundCountOutputType
+   */
+
+  export type RoundCountOutputType = {
+    submissions: number
+  }
+
+  export type RoundCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submissions?: boolean | RoundCountOutputTypeCountSubmissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RoundCountOutputType without action
+   */
+  export type RoundCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RoundCountOutputType
+     */
+    select?: RoundCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RoundCountOutputType without action
+   */
+  export type RoundCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionWhereInput
+  }
+
+
+  /**
+   * Count Type SubmissionCountOutputType
+   */
+
+  export type SubmissionCountOutputType = {
+    votes: number
+    comments: number
+  }
+
+  export type SubmissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    votes?: boolean | SubmissionCountOutputTypeCountVotesArgs
+    comments?: boolean | SubmissionCountOutputTypeCountCommentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SubmissionCountOutputType without action
+   */
+  export type SubmissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionCountOutputType
+     */
+    select?: SubmissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SubmissionCountOutputType without action
+   */
+  export type SubmissionCountOutputTypeCountVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+  }
+
+  /**
+   * SubmissionCountOutputType without action
+   */
+  export type SubmissionCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
 
@@ -1355,6 +2194,11 @@ export namespace Prisma {
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    createdLeagues?: boolean | User$createdLeaguesArgs<ExtArgs>
+    leagueMemberships?: boolean | User$leagueMembershipsArgs<ExtArgs>
+    submissions?: boolean | User$submissionsArgs<ExtArgs>
+    votes?: boolean | User$votesArgs<ExtArgs>
+    comments?: boolean | User$commentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1392,6 +2236,11 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    createdLeagues?: boolean | User$createdLeaguesArgs<ExtArgs>
+    leagueMemberships?: boolean | User$leagueMembershipsArgs<ExtArgs>
+    submissions?: boolean | User$submissionsArgs<ExtArgs>
+    votes?: boolean | User$votesArgs<ExtArgs>
+    comments?: boolean | User$commentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1402,6 +2251,11 @@ export namespace Prisma {
     objects: {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
+      createdLeagues: Prisma.$LeaguePayload<ExtArgs>[]
+      leagueMemberships: Prisma.$LeagueMemberPayload<ExtArgs>[]
+      submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+      votes: Prisma.$VotePayload<ExtArgs>[]
+      comments: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1807,6 +2661,11 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdLeagues<T extends User$createdLeaguesArgs<ExtArgs> = {}>(args?: Subset<T, User$createdLeaguesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    leagueMemberships<T extends User$leagueMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$leagueMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissions<T extends User$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    votes<T extends User$votesArgs<ExtArgs> = {}>(args?: Subset<T, User$votesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2276,6 +3135,126 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdLeagues
+   */
+  export type User$createdLeaguesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    where?: LeagueWhereInput
+    orderBy?: LeagueOrderByWithRelationInput | LeagueOrderByWithRelationInput[]
+    cursor?: LeagueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeagueScalarFieldEnum | LeagueScalarFieldEnum[]
+  }
+
+  /**
+   * User.leagueMemberships
+   */
+  export type User$leagueMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    where?: LeagueMemberWhereInput
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    cursor?: LeagueMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeagueMemberScalarFieldEnum | LeagueMemberScalarFieldEnum[]
+  }
+
+  /**
+   * User.submissions
+   */
+  export type User$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    where?: SubmissionWhereInput
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    cursor?: SubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.votes
+   */
+  export type User$votesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    cursor?: VoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * User.comments
+   */
+  export type User$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
   }
 
   /**
@@ -5565,6 +6544,7935 @@ export namespace Prisma {
 
 
   /**
+   * Model League
+   */
+
+  export type AggregateLeague = {
+    _count: LeagueCountAggregateOutputType | null
+    _avg: LeagueAvgAggregateOutputType | null
+    _sum: LeagueSumAggregateOutputType | null
+    _min: LeagueMinAggregateOutputType | null
+    _max: LeagueMaxAggregateOutputType | null
+  }
+
+  export type LeagueAvgAggregateOutputType = {
+    songsPerRound: number | null
+    maxMembers: number | null
+    downvotePointValue: number | null
+    upvotePointsPerRound: number | null
+  }
+
+  export type LeagueSumAggregateOutputType = {
+    songsPerRound: number | null
+    maxMembers: number | null
+    downvotePointValue: number | null
+    upvotePointsPerRound: number | null
+  }
+
+  export type LeagueMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    status: $Enums.LeagueStatus | null
+    inviteCode: string | null
+    songsPerRound: number | null
+    maxMembers: number | null
+    allowDownvotes: boolean | null
+    downvotePointValue: number | null
+    upvotePointsPerRound: number | null
+    isPublic: boolean | null
+    creatorId: string | null
+  }
+
+  export type LeagueMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    status: $Enums.LeagueStatus | null
+    inviteCode: string | null
+    songsPerRound: number | null
+    maxMembers: number | null
+    allowDownvotes: boolean | null
+    downvotePointValue: number | null
+    upvotePointsPerRound: number | null
+    isPublic: boolean | null
+    creatorId: string | null
+  }
+
+  export type LeagueCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    status: number
+    inviteCode: number
+    songsPerRound: number
+    maxMembers: number
+    allowDownvotes: number
+    downvotePointValue: number
+    upvotePointsPerRound: number
+    isPublic: number
+    creatorId: number
+    _all: number
+  }
+
+
+  export type LeagueAvgAggregateInputType = {
+    songsPerRound?: true
+    maxMembers?: true
+    downvotePointValue?: true
+    upvotePointsPerRound?: true
+  }
+
+  export type LeagueSumAggregateInputType = {
+    songsPerRound?: true
+    maxMembers?: true
+    downvotePointValue?: true
+    upvotePointsPerRound?: true
+  }
+
+  export type LeagueMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    status?: true
+    inviteCode?: true
+    songsPerRound?: true
+    maxMembers?: true
+    allowDownvotes?: true
+    downvotePointValue?: true
+    upvotePointsPerRound?: true
+    isPublic?: true
+    creatorId?: true
+  }
+
+  export type LeagueMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    status?: true
+    inviteCode?: true
+    songsPerRound?: true
+    maxMembers?: true
+    allowDownvotes?: true
+    downvotePointValue?: true
+    upvotePointsPerRound?: true
+    isPublic?: true
+    creatorId?: true
+  }
+
+  export type LeagueCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    status?: true
+    inviteCode?: true
+    songsPerRound?: true
+    maxMembers?: true
+    allowDownvotes?: true
+    downvotePointValue?: true
+    upvotePointsPerRound?: true
+    isPublic?: true
+    creatorId?: true
+    _all?: true
+  }
+
+  export type LeagueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which League to aggregate.
+     */
+    where?: LeagueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Leagues to fetch.
+     */
+    orderBy?: LeagueOrderByWithRelationInput | LeagueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LeagueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Leagues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Leagues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Leagues
+    **/
+    _count?: true | LeagueCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LeagueAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LeagueSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LeagueMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LeagueMaxAggregateInputType
+  }
+
+  export type GetLeagueAggregateType<T extends LeagueAggregateArgs> = {
+        [P in keyof T & keyof AggregateLeague]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLeague[P]>
+      : GetScalarType<T[P], AggregateLeague[P]>
+  }
+
+
+
+
+  export type LeagueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeagueWhereInput
+    orderBy?: LeagueOrderByWithAggregationInput | LeagueOrderByWithAggregationInput[]
+    by: LeagueScalarFieldEnum[] | LeagueScalarFieldEnum
+    having?: LeagueScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LeagueCountAggregateInputType | true
+    _avg?: LeagueAvgAggregateInputType
+    _sum?: LeagueSumAggregateInputType
+    _min?: LeagueMinAggregateInputType
+    _max?: LeagueMaxAggregateInputType
+  }
+
+  export type LeagueGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    status: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound: number
+    maxMembers: number
+    allowDownvotes: boolean
+    downvotePointValue: number
+    upvotePointsPerRound: number
+    isPublic: boolean
+    creatorId: string
+    _count: LeagueCountAggregateOutputType | null
+    _avg: LeagueAvgAggregateOutputType | null
+    _sum: LeagueSumAggregateOutputType | null
+    _min: LeagueMinAggregateOutputType | null
+    _max: LeagueMaxAggregateOutputType | null
+  }
+
+  type GetLeagueGroupByPayload<T extends LeagueGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LeagueGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LeagueGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LeagueGroupByOutputType[P]>
+            : GetScalarType<T[P], LeagueGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LeagueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    status?: boolean
+    inviteCode?: boolean
+    songsPerRound?: boolean
+    maxMembers?: boolean
+    allowDownvotes?: boolean
+    downvotePointValue?: boolean
+    upvotePointsPerRound?: boolean
+    isPublic?: boolean
+    creatorId?: boolean
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | League$membersArgs<ExtArgs>
+    rounds?: boolean | League$roundsArgs<ExtArgs>
+    _count?: boolean | LeagueCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["league"]>
+
+  export type LeagueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    status?: boolean
+    inviteCode?: boolean
+    songsPerRound?: boolean
+    maxMembers?: boolean
+    allowDownvotes?: boolean
+    downvotePointValue?: boolean
+    upvotePointsPerRound?: boolean
+    isPublic?: boolean
+    creatorId?: boolean
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["league"]>
+
+  export type LeagueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    status?: boolean
+    inviteCode?: boolean
+    songsPerRound?: boolean
+    maxMembers?: boolean
+    allowDownvotes?: boolean
+    downvotePointValue?: boolean
+    upvotePointsPerRound?: boolean
+    isPublic?: boolean
+    creatorId?: boolean
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["league"]>
+
+  export type LeagueSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    status?: boolean
+    inviteCode?: boolean
+    songsPerRound?: boolean
+    maxMembers?: boolean
+    allowDownvotes?: boolean
+    downvotePointValue?: boolean
+    upvotePointsPerRound?: boolean
+    isPublic?: boolean
+    creatorId?: boolean
+  }
+
+  export type LeagueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "createdAt" | "updatedAt" | "status" | "inviteCode" | "songsPerRound" | "maxMembers" | "allowDownvotes" | "downvotePointValue" | "upvotePointsPerRound" | "isPublic" | "creatorId", ExtArgs["result"]["league"]>
+  export type LeagueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | League$membersArgs<ExtArgs>
+    rounds?: boolean | League$roundsArgs<ExtArgs>
+    _count?: boolean | LeagueCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LeagueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LeagueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LeaguePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "League"
+    objects: {
+      creator: Prisma.$UserPayload<ExtArgs>
+      members: Prisma.$LeagueMemberPayload<ExtArgs>[]
+      rounds: Prisma.$RoundPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+      status: $Enums.LeagueStatus
+      inviteCode: string
+      songsPerRound: number
+      maxMembers: number
+      allowDownvotes: boolean
+      downvotePointValue: number
+      upvotePointsPerRound: number
+      isPublic: boolean
+      creatorId: string
+    }, ExtArgs["result"]["league"]>
+    composites: {}
+  }
+
+  type LeagueGetPayload<S extends boolean | null | undefined | LeagueDefaultArgs> = $Result.GetResult<Prisma.$LeaguePayload, S>
+
+  type LeagueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LeagueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LeagueCountAggregateInputType | true
+    }
+
+  export interface LeagueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['League'], meta: { name: 'League' } }
+    /**
+     * Find zero or one League that matches the filter.
+     * @param {LeagueFindUniqueArgs} args - Arguments to find a League
+     * @example
+     * // Get one League
+     * const league = await prisma.league.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LeagueFindUniqueArgs>(args: SelectSubset<T, LeagueFindUniqueArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one League that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LeagueFindUniqueOrThrowArgs} args - Arguments to find a League
+     * @example
+     * // Get one League
+     * const league = await prisma.league.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LeagueFindUniqueOrThrowArgs>(args: SelectSubset<T, LeagueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first League that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueFindFirstArgs} args - Arguments to find a League
+     * @example
+     * // Get one League
+     * const league = await prisma.league.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LeagueFindFirstArgs>(args?: SelectSubset<T, LeagueFindFirstArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first League that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueFindFirstOrThrowArgs} args - Arguments to find a League
+     * @example
+     * // Get one League
+     * const league = await prisma.league.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LeagueFindFirstOrThrowArgs>(args?: SelectSubset<T, LeagueFindFirstOrThrowArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Leagues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Leagues
+     * const leagues = await prisma.league.findMany()
+     * 
+     * // Get first 10 Leagues
+     * const leagues = await prisma.league.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const leagueWithIdOnly = await prisma.league.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LeagueFindManyArgs>(args?: SelectSubset<T, LeagueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a League.
+     * @param {LeagueCreateArgs} args - Arguments to create a League.
+     * @example
+     * // Create one League
+     * const League = await prisma.league.create({
+     *   data: {
+     *     // ... data to create a League
+     *   }
+     * })
+     * 
+     */
+    create<T extends LeagueCreateArgs>(args: SelectSubset<T, LeagueCreateArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Leagues.
+     * @param {LeagueCreateManyArgs} args - Arguments to create many Leagues.
+     * @example
+     * // Create many Leagues
+     * const league = await prisma.league.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LeagueCreateManyArgs>(args?: SelectSubset<T, LeagueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Leagues and returns the data saved in the database.
+     * @param {LeagueCreateManyAndReturnArgs} args - Arguments to create many Leagues.
+     * @example
+     * // Create many Leagues
+     * const league = await prisma.league.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Leagues and only return the `id`
+     * const leagueWithIdOnly = await prisma.league.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LeagueCreateManyAndReturnArgs>(args?: SelectSubset<T, LeagueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a League.
+     * @param {LeagueDeleteArgs} args - Arguments to delete one League.
+     * @example
+     * // Delete one League
+     * const League = await prisma.league.delete({
+     *   where: {
+     *     // ... filter to delete one League
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LeagueDeleteArgs>(args: SelectSubset<T, LeagueDeleteArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one League.
+     * @param {LeagueUpdateArgs} args - Arguments to update one League.
+     * @example
+     * // Update one League
+     * const league = await prisma.league.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LeagueUpdateArgs>(args: SelectSubset<T, LeagueUpdateArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Leagues.
+     * @param {LeagueDeleteManyArgs} args - Arguments to filter Leagues to delete.
+     * @example
+     * // Delete a few Leagues
+     * const { count } = await prisma.league.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LeagueDeleteManyArgs>(args?: SelectSubset<T, LeagueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Leagues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Leagues
+     * const league = await prisma.league.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LeagueUpdateManyArgs>(args: SelectSubset<T, LeagueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Leagues and returns the data updated in the database.
+     * @param {LeagueUpdateManyAndReturnArgs} args - Arguments to update many Leagues.
+     * @example
+     * // Update many Leagues
+     * const league = await prisma.league.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Leagues and only return the `id`
+     * const leagueWithIdOnly = await prisma.league.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LeagueUpdateManyAndReturnArgs>(args: SelectSubset<T, LeagueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one League.
+     * @param {LeagueUpsertArgs} args - Arguments to update or create a League.
+     * @example
+     * // Update or create a League
+     * const league = await prisma.league.upsert({
+     *   create: {
+     *     // ... data to create a League
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the League we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LeagueUpsertArgs>(args: SelectSubset<T, LeagueUpsertArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Leagues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueCountArgs} args - Arguments to filter Leagues to count.
+     * @example
+     * // Count the number of Leagues
+     * const count = await prisma.league.count({
+     *   where: {
+     *     // ... the filter for the Leagues we want to count
+     *   }
+     * })
+    **/
+    count<T extends LeagueCountArgs>(
+      args?: Subset<T, LeagueCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LeagueCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a League.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LeagueAggregateArgs>(args: Subset<T, LeagueAggregateArgs>): Prisma.PrismaPromise<GetLeagueAggregateType<T>>
+
+    /**
+     * Group by League.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LeagueGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LeagueGroupByArgs['orderBy'] }
+        : { orderBy?: LeagueGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LeagueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLeagueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the League model
+   */
+  readonly fields: LeagueFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for League.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LeagueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    members<T extends League$membersArgs<ExtArgs> = {}>(args?: Subset<T, League$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rounds<T extends League$roundsArgs<ExtArgs> = {}>(args?: Subset<T, League$roundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the League model
+   */
+  interface LeagueFieldRefs {
+    readonly id: FieldRef<"League", 'String'>
+    readonly name: FieldRef<"League", 'String'>
+    readonly description: FieldRef<"League", 'String'>
+    readonly createdAt: FieldRef<"League", 'DateTime'>
+    readonly updatedAt: FieldRef<"League", 'DateTime'>
+    readonly status: FieldRef<"League", 'LeagueStatus'>
+    readonly inviteCode: FieldRef<"League", 'String'>
+    readonly songsPerRound: FieldRef<"League", 'Int'>
+    readonly maxMembers: FieldRef<"League", 'Int'>
+    readonly allowDownvotes: FieldRef<"League", 'Boolean'>
+    readonly downvotePointValue: FieldRef<"League", 'Int'>
+    readonly upvotePointsPerRound: FieldRef<"League", 'Int'>
+    readonly isPublic: FieldRef<"League", 'Boolean'>
+    readonly creatorId: FieldRef<"League", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * League findUnique
+   */
+  export type LeagueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter, which League to fetch.
+     */
+    where: LeagueWhereUniqueInput
+  }
+
+  /**
+   * League findUniqueOrThrow
+   */
+  export type LeagueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter, which League to fetch.
+     */
+    where: LeagueWhereUniqueInput
+  }
+
+  /**
+   * League findFirst
+   */
+  export type LeagueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter, which League to fetch.
+     */
+    where?: LeagueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Leagues to fetch.
+     */
+    orderBy?: LeagueOrderByWithRelationInput | LeagueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Leagues.
+     */
+    cursor?: LeagueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Leagues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Leagues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Leagues.
+     */
+    distinct?: LeagueScalarFieldEnum | LeagueScalarFieldEnum[]
+  }
+
+  /**
+   * League findFirstOrThrow
+   */
+  export type LeagueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter, which League to fetch.
+     */
+    where?: LeagueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Leagues to fetch.
+     */
+    orderBy?: LeagueOrderByWithRelationInput | LeagueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Leagues.
+     */
+    cursor?: LeagueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Leagues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Leagues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Leagues.
+     */
+    distinct?: LeagueScalarFieldEnum | LeagueScalarFieldEnum[]
+  }
+
+  /**
+   * League findMany
+   */
+  export type LeagueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter, which Leagues to fetch.
+     */
+    where?: LeagueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Leagues to fetch.
+     */
+    orderBy?: LeagueOrderByWithRelationInput | LeagueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Leagues.
+     */
+    cursor?: LeagueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Leagues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Leagues.
+     */
+    skip?: number
+    distinct?: LeagueScalarFieldEnum | LeagueScalarFieldEnum[]
+  }
+
+  /**
+   * League create
+   */
+  export type LeagueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * The data needed to create a League.
+     */
+    data: XOR<LeagueCreateInput, LeagueUncheckedCreateInput>
+  }
+
+  /**
+   * League createMany
+   */
+  export type LeagueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Leagues.
+     */
+    data: LeagueCreateManyInput | LeagueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * League createManyAndReturn
+   */
+  export type LeagueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * The data used to create many Leagues.
+     */
+    data: LeagueCreateManyInput | LeagueCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * League update
+   */
+  export type LeagueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * The data needed to update a League.
+     */
+    data: XOR<LeagueUpdateInput, LeagueUncheckedUpdateInput>
+    /**
+     * Choose, which League to update.
+     */
+    where: LeagueWhereUniqueInput
+  }
+
+  /**
+   * League updateMany
+   */
+  export type LeagueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Leagues.
+     */
+    data: XOR<LeagueUpdateManyMutationInput, LeagueUncheckedUpdateManyInput>
+    /**
+     * Filter which Leagues to update
+     */
+    where?: LeagueWhereInput
+    /**
+     * Limit how many Leagues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * League updateManyAndReturn
+   */
+  export type LeagueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * The data used to update Leagues.
+     */
+    data: XOR<LeagueUpdateManyMutationInput, LeagueUncheckedUpdateManyInput>
+    /**
+     * Filter which Leagues to update
+     */
+    where?: LeagueWhereInput
+    /**
+     * Limit how many Leagues to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * League upsert
+   */
+  export type LeagueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * The filter to search for the League to update in case it exists.
+     */
+    where: LeagueWhereUniqueInput
+    /**
+     * In case the League found by the `where` argument doesn't exist, create a new League with this data.
+     */
+    create: XOR<LeagueCreateInput, LeagueUncheckedCreateInput>
+    /**
+     * In case the League was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LeagueUpdateInput, LeagueUncheckedUpdateInput>
+  }
+
+  /**
+   * League delete
+   */
+  export type LeagueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+    /**
+     * Filter which League to delete.
+     */
+    where: LeagueWhereUniqueInput
+  }
+
+  /**
+   * League deleteMany
+   */
+  export type LeagueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Leagues to delete
+     */
+    where?: LeagueWhereInput
+    /**
+     * Limit how many Leagues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * League.members
+   */
+  export type League$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    where?: LeagueMemberWhereInput
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    cursor?: LeagueMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeagueMemberScalarFieldEnum | LeagueMemberScalarFieldEnum[]
+  }
+
+  /**
+   * League.rounds
+   */
+  export type League$roundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    where?: RoundWhereInput
+    orderBy?: RoundOrderByWithRelationInput | RoundOrderByWithRelationInput[]
+    cursor?: RoundWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RoundScalarFieldEnum | RoundScalarFieldEnum[]
+  }
+
+  /**
+   * League without action
+   */
+  export type LeagueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the League
+     */
+    select?: LeagueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the League
+     */
+    omit?: LeagueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LeagueMember
+   */
+
+  export type AggregateLeagueMember = {
+    _count: LeagueMemberCountAggregateOutputType | null
+    _min: LeagueMemberMinAggregateOutputType | null
+    _max: LeagueMemberMaxAggregateOutputType | null
+  }
+
+  export type LeagueMemberMinAggregateOutputType = {
+    id: string | null
+    joinedAt: Date | null
+    role: $Enums.MemberRole | null
+    leagueId: string | null
+    userId: string | null
+  }
+
+  export type LeagueMemberMaxAggregateOutputType = {
+    id: string | null
+    joinedAt: Date | null
+    role: $Enums.MemberRole | null
+    leagueId: string | null
+    userId: string | null
+  }
+
+  export type LeagueMemberCountAggregateOutputType = {
+    id: number
+    joinedAt: number
+    role: number
+    leagueId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type LeagueMemberMinAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    role?: true
+    leagueId?: true
+    userId?: true
+  }
+
+  export type LeagueMemberMaxAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    role?: true
+    leagueId?: true
+    userId?: true
+  }
+
+  export type LeagueMemberCountAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    role?: true
+    leagueId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type LeagueMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LeagueMember to aggregate.
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeagueMembers to fetch.
+     */
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LeagueMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeagueMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeagueMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LeagueMembers
+    **/
+    _count?: true | LeagueMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LeagueMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LeagueMemberMaxAggregateInputType
+  }
+
+  export type GetLeagueMemberAggregateType<T extends LeagueMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateLeagueMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLeagueMember[P]>
+      : GetScalarType<T[P], AggregateLeagueMember[P]>
+  }
+
+
+
+
+  export type LeagueMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeagueMemberWhereInput
+    orderBy?: LeagueMemberOrderByWithAggregationInput | LeagueMemberOrderByWithAggregationInput[]
+    by: LeagueMemberScalarFieldEnum[] | LeagueMemberScalarFieldEnum
+    having?: LeagueMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LeagueMemberCountAggregateInputType | true
+    _min?: LeagueMemberMinAggregateInputType
+    _max?: LeagueMemberMaxAggregateInputType
+  }
+
+  export type LeagueMemberGroupByOutputType = {
+    id: string
+    joinedAt: Date
+    role: $Enums.MemberRole
+    leagueId: string
+    userId: string
+    _count: LeagueMemberCountAggregateOutputType | null
+    _min: LeagueMemberMinAggregateOutputType | null
+    _max: LeagueMemberMaxAggregateOutputType | null
+  }
+
+  type GetLeagueMemberGroupByPayload<T extends LeagueMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LeagueMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LeagueMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LeagueMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], LeagueMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LeagueMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    role?: boolean
+    leagueId?: boolean
+    userId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["leagueMember"]>
+
+  export type LeagueMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    role?: boolean
+    leagueId?: boolean
+    userId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["leagueMember"]>
+
+  export type LeagueMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    role?: boolean
+    leagueId?: boolean
+    userId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["leagueMember"]>
+
+  export type LeagueMemberSelectScalar = {
+    id?: boolean
+    joinedAt?: boolean
+    role?: boolean
+    leagueId?: boolean
+    userId?: boolean
+  }
+
+  export type LeagueMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "joinedAt" | "role" | "leagueId" | "userId", ExtArgs["result"]["leagueMember"]>
+  export type LeagueMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LeagueMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LeagueMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LeagueMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LeagueMember"
+    objects: {
+      league: Prisma.$LeaguePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      joinedAt: Date
+      role: $Enums.MemberRole
+      leagueId: string
+      userId: string
+    }, ExtArgs["result"]["leagueMember"]>
+    composites: {}
+  }
+
+  type LeagueMemberGetPayload<S extends boolean | null | undefined | LeagueMemberDefaultArgs> = $Result.GetResult<Prisma.$LeagueMemberPayload, S>
+
+  type LeagueMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LeagueMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LeagueMemberCountAggregateInputType | true
+    }
+
+  export interface LeagueMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LeagueMember'], meta: { name: 'LeagueMember' } }
+    /**
+     * Find zero or one LeagueMember that matches the filter.
+     * @param {LeagueMemberFindUniqueArgs} args - Arguments to find a LeagueMember
+     * @example
+     * // Get one LeagueMember
+     * const leagueMember = await prisma.leagueMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LeagueMemberFindUniqueArgs>(args: SelectSubset<T, LeagueMemberFindUniqueArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LeagueMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LeagueMemberFindUniqueOrThrowArgs} args - Arguments to find a LeagueMember
+     * @example
+     * // Get one LeagueMember
+     * const leagueMember = await prisma.leagueMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LeagueMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, LeagueMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LeagueMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberFindFirstArgs} args - Arguments to find a LeagueMember
+     * @example
+     * // Get one LeagueMember
+     * const leagueMember = await prisma.leagueMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LeagueMemberFindFirstArgs>(args?: SelectSubset<T, LeagueMemberFindFirstArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LeagueMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberFindFirstOrThrowArgs} args - Arguments to find a LeagueMember
+     * @example
+     * // Get one LeagueMember
+     * const leagueMember = await prisma.leagueMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LeagueMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, LeagueMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LeagueMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LeagueMembers
+     * const leagueMembers = await prisma.leagueMember.findMany()
+     * 
+     * // Get first 10 LeagueMembers
+     * const leagueMembers = await prisma.leagueMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const leagueMemberWithIdOnly = await prisma.leagueMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LeagueMemberFindManyArgs>(args?: SelectSubset<T, LeagueMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LeagueMember.
+     * @param {LeagueMemberCreateArgs} args - Arguments to create a LeagueMember.
+     * @example
+     * // Create one LeagueMember
+     * const LeagueMember = await prisma.leagueMember.create({
+     *   data: {
+     *     // ... data to create a LeagueMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends LeagueMemberCreateArgs>(args: SelectSubset<T, LeagueMemberCreateArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LeagueMembers.
+     * @param {LeagueMemberCreateManyArgs} args - Arguments to create many LeagueMembers.
+     * @example
+     * // Create many LeagueMembers
+     * const leagueMember = await prisma.leagueMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LeagueMemberCreateManyArgs>(args?: SelectSubset<T, LeagueMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LeagueMembers and returns the data saved in the database.
+     * @param {LeagueMemberCreateManyAndReturnArgs} args - Arguments to create many LeagueMembers.
+     * @example
+     * // Create many LeagueMembers
+     * const leagueMember = await prisma.leagueMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LeagueMembers and only return the `id`
+     * const leagueMemberWithIdOnly = await prisma.leagueMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LeagueMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, LeagueMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LeagueMember.
+     * @param {LeagueMemberDeleteArgs} args - Arguments to delete one LeagueMember.
+     * @example
+     * // Delete one LeagueMember
+     * const LeagueMember = await prisma.leagueMember.delete({
+     *   where: {
+     *     // ... filter to delete one LeagueMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LeagueMemberDeleteArgs>(args: SelectSubset<T, LeagueMemberDeleteArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LeagueMember.
+     * @param {LeagueMemberUpdateArgs} args - Arguments to update one LeagueMember.
+     * @example
+     * // Update one LeagueMember
+     * const leagueMember = await prisma.leagueMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LeagueMemberUpdateArgs>(args: SelectSubset<T, LeagueMemberUpdateArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LeagueMembers.
+     * @param {LeagueMemberDeleteManyArgs} args - Arguments to filter LeagueMembers to delete.
+     * @example
+     * // Delete a few LeagueMembers
+     * const { count } = await prisma.leagueMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LeagueMemberDeleteManyArgs>(args?: SelectSubset<T, LeagueMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LeagueMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LeagueMembers
+     * const leagueMember = await prisma.leagueMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LeagueMemberUpdateManyArgs>(args: SelectSubset<T, LeagueMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LeagueMembers and returns the data updated in the database.
+     * @param {LeagueMemberUpdateManyAndReturnArgs} args - Arguments to update many LeagueMembers.
+     * @example
+     * // Update many LeagueMembers
+     * const leagueMember = await prisma.leagueMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LeagueMembers and only return the `id`
+     * const leagueMemberWithIdOnly = await prisma.leagueMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LeagueMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, LeagueMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LeagueMember.
+     * @param {LeagueMemberUpsertArgs} args - Arguments to update or create a LeagueMember.
+     * @example
+     * // Update or create a LeagueMember
+     * const leagueMember = await prisma.leagueMember.upsert({
+     *   create: {
+     *     // ... data to create a LeagueMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LeagueMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LeagueMemberUpsertArgs>(args: SelectSubset<T, LeagueMemberUpsertArgs<ExtArgs>>): Prisma__LeagueMemberClient<$Result.GetResult<Prisma.$LeagueMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LeagueMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberCountArgs} args - Arguments to filter LeagueMembers to count.
+     * @example
+     * // Count the number of LeagueMembers
+     * const count = await prisma.leagueMember.count({
+     *   where: {
+     *     // ... the filter for the LeagueMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends LeagueMemberCountArgs>(
+      args?: Subset<T, LeagueMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LeagueMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LeagueMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LeagueMemberAggregateArgs>(args: Subset<T, LeagueMemberAggregateArgs>): Prisma.PrismaPromise<GetLeagueMemberAggregateType<T>>
+
+    /**
+     * Group by LeagueMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LeagueMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LeagueMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LeagueMemberGroupByArgs['orderBy'] }
+        : { orderBy?: LeagueMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LeagueMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLeagueMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LeagueMember model
+   */
+  readonly fields: LeagueMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LeagueMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LeagueMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    league<T extends LeagueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeagueDefaultArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LeagueMember model
+   */
+  interface LeagueMemberFieldRefs {
+    readonly id: FieldRef<"LeagueMember", 'String'>
+    readonly joinedAt: FieldRef<"LeagueMember", 'DateTime'>
+    readonly role: FieldRef<"LeagueMember", 'MemberRole'>
+    readonly leagueId: FieldRef<"LeagueMember", 'String'>
+    readonly userId: FieldRef<"LeagueMember", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LeagueMember findUnique
+   */
+  export type LeagueMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which LeagueMember to fetch.
+     */
+    where: LeagueMemberWhereUniqueInput
+  }
+
+  /**
+   * LeagueMember findUniqueOrThrow
+   */
+  export type LeagueMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which LeagueMember to fetch.
+     */
+    where: LeagueMemberWhereUniqueInput
+  }
+
+  /**
+   * LeagueMember findFirst
+   */
+  export type LeagueMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which LeagueMember to fetch.
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeagueMembers to fetch.
+     */
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LeagueMembers.
+     */
+    cursor?: LeagueMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeagueMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeagueMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LeagueMembers.
+     */
+    distinct?: LeagueMemberScalarFieldEnum | LeagueMemberScalarFieldEnum[]
+  }
+
+  /**
+   * LeagueMember findFirstOrThrow
+   */
+  export type LeagueMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which LeagueMember to fetch.
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeagueMembers to fetch.
+     */
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LeagueMembers.
+     */
+    cursor?: LeagueMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeagueMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeagueMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LeagueMembers.
+     */
+    distinct?: LeagueMemberScalarFieldEnum | LeagueMemberScalarFieldEnum[]
+  }
+
+  /**
+   * LeagueMember findMany
+   */
+  export type LeagueMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which LeagueMembers to fetch.
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LeagueMembers to fetch.
+     */
+    orderBy?: LeagueMemberOrderByWithRelationInput | LeagueMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LeagueMembers.
+     */
+    cursor?: LeagueMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LeagueMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LeagueMembers.
+     */
+    skip?: number
+    distinct?: LeagueMemberScalarFieldEnum | LeagueMemberScalarFieldEnum[]
+  }
+
+  /**
+   * LeagueMember create
+   */
+  export type LeagueMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LeagueMember.
+     */
+    data: XOR<LeagueMemberCreateInput, LeagueMemberUncheckedCreateInput>
+  }
+
+  /**
+   * LeagueMember createMany
+   */
+  export type LeagueMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LeagueMembers.
+     */
+    data: LeagueMemberCreateManyInput | LeagueMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LeagueMember createManyAndReturn
+   */
+  export type LeagueMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many LeagueMembers.
+     */
+    data: LeagueMemberCreateManyInput | LeagueMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LeagueMember update
+   */
+  export type LeagueMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LeagueMember.
+     */
+    data: XOR<LeagueMemberUpdateInput, LeagueMemberUncheckedUpdateInput>
+    /**
+     * Choose, which LeagueMember to update.
+     */
+    where: LeagueMemberWhereUniqueInput
+  }
+
+  /**
+   * LeagueMember updateMany
+   */
+  export type LeagueMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LeagueMembers.
+     */
+    data: XOR<LeagueMemberUpdateManyMutationInput, LeagueMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which LeagueMembers to update
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * Limit how many LeagueMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LeagueMember updateManyAndReturn
+   */
+  export type LeagueMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update LeagueMembers.
+     */
+    data: XOR<LeagueMemberUpdateManyMutationInput, LeagueMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which LeagueMembers to update
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * Limit how many LeagueMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LeagueMember upsert
+   */
+  export type LeagueMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LeagueMember to update in case it exists.
+     */
+    where: LeagueMemberWhereUniqueInput
+    /**
+     * In case the LeagueMember found by the `where` argument doesn't exist, create a new LeagueMember with this data.
+     */
+    create: XOR<LeagueMemberCreateInput, LeagueMemberUncheckedCreateInput>
+    /**
+     * In case the LeagueMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LeagueMemberUpdateInput, LeagueMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * LeagueMember delete
+   */
+  export type LeagueMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+    /**
+     * Filter which LeagueMember to delete.
+     */
+    where: LeagueMemberWhereUniqueInput
+  }
+
+  /**
+   * LeagueMember deleteMany
+   */
+  export type LeagueMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LeagueMembers to delete
+     */
+    where?: LeagueMemberWhereInput
+    /**
+     * Limit how many LeagueMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LeagueMember without action
+   */
+  export type LeagueMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LeagueMember
+     */
+    select?: LeagueMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LeagueMember
+     */
+    omit?: LeagueMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeagueMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Round
+   */
+
+  export type AggregateRound = {
+    _count: RoundCountAggregateOutputType | null
+    _avg: RoundAvgAggregateOutputType | null
+    _sum: RoundSumAggregateOutputType | null
+    _min: RoundMinAggregateOutputType | null
+    _max: RoundMaxAggregateOutputType | null
+  }
+
+  export type RoundAvgAggregateOutputType = {
+    roundNumber: number | null
+  }
+
+  export type RoundSumAggregateOutputType = {
+    roundNumber: number | null
+  }
+
+  export type RoundMinAggregateOutputType = {
+    id: string | null
+    roundNumber: number | null
+    themeName: string | null
+    themeDescription: string | null
+    status: $Enums.RoundStatus | null
+    submissionDeadline: Date | null
+    votingDeadline: Date | null
+    playlistUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    leagueId: string | null
+  }
+
+  export type RoundMaxAggregateOutputType = {
+    id: string | null
+    roundNumber: number | null
+    themeName: string | null
+    themeDescription: string | null
+    status: $Enums.RoundStatus | null
+    submissionDeadline: Date | null
+    votingDeadline: Date | null
+    playlistUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    leagueId: string | null
+  }
+
+  export type RoundCountAggregateOutputType = {
+    id: number
+    roundNumber: number
+    themeName: number
+    themeDescription: number
+    status: number
+    submissionDeadline: number
+    votingDeadline: number
+    playlistUrl: number
+    createdAt: number
+    updatedAt: number
+    leagueId: number
+    _all: number
+  }
+
+
+  export type RoundAvgAggregateInputType = {
+    roundNumber?: true
+  }
+
+  export type RoundSumAggregateInputType = {
+    roundNumber?: true
+  }
+
+  export type RoundMinAggregateInputType = {
+    id?: true
+    roundNumber?: true
+    themeName?: true
+    themeDescription?: true
+    status?: true
+    submissionDeadline?: true
+    votingDeadline?: true
+    playlistUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    leagueId?: true
+  }
+
+  export type RoundMaxAggregateInputType = {
+    id?: true
+    roundNumber?: true
+    themeName?: true
+    themeDescription?: true
+    status?: true
+    submissionDeadline?: true
+    votingDeadline?: true
+    playlistUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    leagueId?: true
+  }
+
+  export type RoundCountAggregateInputType = {
+    id?: true
+    roundNumber?: true
+    themeName?: true
+    themeDescription?: true
+    status?: true
+    submissionDeadline?: true
+    votingDeadline?: true
+    playlistUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    leagueId?: true
+    _all?: true
+  }
+
+  export type RoundAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Round to aggregate.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: RoundOrderByWithRelationInput | RoundOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Rounds
+    **/
+    _count?: true | RoundCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoundAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoundSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoundMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoundMaxAggregateInputType
+  }
+
+  export type GetRoundAggregateType<T extends RoundAggregateArgs> = {
+        [P in keyof T & keyof AggregateRound]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRound[P]>
+      : GetScalarType<T[P], AggregateRound[P]>
+  }
+
+
+
+
+  export type RoundGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoundWhereInput
+    orderBy?: RoundOrderByWithAggregationInput | RoundOrderByWithAggregationInput[]
+    by: RoundScalarFieldEnum[] | RoundScalarFieldEnum
+    having?: RoundScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoundCountAggregateInputType | true
+    _avg?: RoundAvgAggregateInputType
+    _sum?: RoundSumAggregateInputType
+    _min?: RoundMinAggregateInputType
+    _max?: RoundMaxAggregateInputType
+  }
+
+  export type RoundGroupByOutputType = {
+    id: string
+    roundNumber: number
+    themeName: string
+    themeDescription: string | null
+    status: $Enums.RoundStatus
+    submissionDeadline: Date
+    votingDeadline: Date
+    playlistUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    leagueId: string
+    _count: RoundCountAggregateOutputType | null
+    _avg: RoundAvgAggregateOutputType | null
+    _sum: RoundSumAggregateOutputType | null
+    _min: RoundMinAggregateOutputType | null
+    _max: RoundMaxAggregateOutputType | null
+  }
+
+  type GetRoundGroupByPayload<T extends RoundGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RoundGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoundGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoundGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoundSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    roundNumber?: boolean
+    themeName?: boolean
+    themeDescription?: boolean
+    status?: boolean
+    submissionDeadline?: boolean
+    votingDeadline?: boolean
+    playlistUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    leagueId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    submissions?: boolean | Round$submissionsArgs<ExtArgs>
+    _count?: boolean | RoundCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["round"]>
+
+  export type RoundSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    roundNumber?: boolean
+    themeName?: boolean
+    themeDescription?: boolean
+    status?: boolean
+    submissionDeadline?: boolean
+    votingDeadline?: boolean
+    playlistUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    leagueId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["round"]>
+
+  export type RoundSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    roundNumber?: boolean
+    themeName?: boolean
+    themeDescription?: boolean
+    status?: boolean
+    submissionDeadline?: boolean
+    votingDeadline?: boolean
+    playlistUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    leagueId?: boolean
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["round"]>
+
+  export type RoundSelectScalar = {
+    id?: boolean
+    roundNumber?: boolean
+    themeName?: boolean
+    themeDescription?: boolean
+    status?: boolean
+    submissionDeadline?: boolean
+    votingDeadline?: boolean
+    playlistUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    leagueId?: boolean
+  }
+
+  export type RoundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roundNumber" | "themeName" | "themeDescription" | "status" | "submissionDeadline" | "votingDeadline" | "playlistUrl" | "createdAt" | "updatedAt" | "leagueId", ExtArgs["result"]["round"]>
+  export type RoundInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+    submissions?: boolean | Round$submissionsArgs<ExtArgs>
+    _count?: boolean | RoundCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RoundIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+  }
+  export type RoundIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    league?: boolean | LeagueDefaultArgs<ExtArgs>
+  }
+
+  export type $RoundPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Round"
+    objects: {
+      league: Prisma.$LeaguePayload<ExtArgs>
+      submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      roundNumber: number
+      themeName: string
+      themeDescription: string | null
+      status: $Enums.RoundStatus
+      submissionDeadline: Date
+      votingDeadline: Date
+      playlistUrl: string | null
+      createdAt: Date
+      updatedAt: Date
+      leagueId: string
+    }, ExtArgs["result"]["round"]>
+    composites: {}
+  }
+
+  type RoundGetPayload<S extends boolean | null | undefined | RoundDefaultArgs> = $Result.GetResult<Prisma.$RoundPayload, S>
+
+  type RoundCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RoundFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RoundCountAggregateInputType | true
+    }
+
+  export interface RoundDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Round'], meta: { name: 'Round' } }
+    /**
+     * Find zero or one Round that matches the filter.
+     * @param {RoundFindUniqueArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RoundFindUniqueArgs>(args: SelectSubset<T, RoundFindUniqueArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Round that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RoundFindUniqueOrThrowArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RoundFindUniqueOrThrowArgs>(args: SelectSubset<T, RoundFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Round that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindFirstArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RoundFindFirstArgs>(args?: SelectSubset<T, RoundFindFirstArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Round that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindFirstOrThrowArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RoundFindFirstOrThrowArgs>(args?: SelectSubset<T, RoundFindFirstOrThrowArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Rounds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Rounds
+     * const rounds = await prisma.round.findMany()
+     * 
+     * // Get first 10 Rounds
+     * const rounds = await prisma.round.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roundWithIdOnly = await prisma.round.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RoundFindManyArgs>(args?: SelectSubset<T, RoundFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Round.
+     * @param {RoundCreateArgs} args - Arguments to create a Round.
+     * @example
+     * // Create one Round
+     * const Round = await prisma.round.create({
+     *   data: {
+     *     // ... data to create a Round
+     *   }
+     * })
+     * 
+     */
+    create<T extends RoundCreateArgs>(args: SelectSubset<T, RoundCreateArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Rounds.
+     * @param {RoundCreateManyArgs} args - Arguments to create many Rounds.
+     * @example
+     * // Create many Rounds
+     * const round = await prisma.round.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RoundCreateManyArgs>(args?: SelectSubset<T, RoundCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Rounds and returns the data saved in the database.
+     * @param {RoundCreateManyAndReturnArgs} args - Arguments to create many Rounds.
+     * @example
+     * // Create many Rounds
+     * const round = await prisma.round.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Rounds and only return the `id`
+     * const roundWithIdOnly = await prisma.round.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RoundCreateManyAndReturnArgs>(args?: SelectSubset<T, RoundCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Round.
+     * @param {RoundDeleteArgs} args - Arguments to delete one Round.
+     * @example
+     * // Delete one Round
+     * const Round = await prisma.round.delete({
+     *   where: {
+     *     // ... filter to delete one Round
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RoundDeleteArgs>(args: SelectSubset<T, RoundDeleteArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Round.
+     * @param {RoundUpdateArgs} args - Arguments to update one Round.
+     * @example
+     * // Update one Round
+     * const round = await prisma.round.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RoundUpdateArgs>(args: SelectSubset<T, RoundUpdateArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Rounds.
+     * @param {RoundDeleteManyArgs} args - Arguments to filter Rounds to delete.
+     * @example
+     * // Delete a few Rounds
+     * const { count } = await prisma.round.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RoundDeleteManyArgs>(args?: SelectSubset<T, RoundDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rounds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Rounds
+     * const round = await prisma.round.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RoundUpdateManyArgs>(args: SelectSubset<T, RoundUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rounds and returns the data updated in the database.
+     * @param {RoundUpdateManyAndReturnArgs} args - Arguments to update many Rounds.
+     * @example
+     * // Update many Rounds
+     * const round = await prisma.round.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Rounds and only return the `id`
+     * const roundWithIdOnly = await prisma.round.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RoundUpdateManyAndReturnArgs>(args: SelectSubset<T, RoundUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Round.
+     * @param {RoundUpsertArgs} args - Arguments to update or create a Round.
+     * @example
+     * // Update or create a Round
+     * const round = await prisma.round.upsert({
+     *   create: {
+     *     // ... data to create a Round
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Round we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RoundUpsertArgs>(args: SelectSubset<T, RoundUpsertArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Rounds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundCountArgs} args - Arguments to filter Rounds to count.
+     * @example
+     * // Count the number of Rounds
+     * const count = await prisma.round.count({
+     *   where: {
+     *     // ... the filter for the Rounds we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoundCountArgs>(
+      args?: Subset<T, RoundCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoundCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Round.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoundAggregateArgs>(args: Subset<T, RoundAggregateArgs>): Prisma.PrismaPromise<GetRoundAggregateType<T>>
+
+    /**
+     * Group by Round.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoundGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoundGroupByArgs['orderBy'] }
+        : { orderBy?: RoundGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoundGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Round model
+   */
+  readonly fields: RoundFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Round.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RoundClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    league<T extends LeagueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeagueDefaultArgs<ExtArgs>>): Prisma__LeagueClient<$Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submissions<T extends Round$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, Round$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Round model
+   */
+  interface RoundFieldRefs {
+    readonly id: FieldRef<"Round", 'String'>
+    readonly roundNumber: FieldRef<"Round", 'Int'>
+    readonly themeName: FieldRef<"Round", 'String'>
+    readonly themeDescription: FieldRef<"Round", 'String'>
+    readonly status: FieldRef<"Round", 'RoundStatus'>
+    readonly submissionDeadline: FieldRef<"Round", 'DateTime'>
+    readonly votingDeadline: FieldRef<"Round", 'DateTime'>
+    readonly playlistUrl: FieldRef<"Round", 'String'>
+    readonly createdAt: FieldRef<"Round", 'DateTime'>
+    readonly updatedAt: FieldRef<"Round", 'DateTime'>
+    readonly leagueId: FieldRef<"Round", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Round findUnique
+   */
+  export type RoundFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+  /**
+   * Round findUniqueOrThrow
+   */
+  export type RoundFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+  /**
+   * Round findFirst
+   */
+  export type RoundFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: RoundOrderByWithRelationInput | RoundOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rounds.
+     */
+    distinct?: RoundScalarFieldEnum | RoundScalarFieldEnum[]
+  }
+
+  /**
+   * Round findFirstOrThrow
+   */
+  export type RoundFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: RoundOrderByWithRelationInput | RoundOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rounds.
+     */
+    distinct?: RoundScalarFieldEnum | RoundScalarFieldEnum[]
+  }
+
+  /**
+   * Round findMany
+   */
+  export type RoundFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter, which Rounds to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: RoundOrderByWithRelationInput | RoundOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    distinct?: RoundScalarFieldEnum | RoundScalarFieldEnum[]
+  }
+
+  /**
+   * Round create
+   */
+  export type RoundCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Round.
+     */
+    data: XOR<RoundCreateInput, RoundUncheckedCreateInput>
+  }
+
+  /**
+   * Round createMany
+   */
+  export type RoundCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Rounds.
+     */
+    data: RoundCreateManyInput | RoundCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Round createManyAndReturn
+   */
+  export type RoundCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * The data used to create many Rounds.
+     */
+    data: RoundCreateManyInput | RoundCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Round update
+   */
+  export type RoundUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Round.
+     */
+    data: XOR<RoundUpdateInput, RoundUncheckedUpdateInput>
+    /**
+     * Choose, which Round to update.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+  /**
+   * Round updateMany
+   */
+  export type RoundUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Rounds.
+     */
+    data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyInput>
+    /**
+     * Filter which Rounds to update
+     */
+    where?: RoundWhereInput
+    /**
+     * Limit how many Rounds to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Round updateManyAndReturn
+   */
+  export type RoundUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * The data used to update Rounds.
+     */
+    data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyInput>
+    /**
+     * Filter which Rounds to update
+     */
+    where?: RoundWhereInput
+    /**
+     * Limit how many Rounds to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Round upsert
+   */
+  export type RoundUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Round to update in case it exists.
+     */
+    where: RoundWhereUniqueInput
+    /**
+     * In case the Round found by the `where` argument doesn't exist, create a new Round with this data.
+     */
+    create: XOR<RoundCreateInput, RoundUncheckedCreateInput>
+    /**
+     * In case the Round was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoundUpdateInput, RoundUncheckedUpdateInput>
+  }
+
+  /**
+   * Round delete
+   */
+  export type RoundDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+    /**
+     * Filter which Round to delete.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+  /**
+   * Round deleteMany
+   */
+  export type RoundDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Rounds to delete
+     */
+    where?: RoundWhereInput
+    /**
+     * Limit how many Rounds to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Round.submissions
+   */
+  export type Round$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    where?: SubmissionWhereInput
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    cursor?: SubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Round without action
+   */
+  export type RoundDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Round
+     */
+    omit?: RoundOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoundInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Submission
+   */
+
+  export type AggregateSubmission = {
+    _count: SubmissionCountAggregateOutputType | null
+    _avg: SubmissionAvgAggregateOutputType | null
+    _sum: SubmissionSumAggregateOutputType | null
+    _min: SubmissionMinAggregateOutputType | null
+    _max: SubmissionMaxAggregateOutputType | null
+  }
+
+  export type SubmissionAvgAggregateOutputType = {
+    trackDurationMs: number | null
+  }
+
+  export type SubmissionSumAggregateOutputType = {
+    trackDurationMs: number | null
+  }
+
+  export type SubmissionMinAggregateOutputType = {
+    id: string | null
+    spotifyTrackId: string | null
+    trackName: string | null
+    artistName: string | null
+    albumName: string | null
+    albumArtUrl: string | null
+    previewUrl: string | null
+    trackDurationMs: number | null
+    createdAt: Date | null
+    roundId: string | null
+    userId: string | null
+  }
+
+  export type SubmissionMaxAggregateOutputType = {
+    id: string | null
+    spotifyTrackId: string | null
+    trackName: string | null
+    artistName: string | null
+    albumName: string | null
+    albumArtUrl: string | null
+    previewUrl: string | null
+    trackDurationMs: number | null
+    createdAt: Date | null
+    roundId: string | null
+    userId: string | null
+  }
+
+  export type SubmissionCountAggregateOutputType = {
+    id: number
+    spotifyTrackId: number
+    trackName: number
+    artistName: number
+    albumName: number
+    albumArtUrl: number
+    previewUrl: number
+    trackDurationMs: number
+    createdAt: number
+    roundId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type SubmissionAvgAggregateInputType = {
+    trackDurationMs?: true
+  }
+
+  export type SubmissionSumAggregateInputType = {
+    trackDurationMs?: true
+  }
+
+  export type SubmissionMinAggregateInputType = {
+    id?: true
+    spotifyTrackId?: true
+    trackName?: true
+    artistName?: true
+    albumName?: true
+    albumArtUrl?: true
+    previewUrl?: true
+    trackDurationMs?: true
+    createdAt?: true
+    roundId?: true
+    userId?: true
+  }
+
+  export type SubmissionMaxAggregateInputType = {
+    id?: true
+    spotifyTrackId?: true
+    trackName?: true
+    artistName?: true
+    albumName?: true
+    albumArtUrl?: true
+    previewUrl?: true
+    trackDurationMs?: true
+    createdAt?: true
+    roundId?: true
+    userId?: true
+  }
+
+  export type SubmissionCountAggregateInputType = {
+    id?: true
+    spotifyTrackId?: true
+    trackName?: true
+    artistName?: true
+    albumName?: true
+    albumArtUrl?: true
+    previewUrl?: true
+    trackDurationMs?: true
+    createdAt?: true
+    roundId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type SubmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submission to aggregate.
+     */
+    where?: SubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submissions to fetch.
+     */
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Submissions
+    **/
+    _count?: true | SubmissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubmissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubmissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmissionMaxAggregateInputType
+  }
+
+  export type GetSubmissionAggregateType<T extends SubmissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmission[P]>
+      : GetScalarType<T[P], AggregateSubmission[P]>
+  }
+
+
+
+
+  export type SubmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionWhereInput
+    orderBy?: SubmissionOrderByWithAggregationInput | SubmissionOrderByWithAggregationInput[]
+    by: SubmissionScalarFieldEnum[] | SubmissionScalarFieldEnum
+    having?: SubmissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmissionCountAggregateInputType | true
+    _avg?: SubmissionAvgAggregateInputType
+    _sum?: SubmissionSumAggregateInputType
+    _min?: SubmissionMinAggregateInputType
+    _max?: SubmissionMaxAggregateInputType
+  }
+
+  export type SubmissionGroupByOutputType = {
+    id: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl: string | null
+    trackDurationMs: number
+    createdAt: Date
+    roundId: string
+    userId: string
+    _count: SubmissionCountAggregateOutputType | null
+    _avg: SubmissionAvgAggregateOutputType | null
+    _sum: SubmissionSumAggregateOutputType | null
+    _min: SubmissionMinAggregateOutputType | null
+    _max: SubmissionMaxAggregateOutputType | null
+  }
+
+  type GetSubmissionGroupByPayload<T extends SubmissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spotifyTrackId?: boolean
+    trackName?: boolean
+    artistName?: boolean
+    albumName?: boolean
+    albumArtUrl?: boolean
+    previewUrl?: boolean
+    trackDurationMs?: boolean
+    createdAt?: boolean
+    roundId?: boolean
+    userId?: boolean
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    votes?: boolean | Submission$votesArgs<ExtArgs>
+    comments?: boolean | Submission$commentsArgs<ExtArgs>
+    _count?: boolean | SubmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submission"]>
+
+  export type SubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spotifyTrackId?: boolean
+    trackName?: boolean
+    artistName?: boolean
+    albumName?: boolean
+    albumArtUrl?: boolean
+    previewUrl?: boolean
+    trackDurationMs?: boolean
+    createdAt?: boolean
+    roundId?: boolean
+    userId?: boolean
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submission"]>
+
+  export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spotifyTrackId?: boolean
+    trackName?: boolean
+    artistName?: boolean
+    albumName?: boolean
+    albumArtUrl?: boolean
+    previewUrl?: boolean
+    trackDurationMs?: boolean
+    createdAt?: boolean
+    roundId?: boolean
+    userId?: boolean
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submission"]>
+
+  export type SubmissionSelectScalar = {
+    id?: boolean
+    spotifyTrackId?: boolean
+    trackName?: boolean
+    artistName?: boolean
+    albumName?: boolean
+    albumArtUrl?: boolean
+    previewUrl?: boolean
+    trackDurationMs?: boolean
+    createdAt?: boolean
+    roundId?: boolean
+    userId?: boolean
+  }
+
+  export type SubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spotifyTrackId" | "trackName" | "artistName" | "albumName" | "albumArtUrl" | "previewUrl" | "trackDurationMs" | "createdAt" | "roundId" | "userId", ExtArgs["result"]["submission"]>
+  export type SubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    votes?: boolean | Submission$votesArgs<ExtArgs>
+    comments?: boolean | Submission$commentsArgs<ExtArgs>
+    _count?: boolean | SubmissionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    round?: boolean | RoundDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Submission"
+    objects: {
+      round: Prisma.$RoundPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+      votes: Prisma.$VotePayload<ExtArgs>[]
+      comments: Prisma.$CommentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      spotifyTrackId: string
+      trackName: string
+      artistName: string
+      albumName: string
+      albumArtUrl: string
+      previewUrl: string | null
+      trackDurationMs: number
+      createdAt: Date
+      roundId: string
+      userId: string
+    }, ExtArgs["result"]["submission"]>
+    composites: {}
+  }
+
+  type SubmissionGetPayload<S extends boolean | null | undefined | SubmissionDefaultArgs> = $Result.GetResult<Prisma.$SubmissionPayload, S>
+
+  type SubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmissionCountAggregateInputType | true
+    }
+
+  export interface SubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submission'], meta: { name: 'Submission' } }
+    /**
+     * Find zero or one Submission that matches the filter.
+     * @param {SubmissionFindUniqueArgs} args - Arguments to find a Submission
+     * @example
+     * // Get one Submission
+     * const submission = await prisma.submission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmissionFindUniqueArgs>(args: SelectSubset<T, SubmissionFindUniqueArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Submission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmissionFindUniqueOrThrowArgs} args - Arguments to find a Submission
+     * @example
+     * // Get one Submission
+     * const submission = await prisma.submission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionFindFirstArgs} args - Arguments to find a Submission
+     * @example
+     * // Get one Submission
+     * const submission = await prisma.submission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmissionFindFirstArgs>(args?: SelectSubset<T, SubmissionFindFirstArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionFindFirstOrThrowArgs} args - Arguments to find a Submission
+     * @example
+     * // Get one Submission
+     * const submission = await prisma.submission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Submissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Submissions
+     * const submissions = await prisma.submission.findMany()
+     * 
+     * // Get first 10 Submissions
+     * const submissions = await prisma.submission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submissionWithIdOnly = await prisma.submission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmissionFindManyArgs>(args?: SelectSubset<T, SubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Submission.
+     * @param {SubmissionCreateArgs} args - Arguments to create a Submission.
+     * @example
+     * // Create one Submission
+     * const Submission = await prisma.submission.create({
+     *   data: {
+     *     // ... data to create a Submission
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmissionCreateArgs>(args: SelectSubset<T, SubmissionCreateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Submissions.
+     * @param {SubmissionCreateManyArgs} args - Arguments to create many Submissions.
+     * @example
+     * // Create many Submissions
+     * const submission = await prisma.submission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmissionCreateManyArgs>(args?: SelectSubset<T, SubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Submissions and returns the data saved in the database.
+     * @param {SubmissionCreateManyAndReturnArgs} args - Arguments to create many Submissions.
+     * @example
+     * // Create many Submissions
+     * const submission = await prisma.submission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Submissions and only return the `id`
+     * const submissionWithIdOnly = await prisma.submission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Submission.
+     * @param {SubmissionDeleteArgs} args - Arguments to delete one Submission.
+     * @example
+     * // Delete one Submission
+     * const Submission = await prisma.submission.delete({
+     *   where: {
+     *     // ... filter to delete one Submission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmissionDeleteArgs>(args: SelectSubset<T, SubmissionDeleteArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Submission.
+     * @param {SubmissionUpdateArgs} args - Arguments to update one Submission.
+     * @example
+     * // Update one Submission
+     * const submission = await prisma.submission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmissionUpdateArgs>(args: SelectSubset<T, SubmissionUpdateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Submissions.
+     * @param {SubmissionDeleteManyArgs} args - Arguments to filter Submissions to delete.
+     * @example
+     * // Delete a few Submissions
+     * const { count } = await prisma.submission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmissionDeleteManyArgs>(args?: SelectSubset<T, SubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Submissions
+     * const submission = await prisma.submission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmissionUpdateManyArgs>(args: SelectSubset<T, SubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submissions and returns the data updated in the database.
+     * @param {SubmissionUpdateManyAndReturnArgs} args - Arguments to update many Submissions.
+     * @example
+     * // Update many Submissions
+     * const submission = await prisma.submission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Submissions and only return the `id`
+     * const submissionWithIdOnly = await prisma.submission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Submission.
+     * @param {SubmissionUpsertArgs} args - Arguments to update or create a Submission.
+     * @example
+     * // Update or create a Submission
+     * const submission = await prisma.submission.upsert({
+     *   create: {
+     *     // ... data to create a Submission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Submission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmissionUpsertArgs>(args: SelectSubset<T, SubmissionUpsertArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Submissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionCountArgs} args - Arguments to filter Submissions to count.
+     * @example
+     * // Count the number of Submissions
+     * const count = await prisma.submission.count({
+     *   where: {
+     *     // ... the filter for the Submissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmissionCountArgs>(
+      args?: Subset<T, SubmissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Submission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmissionAggregateArgs>(args: Subset<T, SubmissionAggregateArgs>): Prisma.PrismaPromise<GetSubmissionAggregateType<T>>
+
+    /**
+     * Group by Submission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmissionGroupByArgs['orderBy'] }
+        : { orderBy?: SubmissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Submission model
+   */
+  readonly fields: SubmissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Submission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    round<T extends RoundDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoundDefaultArgs<ExtArgs>>): Prisma__RoundClient<$Result.GetResult<Prisma.$RoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    votes<T extends Submission$votesArgs<ExtArgs> = {}>(args?: Subset<T, Submission$votesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comments<T extends Submission$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Submission$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Submission model
+   */
+  interface SubmissionFieldRefs {
+    readonly id: FieldRef<"Submission", 'String'>
+    readonly spotifyTrackId: FieldRef<"Submission", 'String'>
+    readonly trackName: FieldRef<"Submission", 'String'>
+    readonly artistName: FieldRef<"Submission", 'String'>
+    readonly albumName: FieldRef<"Submission", 'String'>
+    readonly albumArtUrl: FieldRef<"Submission", 'String'>
+    readonly previewUrl: FieldRef<"Submission", 'String'>
+    readonly trackDurationMs: FieldRef<"Submission", 'Int'>
+    readonly createdAt: FieldRef<"Submission", 'DateTime'>
+    readonly roundId: FieldRef<"Submission", 'String'>
+    readonly userId: FieldRef<"Submission", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Submission findUnique
+   */
+  export type SubmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Submission to fetch.
+     */
+    where: SubmissionWhereUniqueInput
+  }
+
+  /**
+   * Submission findUniqueOrThrow
+   */
+  export type SubmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Submission to fetch.
+     */
+    where: SubmissionWhereUniqueInput
+  }
+
+  /**
+   * Submission findFirst
+   */
+  export type SubmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Submission to fetch.
+     */
+    where?: SubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submissions to fetch.
+     */
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submissions.
+     */
+    cursor?: SubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submissions.
+     */
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Submission findFirstOrThrow
+   */
+  export type SubmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Submission to fetch.
+     */
+    where?: SubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submissions to fetch.
+     */
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submissions.
+     */
+    cursor?: SubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submissions.
+     */
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Submission findMany
+   */
+  export type SubmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Submissions to fetch.
+     */
+    where?: SubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submissions to fetch.
+     */
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Submissions.
+     */
+    cursor?: SubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submissions.
+     */
+    skip?: number
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * Submission create
+   */
+  export type SubmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Submission.
+     */
+    data: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+  }
+
+  /**
+   * Submission createMany
+   */
+  export type SubmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Submissions.
+     */
+    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Submission createManyAndReturn
+   */
+  export type SubmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Submissions.
+     */
+    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submission update
+   */
+  export type SubmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Submission.
+     */
+    data: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+    /**
+     * Choose, which Submission to update.
+     */
+    where: SubmissionWhereUniqueInput
+  }
+
+  /**
+   * Submission updateMany
+   */
+  export type SubmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Submissions.
+     */
+    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Submissions to update
+     */
+    where?: SubmissionWhereInput
+    /**
+     * Limit how many Submissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submission updateManyAndReturn
+   */
+  export type SubmissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to update Submissions.
+     */
+    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Submissions to update
+     */
+    where?: SubmissionWhereInput
+    /**
+     * Limit how many Submissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submission upsert
+   */
+  export type SubmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Submission to update in case it exists.
+     */
+    where: SubmissionWhereUniqueInput
+    /**
+     * In case the Submission found by the `where` argument doesn't exist, create a new Submission with this data.
+     */
+    create: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+    /**
+     * In case the Submission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+  }
+
+  /**
+   * Submission delete
+   */
+  export type SubmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+    /**
+     * Filter which Submission to delete.
+     */
+    where: SubmissionWhereUniqueInput
+  }
+
+  /**
+   * Submission deleteMany
+   */
+  export type SubmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submissions to delete
+     */
+    where?: SubmissionWhereInput
+    /**
+     * Limit how many Submissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submission.votes
+   */
+  export type Submission$votesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    cursor?: VoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Submission.comments
+   */
+  export type Submission$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Submission without action
+   */
+  export type SubmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: SubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: SubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Vote
+   */
+
+  export type AggregateVote = {
+    _count: VoteCountAggregateOutputType | null
+    _avg: VoteAvgAggregateOutputType | null
+    _sum: VoteSumAggregateOutputType | null
+    _min: VoteMinAggregateOutputType | null
+    _max: VoteMaxAggregateOutputType | null
+  }
+
+  export type VoteAvgAggregateOutputType = {
+    points: number | null
+  }
+
+  export type VoteSumAggregateOutputType = {
+    points: number | null
+  }
+
+  export type VoteMinAggregateOutputType = {
+    id: string | null
+    points: number | null
+    roundId: string | null
+    voterId: string | null
+    submissionId: string | null
+  }
+
+  export type VoteMaxAggregateOutputType = {
+    id: string | null
+    points: number | null
+    roundId: string | null
+    voterId: string | null
+    submissionId: string | null
+  }
+
+  export type VoteCountAggregateOutputType = {
+    id: number
+    points: number
+    roundId: number
+    voterId: number
+    submissionId: number
+    _all: number
+  }
+
+
+  export type VoteAvgAggregateInputType = {
+    points?: true
+  }
+
+  export type VoteSumAggregateInputType = {
+    points?: true
+  }
+
+  export type VoteMinAggregateInputType = {
+    id?: true
+    points?: true
+    roundId?: true
+    voterId?: true
+    submissionId?: true
+  }
+
+  export type VoteMaxAggregateInputType = {
+    id?: true
+    points?: true
+    roundId?: true
+    voterId?: true
+    submissionId?: true
+  }
+
+  export type VoteCountAggregateInputType = {
+    id?: true
+    points?: true
+    roundId?: true
+    voterId?: true
+    submissionId?: true
+    _all?: true
+  }
+
+  export type VoteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vote to aggregate.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Votes
+    **/
+    _count?: true | VoteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VoteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VoteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VoteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VoteMaxAggregateInputType
+  }
+
+  export type GetVoteAggregateType<T extends VoteAggregateArgs> = {
+        [P in keyof T & keyof AggregateVote]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVote[P]>
+      : GetScalarType<T[P], AggregateVote[P]>
+  }
+
+
+
+
+  export type VoteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VoteWhereInput
+    orderBy?: VoteOrderByWithAggregationInput | VoteOrderByWithAggregationInput[]
+    by: VoteScalarFieldEnum[] | VoteScalarFieldEnum
+    having?: VoteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VoteCountAggregateInputType | true
+    _avg?: VoteAvgAggregateInputType
+    _sum?: VoteSumAggregateInputType
+    _min?: VoteMinAggregateInputType
+    _max?: VoteMaxAggregateInputType
+  }
+
+  export type VoteGroupByOutputType = {
+    id: string
+    points: number
+    roundId: string
+    voterId: string
+    submissionId: string
+    _count: VoteCountAggregateOutputType | null
+    _avg: VoteAvgAggregateOutputType | null
+    _sum: VoteSumAggregateOutputType | null
+    _min: VoteMinAggregateOutputType | null
+    _max: VoteMaxAggregateOutputType | null
+  }
+
+  type GetVoteGroupByPayload<T extends VoteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VoteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VoteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VoteGroupByOutputType[P]>
+            : GetScalarType<T[P], VoteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VoteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    points?: boolean
+    roundId?: boolean
+    voterId?: boolean
+    submissionId?: boolean
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    points?: boolean
+    roundId?: boolean
+    voterId?: boolean
+    submissionId?: boolean
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    points?: boolean
+    roundId?: boolean
+    voterId?: boolean
+    submissionId?: boolean
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vote"]>
+
+  export type VoteSelectScalar = {
+    id?: boolean
+    points?: boolean
+    roundId?: boolean
+    voterId?: boolean
+    submissionId?: boolean
+  }
+
+  export type VoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "points" | "roundId" | "voterId" | "submissionId", ExtArgs["result"]["vote"]>
+  export type VoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }
+  export type VoteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }
+  export type VoteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    voter?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+  }
+
+  export type $VotePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vote"
+    objects: {
+      voter: Prisma.$UserPayload<ExtArgs>
+      submission: Prisma.$SubmissionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      points: number
+      roundId: string
+      voterId: string
+      submissionId: string
+    }, ExtArgs["result"]["vote"]>
+    composites: {}
+  }
+
+  type VoteGetPayload<S extends boolean | null | undefined | VoteDefaultArgs> = $Result.GetResult<Prisma.$VotePayload, S>
+
+  type VoteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VoteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VoteCountAggregateInputType | true
+    }
+
+  export interface VoteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vote'], meta: { name: 'Vote' } }
+    /**
+     * Find zero or one Vote that matches the filter.
+     * @param {VoteFindUniqueArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VoteFindUniqueArgs>(args: SelectSubset<T, VoteFindUniqueArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Vote that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VoteFindUniqueOrThrowArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VoteFindUniqueOrThrowArgs>(args: SelectSubset<T, VoteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vote that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindFirstArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VoteFindFirstArgs>(args?: SelectSubset<T, VoteFindFirstArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vote that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindFirstOrThrowArgs} args - Arguments to find a Vote
+     * @example
+     * // Get one Vote
+     * const vote = await prisma.vote.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VoteFindFirstOrThrowArgs>(args?: SelectSubset<T, VoteFindFirstOrThrowArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Votes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Votes
+     * const votes = await prisma.vote.findMany()
+     * 
+     * // Get first 10 Votes
+     * const votes = await prisma.vote.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const voteWithIdOnly = await prisma.vote.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VoteFindManyArgs>(args?: SelectSubset<T, VoteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Vote.
+     * @param {VoteCreateArgs} args - Arguments to create a Vote.
+     * @example
+     * // Create one Vote
+     * const Vote = await prisma.vote.create({
+     *   data: {
+     *     // ... data to create a Vote
+     *   }
+     * })
+     * 
+     */
+    create<T extends VoteCreateArgs>(args: SelectSubset<T, VoteCreateArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Votes.
+     * @param {VoteCreateManyArgs} args - Arguments to create many Votes.
+     * @example
+     * // Create many Votes
+     * const vote = await prisma.vote.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VoteCreateManyArgs>(args?: SelectSubset<T, VoteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Votes and returns the data saved in the database.
+     * @param {VoteCreateManyAndReturnArgs} args - Arguments to create many Votes.
+     * @example
+     * // Create many Votes
+     * const vote = await prisma.vote.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Votes and only return the `id`
+     * const voteWithIdOnly = await prisma.vote.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VoteCreateManyAndReturnArgs>(args?: SelectSubset<T, VoteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Vote.
+     * @param {VoteDeleteArgs} args - Arguments to delete one Vote.
+     * @example
+     * // Delete one Vote
+     * const Vote = await prisma.vote.delete({
+     *   where: {
+     *     // ... filter to delete one Vote
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VoteDeleteArgs>(args: SelectSubset<T, VoteDeleteArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Vote.
+     * @param {VoteUpdateArgs} args - Arguments to update one Vote.
+     * @example
+     * // Update one Vote
+     * const vote = await prisma.vote.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VoteUpdateArgs>(args: SelectSubset<T, VoteUpdateArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Votes.
+     * @param {VoteDeleteManyArgs} args - Arguments to filter Votes to delete.
+     * @example
+     * // Delete a few Votes
+     * const { count } = await prisma.vote.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VoteDeleteManyArgs>(args?: SelectSubset<T, VoteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Votes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Votes
+     * const vote = await prisma.vote.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VoteUpdateManyArgs>(args: SelectSubset<T, VoteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Votes and returns the data updated in the database.
+     * @param {VoteUpdateManyAndReturnArgs} args - Arguments to update many Votes.
+     * @example
+     * // Update many Votes
+     * const vote = await prisma.vote.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Votes and only return the `id`
+     * const voteWithIdOnly = await prisma.vote.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VoteUpdateManyAndReturnArgs>(args: SelectSubset<T, VoteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Vote.
+     * @param {VoteUpsertArgs} args - Arguments to update or create a Vote.
+     * @example
+     * // Update or create a Vote
+     * const vote = await prisma.vote.upsert({
+     *   create: {
+     *     // ... data to create a Vote
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vote we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VoteUpsertArgs>(args: SelectSubset<T, VoteUpsertArgs<ExtArgs>>): Prisma__VoteClient<$Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Votes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteCountArgs} args - Arguments to filter Votes to count.
+     * @example
+     * // Count the number of Votes
+     * const count = await prisma.vote.count({
+     *   where: {
+     *     // ... the filter for the Votes we want to count
+     *   }
+     * })
+    **/
+    count<T extends VoteCountArgs>(
+      args?: Subset<T, VoteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VoteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Vote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VoteAggregateArgs>(args: Subset<T, VoteAggregateArgs>): Prisma.PrismaPromise<GetVoteAggregateType<T>>
+
+    /**
+     * Group by Vote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VoteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VoteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VoteGroupByArgs['orderBy'] }
+        : { orderBy?: VoteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VoteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVoteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Vote model
+   */
+  readonly fields: VoteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Vote.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VoteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    voter<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submission<T extends SubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmissionDefaultArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Vote model
+   */
+  interface VoteFieldRefs {
+    readonly id: FieldRef<"Vote", 'String'>
+    readonly points: FieldRef<"Vote", 'Int'>
+    readonly roundId: FieldRef<"Vote", 'String'>
+    readonly voterId: FieldRef<"Vote", 'String'>
+    readonly submissionId: FieldRef<"Vote", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Vote findUnique
+   */
+  export type VoteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote findUniqueOrThrow
+   */
+  export type VoteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote findFirst
+   */
+  export type VoteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Votes.
+     */
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote findFirstOrThrow
+   */
+  export type VoteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Vote to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Votes.
+     */
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote findMany
+   */
+  export type VoteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter, which Votes to fetch.
+     */
+    where?: VoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Votes to fetch.
+     */
+    orderBy?: VoteOrderByWithRelationInput | VoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Votes.
+     */
+    cursor?: VoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Votes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Votes.
+     */
+    skip?: number
+    distinct?: VoteScalarFieldEnum | VoteScalarFieldEnum[]
+  }
+
+  /**
+   * Vote create
+   */
+  export type VoteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Vote.
+     */
+    data: XOR<VoteCreateInput, VoteUncheckedCreateInput>
+  }
+
+  /**
+   * Vote createMany
+   */
+  export type VoteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Votes.
+     */
+    data: VoteCreateManyInput | VoteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Vote createManyAndReturn
+   */
+  export type VoteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * The data used to create many Votes.
+     */
+    data: VoteCreateManyInput | VoteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Vote update
+   */
+  export type VoteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Vote.
+     */
+    data: XOR<VoteUpdateInput, VoteUncheckedUpdateInput>
+    /**
+     * Choose, which Vote to update.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote updateMany
+   */
+  export type VoteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Votes.
+     */
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyInput>
+    /**
+     * Filter which Votes to update
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vote updateManyAndReturn
+   */
+  export type VoteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * The data used to update Votes.
+     */
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyInput>
+    /**
+     * Filter which Votes to update
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Vote upsert
+   */
+  export type VoteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Vote to update in case it exists.
+     */
+    where: VoteWhereUniqueInput
+    /**
+     * In case the Vote found by the `where` argument doesn't exist, create a new Vote with this data.
+     */
+    create: XOR<VoteCreateInput, VoteUncheckedCreateInput>
+    /**
+     * In case the Vote was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VoteUpdateInput, VoteUncheckedUpdateInput>
+  }
+
+  /**
+   * Vote delete
+   */
+  export type VoteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+    /**
+     * Filter which Vote to delete.
+     */
+    where: VoteWhereUniqueInput
+  }
+
+  /**
+   * Vote deleteMany
+   */
+  export type VoteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Votes to delete
+     */
+    where?: VoteWhereInput
+    /**
+     * Limit how many Votes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vote without action
+   */
+  export type VoteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vote
+     */
+    select?: VoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vote
+     */
+    omit?: VoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VoteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Comment
+   */
+
+  export type AggregateComment = {
+    _count: CommentCountAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  export type CommentMinAggregateOutputType = {
+    id: string | null
+    text: string | null
+    createdAt: Date | null
+    submissionId: string | null
+    userId: string | null
+  }
+
+  export type CommentMaxAggregateOutputType = {
+    id: string | null
+    text: string | null
+    createdAt: Date | null
+    submissionId: string | null
+    userId: string | null
+  }
+
+  export type CommentCountAggregateOutputType = {
+    id: number
+    text: number
+    createdAt: number
+    submissionId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type CommentMinAggregateInputType = {
+    id?: true
+    text?: true
+    createdAt?: true
+    submissionId?: true
+    userId?: true
+  }
+
+  export type CommentMaxAggregateInputType = {
+    id?: true
+    text?: true
+    createdAt?: true
+    submissionId?: true
+    userId?: true
+  }
+
+  export type CommentCountAggregateInputType = {
+    id?: true
+    text?: true
+    createdAt?: true
+    submissionId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type CommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comment to aggregate.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Comments
+    **/
+    _count?: true | CommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommentMaxAggregateInputType
+  }
+
+  export type GetCommentAggregateType<T extends CommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComment[P]>
+      : GetScalarType<T[P], AggregateComment[P]>
+  }
+
+
+
+
+  export type CommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithAggregationInput | CommentOrderByWithAggregationInput[]
+    by: CommentScalarFieldEnum[] | CommentScalarFieldEnum
+    having?: CommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommentCountAggregateInputType | true
+    _min?: CommentMinAggregateInputType
+    _max?: CommentMaxAggregateInputType
+  }
+
+  export type CommentGroupByOutputType = {
+    id: string
+    text: string
+    createdAt: Date
+    submissionId: string
+    userId: string
+    _count: CommentCountAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  type GetCommentGroupByPayload<T extends CommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommentGroupByOutputType[P]>
+            : GetScalarType<T[P], CommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    createdAt?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    createdAt?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    createdAt?: boolean
+    submissionId?: boolean
+    userId?: boolean
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectScalar = {
+    id?: boolean
+    text?: boolean
+    createdAt?: boolean
+    submissionId?: boolean
+    userId?: boolean
+  }
+
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "createdAt" | "submissionId" | "userId", ExtArgs["result"]["comment"]>
+  export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Comment"
+    objects: {
+      submission: Prisma.$SubmissionPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      text: string
+      createdAt: Date
+      submissionId: string
+      userId: string
+    }, ExtArgs["result"]["comment"]>
+    composites: {}
+  }
+
+  type CommentGetPayload<S extends boolean | null | undefined | CommentDefaultArgs> = $Result.GetResult<Prisma.$CommentPayload, S>
+
+  type CommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CommentCountAggregateInputType | true
+    }
+
+  export interface CommentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Comment'], meta: { name: 'Comment' } }
+    /**
+     * Find zero or one Comment that matches the filter.
+     * @param {CommentFindUniqueArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CommentFindUniqueArgs>(args: SelectSubset<T, CommentFindUniqueArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Comment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CommentFindUniqueOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CommentFindUniqueOrThrowArgs>(args: SelectSubset<T, CommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CommentFindFirstArgs>(args?: SelectSubset<T, CommentFindFirstArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CommentFindFirstOrThrowArgs>(args?: SelectSubset<T, CommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Comments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Comments
+     * const comments = await prisma.comment.findMany()
+     * 
+     * // Get first 10 Comments
+     * const comments = await prisma.comment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const commentWithIdOnly = await prisma.comment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CommentFindManyArgs>(args?: SelectSubset<T, CommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Comment.
+     * @param {CommentCreateArgs} args - Arguments to create a Comment.
+     * @example
+     * // Create one Comment
+     * const Comment = await prisma.comment.create({
+     *   data: {
+     *     // ... data to create a Comment
+     *   }
+     * })
+     * 
+     */
+    create<T extends CommentCreateArgs>(args: SelectSubset<T, CommentCreateArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Comments.
+     * @param {CommentCreateManyArgs} args - Arguments to create many Comments.
+     * @example
+     * // Create many Comments
+     * const comment = await prisma.comment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CommentCreateManyArgs>(args?: SelectSubset<T, CommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Comments and returns the data saved in the database.
+     * @param {CommentCreateManyAndReturnArgs} args - Arguments to create many Comments.
+     * @example
+     * // Create many Comments
+     * const comment = await prisma.comment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Comments and only return the `id`
+     * const commentWithIdOnly = await prisma.comment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CommentCreateManyAndReturnArgs>(args?: SelectSubset<T, CommentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Comment.
+     * @param {CommentDeleteArgs} args - Arguments to delete one Comment.
+     * @example
+     * // Delete one Comment
+     * const Comment = await prisma.comment.delete({
+     *   where: {
+     *     // ... filter to delete one Comment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CommentDeleteArgs>(args: SelectSubset<T, CommentDeleteArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Comment.
+     * @param {CommentUpdateArgs} args - Arguments to update one Comment.
+     * @example
+     * // Update one Comment
+     * const comment = await prisma.comment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CommentUpdateArgs>(args: SelectSubset<T, CommentUpdateArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Comments.
+     * @param {CommentDeleteManyArgs} args - Arguments to filter Comments to delete.
+     * @example
+     * // Delete a few Comments
+     * const { count } = await prisma.comment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CommentDeleteManyArgs>(args?: SelectSubset<T, CommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Comments
+     * const comment = await prisma.comment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CommentUpdateManyArgs>(args: SelectSubset<T, CommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comments and returns the data updated in the database.
+     * @param {CommentUpdateManyAndReturnArgs} args - Arguments to update many Comments.
+     * @example
+     * // Update many Comments
+     * const comment = await prisma.comment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Comments and only return the `id`
+     * const commentWithIdOnly = await prisma.comment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CommentUpdateManyAndReturnArgs>(args: SelectSubset<T, CommentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Comment.
+     * @param {CommentUpsertArgs} args - Arguments to update or create a Comment.
+     * @example
+     * // Update or create a Comment
+     * const comment = await prisma.comment.upsert({
+     *   create: {
+     *     // ... data to create a Comment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Comment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CommentUpsertArgs>(args: SelectSubset<T, CommentUpsertArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentCountArgs} args - Arguments to filter Comments to count.
+     * @example
+     * // Count the number of Comments
+     * const count = await prisma.comment.count({
+     *   where: {
+     *     // ... the filter for the Comments we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommentCountArgs>(
+      args?: Subset<T, CommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommentAggregateArgs>(args: Subset<T, CommentAggregateArgs>): Prisma.PrismaPromise<GetCommentAggregateType<T>>
+
+    /**
+     * Group by Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommentGroupByArgs['orderBy'] }
+        : { orderBy?: CommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Comment model
+   */
+  readonly fields: CommentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Comment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submission<T extends SubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmissionDefaultArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Comment model
+   */
+  interface CommentFieldRefs {
+    readonly id: FieldRef<"Comment", 'String'>
+    readonly text: FieldRef<"Comment", 'String'>
+    readonly createdAt: FieldRef<"Comment", 'DateTime'>
+    readonly submissionId: FieldRef<"Comment", 'String'>
+    readonly userId: FieldRef<"Comment", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Comment findUnique
+   */
+  export type CommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment findUniqueOrThrow
+   */
+  export type CommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment findFirst
+   */
+  export type CommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment findFirstOrThrow
+   */
+  export type CommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment findMany
+   */
+  export type CommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comments to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment create
+   */
+  export type CommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Comment.
+     */
+    data: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+  }
+
+  /**
+   * Comment createMany
+   */
+  export type CommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Comments.
+     */
+    data: CommentCreateManyInput | CommentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Comment createManyAndReturn
+   */
+  export type CommentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Comments.
+     */
+    data: CommentCreateManyInput | CommentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Comment update
+   */
+  export type CommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Comment.
+     */
+    data: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+    /**
+     * Choose, which Comment to update.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment updateMany
+   */
+  export type CommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Comments.
+     */
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    /**
+     * Filter which Comments to update
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comment updateManyAndReturn
+   */
+  export type CommentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * The data used to update Comments.
+     */
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    /**
+     * Filter which Comments to update
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Comment upsert
+   */
+  export type CommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Comment to update in case it exists.
+     */
+    where: CommentWhereUniqueInput
+    /**
+     * In case the Comment found by the `where` argument doesn't exist, create a new Comment with this data.
+     */
+    create: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+    /**
+     * In case the Comment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+  }
+
+  /**
+   * Comment delete
+   */
+  export type CommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter which Comment to delete.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment deleteMany
+   */
+  export type CommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comments to delete
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comment without action
+   */
+  export type CommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ThemeTemplate
+   */
+
+  export type AggregateThemeTemplate = {
+    _count: ThemeTemplateCountAggregateOutputType | null
+    _min: ThemeTemplateMinAggregateOutputType | null
+    _max: ThemeTemplateMaxAggregateOutputType | null
+  }
+
+  export type ThemeTemplateMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    category: string | null
+  }
+
+  export type ThemeTemplateMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    category: string | null
+  }
+
+  export type ThemeTemplateCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    category: number
+    _all: number
+  }
+
+
+  export type ThemeTemplateMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+  }
+
+  export type ThemeTemplateMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+  }
+
+  export type ThemeTemplateCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+    _all?: true
+  }
+
+  export type ThemeTemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ThemeTemplate to aggregate.
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ThemeTemplates to fetch.
+     */
+    orderBy?: ThemeTemplateOrderByWithRelationInput | ThemeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ThemeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ThemeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ThemeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ThemeTemplates
+    **/
+    _count?: true | ThemeTemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ThemeTemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ThemeTemplateMaxAggregateInputType
+  }
+
+  export type GetThemeTemplateAggregateType<T extends ThemeTemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateThemeTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateThemeTemplate[P]>
+      : GetScalarType<T[P], AggregateThemeTemplate[P]>
+  }
+
+
+
+
+  export type ThemeTemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ThemeTemplateWhereInput
+    orderBy?: ThemeTemplateOrderByWithAggregationInput | ThemeTemplateOrderByWithAggregationInput[]
+    by: ThemeTemplateScalarFieldEnum[] | ThemeTemplateScalarFieldEnum
+    having?: ThemeTemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ThemeTemplateCountAggregateInputType | true
+    _min?: ThemeTemplateMinAggregateInputType
+    _max?: ThemeTemplateMaxAggregateInputType
+  }
+
+  export type ThemeTemplateGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    category: string
+    _count: ThemeTemplateCountAggregateOutputType | null
+    _min: ThemeTemplateMinAggregateOutputType | null
+    _max: ThemeTemplateMaxAggregateOutputType | null
+  }
+
+  type GetThemeTemplateGroupByPayload<T extends ThemeTemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ThemeTemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ThemeTemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ThemeTemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], ThemeTemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ThemeTemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+  }, ExtArgs["result"]["themeTemplate"]>
+
+  export type ThemeTemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+  }, ExtArgs["result"]["themeTemplate"]>
+
+  export type ThemeTemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+  }, ExtArgs["result"]["themeTemplate"]>
+
+  export type ThemeTemplateSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+  }
+
+  export type ThemeTemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "category", ExtArgs["result"]["themeTemplate"]>
+
+  export type $ThemeTemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ThemeTemplate"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      category: string
+    }, ExtArgs["result"]["themeTemplate"]>
+    composites: {}
+  }
+
+  type ThemeTemplateGetPayload<S extends boolean | null | undefined | ThemeTemplateDefaultArgs> = $Result.GetResult<Prisma.$ThemeTemplatePayload, S>
+
+  type ThemeTemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ThemeTemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ThemeTemplateCountAggregateInputType | true
+    }
+
+  export interface ThemeTemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ThemeTemplate'], meta: { name: 'ThemeTemplate' } }
+    /**
+     * Find zero or one ThemeTemplate that matches the filter.
+     * @param {ThemeTemplateFindUniqueArgs} args - Arguments to find a ThemeTemplate
+     * @example
+     * // Get one ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ThemeTemplateFindUniqueArgs>(args: SelectSubset<T, ThemeTemplateFindUniqueArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ThemeTemplate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ThemeTemplateFindUniqueOrThrowArgs} args - Arguments to find a ThemeTemplate
+     * @example
+     * // Get one ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ThemeTemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, ThemeTemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ThemeTemplate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateFindFirstArgs} args - Arguments to find a ThemeTemplate
+     * @example
+     * // Get one ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ThemeTemplateFindFirstArgs>(args?: SelectSubset<T, ThemeTemplateFindFirstArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ThemeTemplate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateFindFirstOrThrowArgs} args - Arguments to find a ThemeTemplate
+     * @example
+     * // Get one ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ThemeTemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, ThemeTemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ThemeTemplates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ThemeTemplates
+     * const themeTemplates = await prisma.themeTemplate.findMany()
+     * 
+     * // Get first 10 ThemeTemplates
+     * const themeTemplates = await prisma.themeTemplate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const themeTemplateWithIdOnly = await prisma.themeTemplate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ThemeTemplateFindManyArgs>(args?: SelectSubset<T, ThemeTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ThemeTemplate.
+     * @param {ThemeTemplateCreateArgs} args - Arguments to create a ThemeTemplate.
+     * @example
+     * // Create one ThemeTemplate
+     * const ThemeTemplate = await prisma.themeTemplate.create({
+     *   data: {
+     *     // ... data to create a ThemeTemplate
+     *   }
+     * })
+     * 
+     */
+    create<T extends ThemeTemplateCreateArgs>(args: SelectSubset<T, ThemeTemplateCreateArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ThemeTemplates.
+     * @param {ThemeTemplateCreateManyArgs} args - Arguments to create many ThemeTemplates.
+     * @example
+     * // Create many ThemeTemplates
+     * const themeTemplate = await prisma.themeTemplate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ThemeTemplateCreateManyArgs>(args?: SelectSubset<T, ThemeTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ThemeTemplates and returns the data saved in the database.
+     * @param {ThemeTemplateCreateManyAndReturnArgs} args - Arguments to create many ThemeTemplates.
+     * @example
+     * // Create many ThemeTemplates
+     * const themeTemplate = await prisma.themeTemplate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ThemeTemplates and only return the `id`
+     * const themeTemplateWithIdOnly = await prisma.themeTemplate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ThemeTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, ThemeTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ThemeTemplate.
+     * @param {ThemeTemplateDeleteArgs} args - Arguments to delete one ThemeTemplate.
+     * @example
+     * // Delete one ThemeTemplate
+     * const ThemeTemplate = await prisma.themeTemplate.delete({
+     *   where: {
+     *     // ... filter to delete one ThemeTemplate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ThemeTemplateDeleteArgs>(args: SelectSubset<T, ThemeTemplateDeleteArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ThemeTemplate.
+     * @param {ThemeTemplateUpdateArgs} args - Arguments to update one ThemeTemplate.
+     * @example
+     * // Update one ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ThemeTemplateUpdateArgs>(args: SelectSubset<T, ThemeTemplateUpdateArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ThemeTemplates.
+     * @param {ThemeTemplateDeleteManyArgs} args - Arguments to filter ThemeTemplates to delete.
+     * @example
+     * // Delete a few ThemeTemplates
+     * const { count } = await prisma.themeTemplate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ThemeTemplateDeleteManyArgs>(args?: SelectSubset<T, ThemeTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ThemeTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ThemeTemplates
+     * const themeTemplate = await prisma.themeTemplate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ThemeTemplateUpdateManyArgs>(args: SelectSubset<T, ThemeTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ThemeTemplates and returns the data updated in the database.
+     * @param {ThemeTemplateUpdateManyAndReturnArgs} args - Arguments to update many ThemeTemplates.
+     * @example
+     * // Update many ThemeTemplates
+     * const themeTemplate = await prisma.themeTemplate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ThemeTemplates and only return the `id`
+     * const themeTemplateWithIdOnly = await prisma.themeTemplate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ThemeTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, ThemeTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ThemeTemplate.
+     * @param {ThemeTemplateUpsertArgs} args - Arguments to update or create a ThemeTemplate.
+     * @example
+     * // Update or create a ThemeTemplate
+     * const themeTemplate = await prisma.themeTemplate.upsert({
+     *   create: {
+     *     // ... data to create a ThemeTemplate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ThemeTemplate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ThemeTemplateUpsertArgs>(args: SelectSubset<T, ThemeTemplateUpsertArgs<ExtArgs>>): Prisma__ThemeTemplateClient<$Result.GetResult<Prisma.$ThemeTemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ThemeTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateCountArgs} args - Arguments to filter ThemeTemplates to count.
+     * @example
+     * // Count the number of ThemeTemplates
+     * const count = await prisma.themeTemplate.count({
+     *   where: {
+     *     // ... the filter for the ThemeTemplates we want to count
+     *   }
+     * })
+    **/
+    count<T extends ThemeTemplateCountArgs>(
+      args?: Subset<T, ThemeTemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ThemeTemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ThemeTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ThemeTemplateAggregateArgs>(args: Subset<T, ThemeTemplateAggregateArgs>): Prisma.PrismaPromise<GetThemeTemplateAggregateType<T>>
+
+    /**
+     * Group by ThemeTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeTemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ThemeTemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ThemeTemplateGroupByArgs['orderBy'] }
+        : { orderBy?: ThemeTemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ThemeTemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetThemeTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ThemeTemplate model
+   */
+  readonly fields: ThemeTemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ThemeTemplate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ThemeTemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ThemeTemplate model
+   */
+  interface ThemeTemplateFieldRefs {
+    readonly id: FieldRef<"ThemeTemplate", 'String'>
+    readonly name: FieldRef<"ThemeTemplate", 'String'>
+    readonly description: FieldRef<"ThemeTemplate", 'String'>
+    readonly category: FieldRef<"ThemeTemplate", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ThemeTemplate findUnique
+   */
+  export type ThemeTemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which ThemeTemplate to fetch.
+     */
+    where: ThemeTemplateWhereUniqueInput
+  }
+
+  /**
+   * ThemeTemplate findUniqueOrThrow
+   */
+  export type ThemeTemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which ThemeTemplate to fetch.
+     */
+    where: ThemeTemplateWhereUniqueInput
+  }
+
+  /**
+   * ThemeTemplate findFirst
+   */
+  export type ThemeTemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which ThemeTemplate to fetch.
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ThemeTemplates to fetch.
+     */
+    orderBy?: ThemeTemplateOrderByWithRelationInput | ThemeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ThemeTemplates.
+     */
+    cursor?: ThemeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ThemeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ThemeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ThemeTemplates.
+     */
+    distinct?: ThemeTemplateScalarFieldEnum | ThemeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * ThemeTemplate findFirstOrThrow
+   */
+  export type ThemeTemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which ThemeTemplate to fetch.
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ThemeTemplates to fetch.
+     */
+    orderBy?: ThemeTemplateOrderByWithRelationInput | ThemeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ThemeTemplates.
+     */
+    cursor?: ThemeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ThemeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ThemeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ThemeTemplates.
+     */
+    distinct?: ThemeTemplateScalarFieldEnum | ThemeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * ThemeTemplate findMany
+   */
+  export type ThemeTemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which ThemeTemplates to fetch.
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ThemeTemplates to fetch.
+     */
+    orderBy?: ThemeTemplateOrderByWithRelationInput | ThemeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ThemeTemplates.
+     */
+    cursor?: ThemeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ThemeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ThemeTemplates.
+     */
+    skip?: number
+    distinct?: ThemeTemplateScalarFieldEnum | ThemeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * ThemeTemplate create
+   */
+  export type ThemeTemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ThemeTemplate.
+     */
+    data: XOR<ThemeTemplateCreateInput, ThemeTemplateUncheckedCreateInput>
+  }
+
+  /**
+   * ThemeTemplate createMany
+   */
+  export type ThemeTemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ThemeTemplates.
+     */
+    data: ThemeTemplateCreateManyInput | ThemeTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ThemeTemplate createManyAndReturn
+   */
+  export type ThemeTemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many ThemeTemplates.
+     */
+    data: ThemeTemplateCreateManyInput | ThemeTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ThemeTemplate update
+   */
+  export type ThemeTemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ThemeTemplate.
+     */
+    data: XOR<ThemeTemplateUpdateInput, ThemeTemplateUncheckedUpdateInput>
+    /**
+     * Choose, which ThemeTemplate to update.
+     */
+    where: ThemeTemplateWhereUniqueInput
+  }
+
+  /**
+   * ThemeTemplate updateMany
+   */
+  export type ThemeTemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ThemeTemplates.
+     */
+    data: XOR<ThemeTemplateUpdateManyMutationInput, ThemeTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which ThemeTemplates to update
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * Limit how many ThemeTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ThemeTemplate updateManyAndReturn
+   */
+  export type ThemeTemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update ThemeTemplates.
+     */
+    data: XOR<ThemeTemplateUpdateManyMutationInput, ThemeTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which ThemeTemplates to update
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * Limit how many ThemeTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ThemeTemplate upsert
+   */
+  export type ThemeTemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ThemeTemplate to update in case it exists.
+     */
+    where: ThemeTemplateWhereUniqueInput
+    /**
+     * In case the ThemeTemplate found by the `where` argument doesn't exist, create a new ThemeTemplate with this data.
+     */
+    create: XOR<ThemeTemplateCreateInput, ThemeTemplateUncheckedCreateInput>
+    /**
+     * In case the ThemeTemplate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ThemeTemplateUpdateInput, ThemeTemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * ThemeTemplate delete
+   */
+  export type ThemeTemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+    /**
+     * Filter which ThemeTemplate to delete.
+     */
+    where: ThemeTemplateWhereUniqueInput
+  }
+
+  /**
+   * ThemeTemplate deleteMany
+   */
+  export type ThemeTemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ThemeTemplates to delete
+     */
+    where?: ThemeTemplateWhereInput
+    /**
+     * Limit how many ThemeTemplates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ThemeTemplate without action
+   */
+  export type ThemeTemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeTemplate
+     */
+    select?: ThemeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ThemeTemplate
+     */
+    omit?: ThemeTemplateOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5636,6 +14544,103 @@ export namespace Prisma {
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+  export const LeagueScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    status: 'status',
+    inviteCode: 'inviteCode',
+    songsPerRound: 'songsPerRound',
+    maxMembers: 'maxMembers',
+    allowDownvotes: 'allowDownvotes',
+    downvotePointValue: 'downvotePointValue',
+    upvotePointsPerRound: 'upvotePointsPerRound',
+    isPublic: 'isPublic',
+    creatorId: 'creatorId'
+  };
+
+  export type LeagueScalarFieldEnum = (typeof LeagueScalarFieldEnum)[keyof typeof LeagueScalarFieldEnum]
+
+
+  export const LeagueMemberScalarFieldEnum: {
+    id: 'id',
+    joinedAt: 'joinedAt',
+    role: 'role',
+    leagueId: 'leagueId',
+    userId: 'userId'
+  };
+
+  export type LeagueMemberScalarFieldEnum = (typeof LeagueMemberScalarFieldEnum)[keyof typeof LeagueMemberScalarFieldEnum]
+
+
+  export const RoundScalarFieldEnum: {
+    id: 'id',
+    roundNumber: 'roundNumber',
+    themeName: 'themeName',
+    themeDescription: 'themeDescription',
+    status: 'status',
+    submissionDeadline: 'submissionDeadline',
+    votingDeadline: 'votingDeadline',
+    playlistUrl: 'playlistUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    leagueId: 'leagueId'
+  };
+
+  export type RoundScalarFieldEnum = (typeof RoundScalarFieldEnum)[keyof typeof RoundScalarFieldEnum]
+
+
+  export const SubmissionScalarFieldEnum: {
+    id: 'id',
+    spotifyTrackId: 'spotifyTrackId',
+    trackName: 'trackName',
+    artistName: 'artistName',
+    albumName: 'albumName',
+    albumArtUrl: 'albumArtUrl',
+    previewUrl: 'previewUrl',
+    trackDurationMs: 'trackDurationMs',
+    createdAt: 'createdAt',
+    roundId: 'roundId',
+    userId: 'userId'
+  };
+
+  export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+
+
+  export const VoteScalarFieldEnum: {
+    id: 'id',
+    points: 'points',
+    roundId: 'roundId',
+    voterId: 'voterId',
+    submissionId: 'submissionId'
+  };
+
+  export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
+
+
+  export const CommentScalarFieldEnum: {
+    id: 'id',
+    text: 'text',
+    createdAt: 'createdAt',
+    submissionId: 'submissionId',
+    userId: 'userId'
+  };
+
+  export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+  export const ThemeTemplateScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    category: 'category'
+  };
+
+  export type ThemeTemplateScalarFieldEnum = (typeof ThemeTemplateScalarFieldEnum)[keyof typeof ThemeTemplateScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -5701,6 +14706,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'LeagueStatus'
+   */
+  export type EnumLeagueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeagueStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'LeagueStatus[]'
+   */
+  export type ListEnumLeagueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeagueStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -5711,6 +14730,48 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MemberRole'
+   */
+  export type EnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'MemberRole[]'
+   */
+  export type ListEnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RoundStatus'
+   */
+  export type EnumRoundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoundStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RoundStatus[]'
+   */
+  export type ListEnumRoundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoundStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -5730,6 +14791,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    createdLeagues?: LeagueListRelationFilter
+    leagueMemberships?: LeagueMemberListRelationFilter
+    submissions?: SubmissionListRelationFilter
+    votes?: VoteListRelationFilter
+    comments?: CommentListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5742,6 +14808,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
+    createdLeagues?: LeagueOrderByRelationAggregateInput
+    leagueMemberships?: LeagueMemberOrderByRelationAggregateInput
+    submissions?: SubmissionOrderByRelationAggregateInput
+    votes?: VoteOrderByRelationAggregateInput
+    comments?: CommentOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5757,6 +14828,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    createdLeagues?: LeagueListRelationFilter
+    leagueMemberships?: LeagueMemberListRelationFilter
+    submissions?: SubmissionListRelationFilter
+    votes?: VoteListRelationFilter
+    comments?: CommentListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6007,6 +15083,527 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
   }
 
+  export type LeagueWhereInput = {
+    AND?: LeagueWhereInput | LeagueWhereInput[]
+    OR?: LeagueWhereInput[]
+    NOT?: LeagueWhereInput | LeagueWhereInput[]
+    id?: StringFilter<"League"> | string
+    name?: StringFilter<"League"> | string
+    description?: StringNullableFilter<"League"> | string | null
+    createdAt?: DateTimeFilter<"League"> | Date | string
+    updatedAt?: DateTimeFilter<"League"> | Date | string
+    status?: EnumLeagueStatusFilter<"League"> | $Enums.LeagueStatus
+    inviteCode?: StringFilter<"League"> | string
+    songsPerRound?: IntFilter<"League"> | number
+    maxMembers?: IntFilter<"League"> | number
+    allowDownvotes?: BoolFilter<"League"> | boolean
+    downvotePointValue?: IntFilter<"League"> | number
+    upvotePointsPerRound?: IntFilter<"League"> | number
+    isPublic?: BoolFilter<"League"> | boolean
+    creatorId?: StringFilter<"League"> | string
+    creator?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: LeagueMemberListRelationFilter
+    rounds?: RoundListRelationFilter
+  }
+
+  export type LeagueOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    status?: SortOrder
+    inviteCode?: SortOrder
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    allowDownvotes?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+    isPublic?: SortOrder
+    creatorId?: SortOrder
+    creator?: UserOrderByWithRelationInput
+    members?: LeagueMemberOrderByRelationAggregateInput
+    rounds?: RoundOrderByRelationAggregateInput
+  }
+
+  export type LeagueWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    inviteCode?: string
+    AND?: LeagueWhereInput | LeagueWhereInput[]
+    OR?: LeagueWhereInput[]
+    NOT?: LeagueWhereInput | LeagueWhereInput[]
+    name?: StringFilter<"League"> | string
+    description?: StringNullableFilter<"League"> | string | null
+    createdAt?: DateTimeFilter<"League"> | Date | string
+    updatedAt?: DateTimeFilter<"League"> | Date | string
+    status?: EnumLeagueStatusFilter<"League"> | $Enums.LeagueStatus
+    songsPerRound?: IntFilter<"League"> | number
+    maxMembers?: IntFilter<"League"> | number
+    allowDownvotes?: BoolFilter<"League"> | boolean
+    downvotePointValue?: IntFilter<"League"> | number
+    upvotePointsPerRound?: IntFilter<"League"> | number
+    isPublic?: BoolFilter<"League"> | boolean
+    creatorId?: StringFilter<"League"> | string
+    creator?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: LeagueMemberListRelationFilter
+    rounds?: RoundListRelationFilter
+  }, "id" | "inviteCode">
+
+  export type LeagueOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    status?: SortOrder
+    inviteCode?: SortOrder
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    allowDownvotes?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+    isPublic?: SortOrder
+    creatorId?: SortOrder
+    _count?: LeagueCountOrderByAggregateInput
+    _avg?: LeagueAvgOrderByAggregateInput
+    _max?: LeagueMaxOrderByAggregateInput
+    _min?: LeagueMinOrderByAggregateInput
+    _sum?: LeagueSumOrderByAggregateInput
+  }
+
+  export type LeagueScalarWhereWithAggregatesInput = {
+    AND?: LeagueScalarWhereWithAggregatesInput | LeagueScalarWhereWithAggregatesInput[]
+    OR?: LeagueScalarWhereWithAggregatesInput[]
+    NOT?: LeagueScalarWhereWithAggregatesInput | LeagueScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"League"> | string
+    name?: StringWithAggregatesFilter<"League"> | string
+    description?: StringNullableWithAggregatesFilter<"League"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"League"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"League"> | Date | string
+    status?: EnumLeagueStatusWithAggregatesFilter<"League"> | $Enums.LeagueStatus
+    inviteCode?: StringWithAggregatesFilter<"League"> | string
+    songsPerRound?: IntWithAggregatesFilter<"League"> | number
+    maxMembers?: IntWithAggregatesFilter<"League"> | number
+    allowDownvotes?: BoolWithAggregatesFilter<"League"> | boolean
+    downvotePointValue?: IntWithAggregatesFilter<"League"> | number
+    upvotePointsPerRound?: IntWithAggregatesFilter<"League"> | number
+    isPublic?: BoolWithAggregatesFilter<"League"> | boolean
+    creatorId?: StringWithAggregatesFilter<"League"> | string
+  }
+
+  export type LeagueMemberWhereInput = {
+    AND?: LeagueMemberWhereInput | LeagueMemberWhereInput[]
+    OR?: LeagueMemberWhereInput[]
+    NOT?: LeagueMemberWhereInput | LeagueMemberWhereInput[]
+    id?: StringFilter<"LeagueMember"> | string
+    joinedAt?: DateTimeFilter<"LeagueMember"> | Date | string
+    role?: EnumMemberRoleFilter<"LeagueMember"> | $Enums.MemberRole
+    leagueId?: StringFilter<"LeagueMember"> | string
+    userId?: StringFilter<"LeagueMember"> | string
+    league?: XOR<LeagueScalarRelationFilter, LeagueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type LeagueMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    role?: SortOrder
+    leagueId?: SortOrder
+    userId?: SortOrder
+    league?: LeagueOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type LeagueMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    leagueId_userId?: LeagueMemberLeagueIdUserIdCompoundUniqueInput
+    AND?: LeagueMemberWhereInput | LeagueMemberWhereInput[]
+    OR?: LeagueMemberWhereInput[]
+    NOT?: LeagueMemberWhereInput | LeagueMemberWhereInput[]
+    joinedAt?: DateTimeFilter<"LeagueMember"> | Date | string
+    role?: EnumMemberRoleFilter<"LeagueMember"> | $Enums.MemberRole
+    leagueId?: StringFilter<"LeagueMember"> | string
+    userId?: StringFilter<"LeagueMember"> | string
+    league?: XOR<LeagueScalarRelationFilter, LeagueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "leagueId_userId">
+
+  export type LeagueMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    role?: SortOrder
+    leagueId?: SortOrder
+    userId?: SortOrder
+    _count?: LeagueMemberCountOrderByAggregateInput
+    _max?: LeagueMemberMaxOrderByAggregateInput
+    _min?: LeagueMemberMinOrderByAggregateInput
+  }
+
+  export type LeagueMemberScalarWhereWithAggregatesInput = {
+    AND?: LeagueMemberScalarWhereWithAggregatesInput | LeagueMemberScalarWhereWithAggregatesInput[]
+    OR?: LeagueMemberScalarWhereWithAggregatesInput[]
+    NOT?: LeagueMemberScalarWhereWithAggregatesInput | LeagueMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LeagueMember"> | string
+    joinedAt?: DateTimeWithAggregatesFilter<"LeagueMember"> | Date | string
+    role?: EnumMemberRoleWithAggregatesFilter<"LeagueMember"> | $Enums.MemberRole
+    leagueId?: StringWithAggregatesFilter<"LeagueMember"> | string
+    userId?: StringWithAggregatesFilter<"LeagueMember"> | string
+  }
+
+  export type RoundWhereInput = {
+    AND?: RoundWhereInput | RoundWhereInput[]
+    OR?: RoundWhereInput[]
+    NOT?: RoundWhereInput | RoundWhereInput[]
+    id?: StringFilter<"Round"> | string
+    roundNumber?: IntFilter<"Round"> | number
+    themeName?: StringFilter<"Round"> | string
+    themeDescription?: StringNullableFilter<"Round"> | string | null
+    status?: EnumRoundStatusFilter<"Round"> | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFilter<"Round"> | Date | string
+    votingDeadline?: DateTimeFilter<"Round"> | Date | string
+    playlistUrl?: StringNullableFilter<"Round"> | string | null
+    createdAt?: DateTimeFilter<"Round"> | Date | string
+    updatedAt?: DateTimeFilter<"Round"> | Date | string
+    leagueId?: StringFilter<"Round"> | string
+    league?: XOR<LeagueScalarRelationFilter, LeagueWhereInput>
+    submissions?: SubmissionListRelationFilter
+  }
+
+  export type RoundOrderByWithRelationInput = {
+    id?: SortOrder
+    roundNumber?: SortOrder
+    themeName?: SortOrder
+    themeDescription?: SortOrderInput | SortOrder
+    status?: SortOrder
+    submissionDeadline?: SortOrder
+    votingDeadline?: SortOrder
+    playlistUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    leagueId?: SortOrder
+    league?: LeagueOrderByWithRelationInput
+    submissions?: SubmissionOrderByRelationAggregateInput
+  }
+
+  export type RoundWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RoundWhereInput | RoundWhereInput[]
+    OR?: RoundWhereInput[]
+    NOT?: RoundWhereInput | RoundWhereInput[]
+    roundNumber?: IntFilter<"Round"> | number
+    themeName?: StringFilter<"Round"> | string
+    themeDescription?: StringNullableFilter<"Round"> | string | null
+    status?: EnumRoundStatusFilter<"Round"> | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFilter<"Round"> | Date | string
+    votingDeadline?: DateTimeFilter<"Round"> | Date | string
+    playlistUrl?: StringNullableFilter<"Round"> | string | null
+    createdAt?: DateTimeFilter<"Round"> | Date | string
+    updatedAt?: DateTimeFilter<"Round"> | Date | string
+    leagueId?: StringFilter<"Round"> | string
+    league?: XOR<LeagueScalarRelationFilter, LeagueWhereInput>
+    submissions?: SubmissionListRelationFilter
+  }, "id">
+
+  export type RoundOrderByWithAggregationInput = {
+    id?: SortOrder
+    roundNumber?: SortOrder
+    themeName?: SortOrder
+    themeDescription?: SortOrderInput | SortOrder
+    status?: SortOrder
+    submissionDeadline?: SortOrder
+    votingDeadline?: SortOrder
+    playlistUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    leagueId?: SortOrder
+    _count?: RoundCountOrderByAggregateInput
+    _avg?: RoundAvgOrderByAggregateInput
+    _max?: RoundMaxOrderByAggregateInput
+    _min?: RoundMinOrderByAggregateInput
+    _sum?: RoundSumOrderByAggregateInput
+  }
+
+  export type RoundScalarWhereWithAggregatesInput = {
+    AND?: RoundScalarWhereWithAggregatesInput | RoundScalarWhereWithAggregatesInput[]
+    OR?: RoundScalarWhereWithAggregatesInput[]
+    NOT?: RoundScalarWhereWithAggregatesInput | RoundScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Round"> | string
+    roundNumber?: IntWithAggregatesFilter<"Round"> | number
+    themeName?: StringWithAggregatesFilter<"Round"> | string
+    themeDescription?: StringNullableWithAggregatesFilter<"Round"> | string | null
+    status?: EnumRoundStatusWithAggregatesFilter<"Round"> | $Enums.RoundStatus
+    submissionDeadline?: DateTimeWithAggregatesFilter<"Round"> | Date | string
+    votingDeadline?: DateTimeWithAggregatesFilter<"Round"> | Date | string
+    playlistUrl?: StringNullableWithAggregatesFilter<"Round"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Round"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Round"> | Date | string
+    leagueId?: StringWithAggregatesFilter<"Round"> | string
+  }
+
+  export type SubmissionWhereInput = {
+    AND?: SubmissionWhereInput | SubmissionWhereInput[]
+    OR?: SubmissionWhereInput[]
+    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
+    id?: StringFilter<"Submission"> | string
+    spotifyTrackId?: StringFilter<"Submission"> | string
+    trackName?: StringFilter<"Submission"> | string
+    artistName?: StringFilter<"Submission"> | string
+    albumName?: StringFilter<"Submission"> | string
+    albumArtUrl?: StringFilter<"Submission"> | string
+    previewUrl?: StringNullableFilter<"Submission"> | string | null
+    trackDurationMs?: IntFilter<"Submission"> | number
+    createdAt?: DateTimeFilter<"Submission"> | Date | string
+    roundId?: StringFilter<"Submission"> | string
+    userId?: StringFilter<"Submission"> | string
+    round?: XOR<RoundScalarRelationFilter, RoundWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    votes?: VoteListRelationFilter
+    comments?: CommentListRelationFilter
+  }
+
+  export type SubmissionOrderByWithRelationInput = {
+    id?: SortOrder
+    spotifyTrackId?: SortOrder
+    trackName?: SortOrder
+    artistName?: SortOrder
+    albumName?: SortOrder
+    albumArtUrl?: SortOrder
+    previewUrl?: SortOrderInput | SortOrder
+    trackDurationMs?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    userId?: SortOrder
+    round?: RoundOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    votes?: VoteOrderByRelationAggregateInput
+    comments?: CommentOrderByRelationAggregateInput
+  }
+
+  export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    roundId_userId_spotifyTrackId?: SubmissionRoundIdUserIdSpotifyTrackIdCompoundUniqueInput
+    AND?: SubmissionWhereInput | SubmissionWhereInput[]
+    OR?: SubmissionWhereInput[]
+    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
+    spotifyTrackId?: StringFilter<"Submission"> | string
+    trackName?: StringFilter<"Submission"> | string
+    artistName?: StringFilter<"Submission"> | string
+    albumName?: StringFilter<"Submission"> | string
+    albumArtUrl?: StringFilter<"Submission"> | string
+    previewUrl?: StringNullableFilter<"Submission"> | string | null
+    trackDurationMs?: IntFilter<"Submission"> | number
+    createdAt?: DateTimeFilter<"Submission"> | Date | string
+    roundId?: StringFilter<"Submission"> | string
+    userId?: StringFilter<"Submission"> | string
+    round?: XOR<RoundScalarRelationFilter, RoundWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    votes?: VoteListRelationFilter
+    comments?: CommentListRelationFilter
+  }, "id" | "roundId_userId_spotifyTrackId">
+
+  export type SubmissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    spotifyTrackId?: SortOrder
+    trackName?: SortOrder
+    artistName?: SortOrder
+    albumName?: SortOrder
+    albumArtUrl?: SortOrder
+    previewUrl?: SortOrderInput | SortOrder
+    trackDurationMs?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    userId?: SortOrder
+    _count?: SubmissionCountOrderByAggregateInput
+    _avg?: SubmissionAvgOrderByAggregateInput
+    _max?: SubmissionMaxOrderByAggregateInput
+    _min?: SubmissionMinOrderByAggregateInput
+    _sum?: SubmissionSumOrderByAggregateInput
+  }
+
+  export type SubmissionScalarWhereWithAggregatesInput = {
+    AND?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
+    OR?: SubmissionScalarWhereWithAggregatesInput[]
+    NOT?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Submission"> | string
+    spotifyTrackId?: StringWithAggregatesFilter<"Submission"> | string
+    trackName?: StringWithAggregatesFilter<"Submission"> | string
+    artistName?: StringWithAggregatesFilter<"Submission"> | string
+    albumName?: StringWithAggregatesFilter<"Submission"> | string
+    albumArtUrl?: StringWithAggregatesFilter<"Submission"> | string
+    previewUrl?: StringNullableWithAggregatesFilter<"Submission"> | string | null
+    trackDurationMs?: IntWithAggregatesFilter<"Submission"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
+    roundId?: StringWithAggregatesFilter<"Submission"> | string
+    userId?: StringWithAggregatesFilter<"Submission"> | string
+  }
+
+  export type VoteWhereInput = {
+    AND?: VoteWhereInput | VoteWhereInput[]
+    OR?: VoteWhereInput[]
+    NOT?: VoteWhereInput | VoteWhereInput[]
+    id?: StringFilter<"Vote"> | string
+    points?: IntFilter<"Vote"> | number
+    roundId?: StringFilter<"Vote"> | string
+    voterId?: StringFilter<"Vote"> | string
+    submissionId?: StringFilter<"Vote"> | string
+    voter?: XOR<UserScalarRelationFilter, UserWhereInput>
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
+  }
+
+  export type VoteOrderByWithRelationInput = {
+    id?: SortOrder
+    points?: SortOrder
+    roundId?: SortOrder
+    voterId?: SortOrder
+    submissionId?: SortOrder
+    voter?: UserOrderByWithRelationInput
+    submission?: SubmissionOrderByWithRelationInput
+  }
+
+  export type VoteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    roundId_voterId_submissionId?: VoteRoundIdVoterIdSubmissionIdCompoundUniqueInput
+    AND?: VoteWhereInput | VoteWhereInput[]
+    OR?: VoteWhereInput[]
+    NOT?: VoteWhereInput | VoteWhereInput[]
+    points?: IntFilter<"Vote"> | number
+    roundId?: StringFilter<"Vote"> | string
+    voterId?: StringFilter<"Vote"> | string
+    submissionId?: StringFilter<"Vote"> | string
+    voter?: XOR<UserScalarRelationFilter, UserWhereInput>
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
+  }, "id" | "roundId_voterId_submissionId">
+
+  export type VoteOrderByWithAggregationInput = {
+    id?: SortOrder
+    points?: SortOrder
+    roundId?: SortOrder
+    voterId?: SortOrder
+    submissionId?: SortOrder
+    _count?: VoteCountOrderByAggregateInput
+    _avg?: VoteAvgOrderByAggregateInput
+    _max?: VoteMaxOrderByAggregateInput
+    _min?: VoteMinOrderByAggregateInput
+    _sum?: VoteSumOrderByAggregateInput
+  }
+
+  export type VoteScalarWhereWithAggregatesInput = {
+    AND?: VoteScalarWhereWithAggregatesInput | VoteScalarWhereWithAggregatesInput[]
+    OR?: VoteScalarWhereWithAggregatesInput[]
+    NOT?: VoteScalarWhereWithAggregatesInput | VoteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Vote"> | string
+    points?: IntWithAggregatesFilter<"Vote"> | number
+    roundId?: StringWithAggregatesFilter<"Vote"> | string
+    voterId?: StringWithAggregatesFilter<"Vote"> | string
+    submissionId?: StringWithAggregatesFilter<"Vote"> | string
+  }
+
+  export type CommentWhereInput = {
+    AND?: CommentWhereInput | CommentWhereInput[]
+    OR?: CommentWhereInput[]
+    NOT?: CommentWhereInput | CommentWhereInput[]
+    id?: StringFilter<"Comment"> | string
+    text?: StringFilter<"Comment"> | string
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    submissionId?: StringFilter<"Comment"> | string
+    userId?: StringFilter<"Comment"> | string
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CommentOrderByWithRelationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    submission?: SubmissionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CommentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    submissionId_userId?: CommentSubmissionIdUserIdCompoundUniqueInput
+    AND?: CommentWhereInput | CommentWhereInput[]
+    OR?: CommentWhereInput[]
+    NOT?: CommentWhereInput | CommentWhereInput[]
+    text?: StringFilter<"Comment"> | string
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    submissionId?: StringFilter<"Comment"> | string
+    userId?: StringFilter<"Comment"> | string
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "submissionId_userId">
+
+  export type CommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+    _count?: CommentCountOrderByAggregateInput
+    _max?: CommentMaxOrderByAggregateInput
+    _min?: CommentMinOrderByAggregateInput
+  }
+
+  export type CommentScalarWhereWithAggregatesInput = {
+    AND?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
+    OR?: CommentScalarWhereWithAggregatesInput[]
+    NOT?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Comment"> | string
+    text?: StringWithAggregatesFilter<"Comment"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+    submissionId?: StringWithAggregatesFilter<"Comment"> | string
+    userId?: StringWithAggregatesFilter<"Comment"> | string
+  }
+
+  export type ThemeTemplateWhereInput = {
+    AND?: ThemeTemplateWhereInput | ThemeTemplateWhereInput[]
+    OR?: ThemeTemplateWhereInput[]
+    NOT?: ThemeTemplateWhereInput | ThemeTemplateWhereInput[]
+    id?: StringFilter<"ThemeTemplate"> | string
+    name?: StringFilter<"ThemeTemplate"> | string
+    description?: StringFilter<"ThemeTemplate"> | string
+    category?: StringFilter<"ThemeTemplate"> | string
+  }
+
+  export type ThemeTemplateOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+  }
+
+  export type ThemeTemplateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ThemeTemplateWhereInput | ThemeTemplateWhereInput[]
+    OR?: ThemeTemplateWhereInput[]
+    NOT?: ThemeTemplateWhereInput | ThemeTemplateWhereInput[]
+    name?: StringFilter<"ThemeTemplate"> | string
+    description?: StringFilter<"ThemeTemplate"> | string
+    category?: StringFilter<"ThemeTemplate"> | string
+  }, "id">
+
+  export type ThemeTemplateOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    _count?: ThemeTemplateCountOrderByAggregateInput
+    _max?: ThemeTemplateMaxOrderByAggregateInput
+    _min?: ThemeTemplateMinOrderByAggregateInput
+  }
+
+  export type ThemeTemplateScalarWhereWithAggregatesInput = {
+    AND?: ThemeTemplateScalarWhereWithAggregatesInput | ThemeTemplateScalarWhereWithAggregatesInput[]
+    OR?: ThemeTemplateScalarWhereWithAggregatesInput[]
+    NOT?: ThemeTemplateScalarWhereWithAggregatesInput | ThemeTemplateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ThemeTemplate"> | string
+    name?: StringWithAggregatesFilter<"ThemeTemplate"> | string
+    description?: StringWithAggregatesFilter<"ThemeTemplate"> | string
+    category?: StringWithAggregatesFilter<"ThemeTemplate"> | string
+  }
+
   export type UserCreateInput = {
     id: string
     name: string
@@ -6017,6 +15614,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6029,6 +15631,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6041,6 +15648,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6053,6 +15665,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6335,6 +15952,548 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LeagueCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creator: UserCreateNestedOneWithoutCreatedLeaguesInput
+    members?: LeagueMemberCreateNestedManyWithoutLeagueInput
+    rounds?: RoundCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creatorId: string
+    members?: LeagueMemberUncheckedCreateNestedManyWithoutLeagueInput
+    rounds?: RoundUncheckedCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creator?: UserUpdateOneRequiredWithoutCreatedLeaguesNestedInput
+    members?: LeagueMemberUpdateManyWithoutLeagueNestedInput
+    rounds?: RoundUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creatorId?: StringFieldUpdateOperationsInput | string
+    members?: LeagueMemberUncheckedUpdateManyWithoutLeagueNestedInput
+    rounds?: RoundUncheckedUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creatorId: string
+  }
+
+  export type LeagueUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type LeagueUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creatorId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LeagueMemberCreateInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    league: LeagueCreateNestedOneWithoutMembersInput
+    user: UserCreateNestedOneWithoutLeagueMembershipsInput
+  }
+
+  export type LeagueMemberUncheckedCreateInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    leagueId: string
+    userId: string
+  }
+
+  export type LeagueMemberUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    league?: LeagueUpdateOneRequiredWithoutMembersNestedInput
+    user?: UserUpdateOneRequiredWithoutLeagueMembershipsNestedInput
+  }
+
+  export type LeagueMemberUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    leagueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LeagueMemberCreateManyInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    leagueId: string
+    userId: string
+  }
+
+  export type LeagueMemberUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+  }
+
+  export type LeagueMemberUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    leagueId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type RoundCreateInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    league: LeagueCreateNestedOneWithoutRoundsInput
+    submissions?: SubmissionCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundUncheckedCreateInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leagueId: string
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    league?: LeagueUpdateOneRequiredWithoutRoundsNestedInput
+    submissions?: SubmissionUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leagueId?: StringFieldUpdateOperationsInput | string
+    submissions?: SubmissionUncheckedUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundCreateManyInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leagueId: string
+  }
+
+  export type RoundUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leagueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubmissionCreateInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    round: RoundCreateNestedOneWithoutSubmissionsInput
+    user: UserCreateNestedOneWithoutSubmissionsInput
+    votes?: VoteCreateNestedManyWithoutSubmissionInput
+    comments?: CommentCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUncheckedCreateInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+    userId: string
+    votes?: VoteUncheckedCreateNestedManyWithoutSubmissionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    round?: RoundUpdateOneRequiredWithoutSubmissionsNestedInput
+    user?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+    votes?: VoteUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    votes?: VoteUncheckedUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionCreateManyInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+    userId: string
+  }
+
+  export type SubmissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteCreateInput = {
+    id?: string
+    points: number
+    roundId: string
+    voter: UserCreateNestedOneWithoutVotesInput
+    submission: SubmissionCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateInput = {
+    id?: string
+    points: number
+    roundId: string
+    voterId: string
+    submissionId: string
+  }
+
+  export type VoteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voter?: UserUpdateOneRequiredWithoutVotesNestedInput
+    submission?: SubmissionUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voterId?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteCreateManyInput = {
+    id?: string
+    points: number
+    roundId: string
+    voterId: string
+    submissionId: string
+  }
+
+  export type VoteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voterId?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentCreateInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submission: SubmissionCreateNestedOneWithoutCommentsInput
+    user: UserCreateNestedOneWithoutCommentsInput
+  }
+
+  export type CommentUncheckedCreateInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submissionId: string
+    userId: string
+  }
+
+  export type CommentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: SubmissionUpdateOneRequiredWithoutCommentsNestedInput
+    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
+  }
+
+  export type CommentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentCreateManyInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submissionId: string
+    userId: string
+  }
+
+  export type CommentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeTemplateCreateInput = {
+    id?: string
+    name: string
+    description: string
+    category: string
+  }
+
+  export type ThemeTemplateUncheckedCreateInput = {
+    id?: string
+    name: string
+    description: string
+    category: string
+  }
+
+  export type ThemeTemplateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeTemplateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeTemplateCreateManyInput = {
+    id?: string
+    name: string
+    description: string
+    category: string
+  }
+
+  export type ThemeTemplateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeTemplateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6393,6 +16552,36 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
+  export type LeagueListRelationFilter = {
+    every?: LeagueWhereInput
+    some?: LeagueWhereInput
+    none?: LeagueWhereInput
+  }
+
+  export type LeagueMemberListRelationFilter = {
+    every?: LeagueMemberWhereInput
+    some?: LeagueMemberWhereInput
+    none?: LeagueMemberWhereInput
+  }
+
+  export type SubmissionListRelationFilter = {
+    every?: SubmissionWhereInput
+    some?: SubmissionWhereInput
+    none?: SubmissionWhereInput
+  }
+
+  export type VoteListRelationFilter = {
+    every?: VoteWhereInput
+    some?: VoteWhereInput
+    none?: VoteWhereInput
+  }
+
+  export type CommentListRelationFilter = {
+    every?: CommentWhereInput
+    some?: CommentWhereInput
+    none?: CommentWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -6403,6 +16592,26 @@ export namespace Prisma {
   }
 
   export type AccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LeagueOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LeagueMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6632,6 +16841,397 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumLeagueStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.LeagueStatus | EnumLeagueStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLeagueStatusFilter<$PrismaModel> | $Enums.LeagueStatus
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type RoundListRelationFilter = {
+    every?: RoundWhereInput
+    some?: RoundWhereInput
+    none?: RoundWhereInput
+  }
+
+  export type RoundOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LeagueCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    status?: SortOrder
+    inviteCode?: SortOrder
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    allowDownvotes?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+    isPublic?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type LeagueAvgOrderByAggregateInput = {
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+  }
+
+  export type LeagueMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    status?: SortOrder
+    inviteCode?: SortOrder
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    allowDownvotes?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+    isPublic?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type LeagueMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    status?: SortOrder
+    inviteCode?: SortOrder
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    allowDownvotes?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+    isPublic?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type LeagueSumOrderByAggregateInput = {
+    songsPerRound?: SortOrder
+    maxMembers?: SortOrder
+    downvotePointValue?: SortOrder
+    upvotePointsPerRound?: SortOrder
+  }
+
+  export type EnumLeagueStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LeagueStatus | EnumLeagueStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLeagueStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeagueStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLeagueStatusFilter<$PrismaModel>
+    _max?: NestedEnumLeagueStatusFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumMemberRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleFilter<$PrismaModel> | $Enums.MemberRole
+  }
+
+  export type LeagueScalarRelationFilter = {
+    is?: LeagueWhereInput
+    isNot?: LeagueWhereInput
+  }
+
+  export type LeagueMemberLeagueIdUserIdCompoundUniqueInput = {
+    leagueId: string
+    userId: string
+  }
+
+  export type LeagueMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    role?: SortOrder
+    leagueId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type LeagueMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    role?: SortOrder
+    leagueId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type LeagueMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    role?: SortOrder
+    leagueId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EnumMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.MemberRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMemberRoleFilter<$PrismaModel>
+    _max?: NestedEnumMemberRoleFilter<$PrismaModel>
+  }
+
+  export type EnumRoundStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RoundStatus | EnumRoundStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoundStatusFilter<$PrismaModel> | $Enums.RoundStatus
+  }
+
+  export type RoundCountOrderByAggregateInput = {
+    id?: SortOrder
+    roundNumber?: SortOrder
+    themeName?: SortOrder
+    themeDescription?: SortOrder
+    status?: SortOrder
+    submissionDeadline?: SortOrder
+    votingDeadline?: SortOrder
+    playlistUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    leagueId?: SortOrder
+  }
+
+  export type RoundAvgOrderByAggregateInput = {
+    roundNumber?: SortOrder
+  }
+
+  export type RoundMaxOrderByAggregateInput = {
+    id?: SortOrder
+    roundNumber?: SortOrder
+    themeName?: SortOrder
+    themeDescription?: SortOrder
+    status?: SortOrder
+    submissionDeadline?: SortOrder
+    votingDeadline?: SortOrder
+    playlistUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    leagueId?: SortOrder
+  }
+
+  export type RoundMinOrderByAggregateInput = {
+    id?: SortOrder
+    roundNumber?: SortOrder
+    themeName?: SortOrder
+    themeDescription?: SortOrder
+    status?: SortOrder
+    submissionDeadline?: SortOrder
+    votingDeadline?: SortOrder
+    playlistUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    leagueId?: SortOrder
+  }
+
+  export type RoundSumOrderByAggregateInput = {
+    roundNumber?: SortOrder
+  }
+
+  export type EnumRoundStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RoundStatus | EnumRoundStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoundStatusWithAggregatesFilter<$PrismaModel> | $Enums.RoundStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoundStatusFilter<$PrismaModel>
+    _max?: NestedEnumRoundStatusFilter<$PrismaModel>
+  }
+
+  export type RoundScalarRelationFilter = {
+    is?: RoundWhereInput
+    isNot?: RoundWhereInput
+  }
+
+  export type SubmissionRoundIdUserIdSpotifyTrackIdCompoundUniqueInput = {
+    roundId: string
+    userId: string
+    spotifyTrackId: string
+  }
+
+  export type SubmissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    spotifyTrackId?: SortOrder
+    trackName?: SortOrder
+    artistName?: SortOrder
+    albumName?: SortOrder
+    albumArtUrl?: SortOrder
+    previewUrl?: SortOrder
+    trackDurationMs?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SubmissionAvgOrderByAggregateInput = {
+    trackDurationMs?: SortOrder
+  }
+
+  export type SubmissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    spotifyTrackId?: SortOrder
+    trackName?: SortOrder
+    artistName?: SortOrder
+    albumName?: SortOrder
+    albumArtUrl?: SortOrder
+    previewUrl?: SortOrder
+    trackDurationMs?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SubmissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    spotifyTrackId?: SortOrder
+    trackName?: SortOrder
+    artistName?: SortOrder
+    albumName?: SortOrder
+    albumArtUrl?: SortOrder
+    previewUrl?: SortOrder
+    trackDurationMs?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SubmissionSumOrderByAggregateInput = {
+    trackDurationMs?: SortOrder
+  }
+
+  export type SubmissionScalarRelationFilter = {
+    is?: SubmissionWhereInput
+    isNot?: SubmissionWhereInput
+  }
+
+  export type VoteRoundIdVoterIdSubmissionIdCompoundUniqueInput = {
+    roundId: string
+    voterId: string
+    submissionId: string
+  }
+
+  export type VoteCountOrderByAggregateInput = {
+    id?: SortOrder
+    points?: SortOrder
+    roundId?: SortOrder
+    voterId?: SortOrder
+    submissionId?: SortOrder
+  }
+
+  export type VoteAvgOrderByAggregateInput = {
+    points?: SortOrder
+  }
+
+  export type VoteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    points?: SortOrder
+    roundId?: SortOrder
+    voterId?: SortOrder
+    submissionId?: SortOrder
+  }
+
+  export type VoteMinOrderByAggregateInput = {
+    id?: SortOrder
+    points?: SortOrder
+    roundId?: SortOrder
+    voterId?: SortOrder
+    submissionId?: SortOrder
+  }
+
+  export type VoteSumOrderByAggregateInput = {
+    points?: SortOrder
+  }
+
+  export type CommentSubmissionIdUserIdCompoundUniqueInput = {
+    submissionId: string
+    userId: string
+  }
+
+  export type CommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type CommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type CommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    submissionId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ThemeTemplateCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+  }
+
+  export type ThemeTemplateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+  }
+
+  export type ThemeTemplateMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -6646,6 +17246,41 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
+  export type LeagueCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput> | LeagueCreateWithoutCreatorInput[] | LeagueUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: LeagueCreateOrConnectWithoutCreatorInput | LeagueCreateOrConnectWithoutCreatorInput[]
+    createMany?: LeagueCreateManyCreatorInputEnvelope
+    connect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+  }
+
+  export type LeagueMemberCreateNestedManyWithoutUserInput = {
+    create?: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput> | LeagueMemberCreateWithoutUserInput[] | LeagueMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutUserInput | LeagueMemberCreateOrConnectWithoutUserInput[]
+    createMany?: LeagueMemberCreateManyUserInputEnvelope
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+  }
+
+  export type SubmissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
+    createMany?: SubmissionCreateManyUserInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type VoteCreateNestedManyWithoutVoterInput = {
+    create?: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput> | VoteCreateWithoutVoterInput[] | VoteUncheckedCreateWithoutVoterInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutVoterInput | VoteCreateOrConnectWithoutVoterInput[]
+    createMany?: VoteCreateManyVoterInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type CommentCreateNestedManyWithoutUserInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -6658,6 +17293,41 @@ export namespace Prisma {
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
     createMany?: AccountCreateManyUserInputEnvelope
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
+  export type LeagueUncheckedCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput> | LeagueCreateWithoutCreatorInput[] | LeagueUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: LeagueCreateOrConnectWithoutCreatorInput | LeagueCreateOrConnectWithoutCreatorInput[]
+    createMany?: LeagueCreateManyCreatorInputEnvelope
+    connect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+  }
+
+  export type LeagueMemberUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput> | LeagueMemberCreateWithoutUserInput[] | LeagueMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutUserInput | LeagueMemberCreateOrConnectWithoutUserInput[]
+    createMany?: LeagueMemberCreateManyUserInputEnvelope
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+  }
+
+  export type SubmissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
+    createMany?: SubmissionCreateManyUserInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type VoteUncheckedCreateNestedManyWithoutVoterInput = {
+    create?: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput> | VoteCreateWithoutVoterInput[] | VoteUncheckedCreateWithoutVoterInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutVoterInput | VoteCreateOrConnectWithoutVoterInput[]
+    createMany?: VoteCreateManyVoterInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6704,6 +17374,76 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
+  export type LeagueUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput> | LeagueCreateWithoutCreatorInput[] | LeagueUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: LeagueCreateOrConnectWithoutCreatorInput | LeagueCreateOrConnectWithoutCreatorInput[]
+    upsert?: LeagueUpsertWithWhereUniqueWithoutCreatorInput | LeagueUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: LeagueCreateManyCreatorInputEnvelope
+    set?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    disconnect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    delete?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    connect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    update?: LeagueUpdateWithWhereUniqueWithoutCreatorInput | LeagueUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: LeagueUpdateManyWithWhereWithoutCreatorInput | LeagueUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: LeagueScalarWhereInput | LeagueScalarWhereInput[]
+  }
+
+  export type LeagueMemberUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput> | LeagueMemberCreateWithoutUserInput[] | LeagueMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutUserInput | LeagueMemberCreateOrConnectWithoutUserInput[]
+    upsert?: LeagueMemberUpsertWithWhereUniqueWithoutUserInput | LeagueMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LeagueMemberCreateManyUserInputEnvelope
+    set?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    disconnect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    delete?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    update?: LeagueMemberUpdateWithWhereUniqueWithoutUserInput | LeagueMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LeagueMemberUpdateManyWithWhereWithoutUserInput | LeagueMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+  }
+
+  export type SubmissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutUserInput | SubmissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SubmissionCreateManyUserInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutUserInput | SubmissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutUserInput | SubmissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type VoteUpdateManyWithoutVoterNestedInput = {
+    create?: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput> | VoteCreateWithoutVoterInput[] | VoteUncheckedCreateWithoutVoterInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutVoterInput | VoteCreateOrConnectWithoutVoterInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutVoterInput | VoteUpsertWithWhereUniqueWithoutVoterInput[]
+    createMany?: VoteCreateManyVoterInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutVoterInput | VoteUpdateWithWhereUniqueWithoutVoterInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutVoterInput | VoteUpdateManyWithWhereWithoutVoterInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type CommentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutUserInput | CommentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -6730,6 +17470,76 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
+  export type LeagueUncheckedUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput> | LeagueCreateWithoutCreatorInput[] | LeagueUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: LeagueCreateOrConnectWithoutCreatorInput | LeagueCreateOrConnectWithoutCreatorInput[]
+    upsert?: LeagueUpsertWithWhereUniqueWithoutCreatorInput | LeagueUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: LeagueCreateManyCreatorInputEnvelope
+    set?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    disconnect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    delete?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    connect?: LeagueWhereUniqueInput | LeagueWhereUniqueInput[]
+    update?: LeagueUpdateWithWhereUniqueWithoutCreatorInput | LeagueUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: LeagueUpdateManyWithWhereWithoutCreatorInput | LeagueUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: LeagueScalarWhereInput | LeagueScalarWhereInput[]
+  }
+
+  export type LeagueMemberUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput> | LeagueMemberCreateWithoutUserInput[] | LeagueMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutUserInput | LeagueMemberCreateOrConnectWithoutUserInput[]
+    upsert?: LeagueMemberUpsertWithWhereUniqueWithoutUserInput | LeagueMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LeagueMemberCreateManyUserInputEnvelope
+    set?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    disconnect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    delete?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    update?: LeagueMemberUpdateWithWhereUniqueWithoutUserInput | LeagueMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LeagueMemberUpdateManyWithWhereWithoutUserInput | LeagueMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+  }
+
+  export type SubmissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutUserInput | SubmissionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SubmissionCreateManyUserInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutUserInput | SubmissionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutUserInput | SubmissionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type VoteUncheckedUpdateManyWithoutVoterNestedInput = {
+    create?: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput> | VoteCreateWithoutVoterInput[] | VoteUncheckedCreateWithoutVoterInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutVoterInput | VoteCreateOrConnectWithoutVoterInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutVoterInput | VoteUpsertWithWhereUniqueWithoutVoterInput[]
+    createMany?: VoteCreateManyVoterInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutVoterInput | VoteUpdateWithWhereUniqueWithoutVoterInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutVoterInput | VoteUpdateManyWithWhereWithoutVoterInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutUserInput | CommentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -6762,6 +17572,376 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAccountsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCreatedLeaguesInput = {
+    create?: XOR<UserCreateWithoutCreatedLeaguesInput, UserUncheckedCreateWithoutCreatedLeaguesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedLeaguesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type LeagueMemberCreateNestedManyWithoutLeagueInput = {
+    create?: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput> | LeagueMemberCreateWithoutLeagueInput[] | LeagueMemberUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutLeagueInput | LeagueMemberCreateOrConnectWithoutLeagueInput[]
+    createMany?: LeagueMemberCreateManyLeagueInputEnvelope
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+  }
+
+  export type RoundCreateNestedManyWithoutLeagueInput = {
+    create?: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput> | RoundCreateWithoutLeagueInput[] | RoundUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: RoundCreateOrConnectWithoutLeagueInput | RoundCreateOrConnectWithoutLeagueInput[]
+    createMany?: RoundCreateManyLeagueInputEnvelope
+    connect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+  }
+
+  export type LeagueMemberUncheckedCreateNestedManyWithoutLeagueInput = {
+    create?: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput> | LeagueMemberCreateWithoutLeagueInput[] | LeagueMemberUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutLeagueInput | LeagueMemberCreateOrConnectWithoutLeagueInput[]
+    createMany?: LeagueMemberCreateManyLeagueInputEnvelope
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+  }
+
+  export type RoundUncheckedCreateNestedManyWithoutLeagueInput = {
+    create?: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput> | RoundCreateWithoutLeagueInput[] | RoundUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: RoundCreateOrConnectWithoutLeagueInput | RoundCreateOrConnectWithoutLeagueInput[]
+    createMany?: RoundCreateManyLeagueInputEnvelope
+    connect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+  }
+
+  export type EnumLeagueStatusFieldUpdateOperationsInput = {
+    set?: $Enums.LeagueStatus
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedLeaguesNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedLeaguesInput, UserUncheckedCreateWithoutCreatedLeaguesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedLeaguesInput
+    upsert?: UserUpsertWithoutCreatedLeaguesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedLeaguesInput, UserUpdateWithoutCreatedLeaguesInput>, UserUncheckedUpdateWithoutCreatedLeaguesInput>
+  }
+
+  export type LeagueMemberUpdateManyWithoutLeagueNestedInput = {
+    create?: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput> | LeagueMemberCreateWithoutLeagueInput[] | LeagueMemberUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutLeagueInput | LeagueMemberCreateOrConnectWithoutLeagueInput[]
+    upsert?: LeagueMemberUpsertWithWhereUniqueWithoutLeagueInput | LeagueMemberUpsertWithWhereUniqueWithoutLeagueInput[]
+    createMany?: LeagueMemberCreateManyLeagueInputEnvelope
+    set?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    disconnect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    delete?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    update?: LeagueMemberUpdateWithWhereUniqueWithoutLeagueInput | LeagueMemberUpdateWithWhereUniqueWithoutLeagueInput[]
+    updateMany?: LeagueMemberUpdateManyWithWhereWithoutLeagueInput | LeagueMemberUpdateManyWithWhereWithoutLeagueInput[]
+    deleteMany?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+  }
+
+  export type RoundUpdateManyWithoutLeagueNestedInput = {
+    create?: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput> | RoundCreateWithoutLeagueInput[] | RoundUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: RoundCreateOrConnectWithoutLeagueInput | RoundCreateOrConnectWithoutLeagueInput[]
+    upsert?: RoundUpsertWithWhereUniqueWithoutLeagueInput | RoundUpsertWithWhereUniqueWithoutLeagueInput[]
+    createMany?: RoundCreateManyLeagueInputEnvelope
+    set?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    disconnect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    delete?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    connect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    update?: RoundUpdateWithWhereUniqueWithoutLeagueInput | RoundUpdateWithWhereUniqueWithoutLeagueInput[]
+    updateMany?: RoundUpdateManyWithWhereWithoutLeagueInput | RoundUpdateManyWithWhereWithoutLeagueInput[]
+    deleteMany?: RoundScalarWhereInput | RoundScalarWhereInput[]
+  }
+
+  export type LeagueMemberUncheckedUpdateManyWithoutLeagueNestedInput = {
+    create?: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput> | LeagueMemberCreateWithoutLeagueInput[] | LeagueMemberUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: LeagueMemberCreateOrConnectWithoutLeagueInput | LeagueMemberCreateOrConnectWithoutLeagueInput[]
+    upsert?: LeagueMemberUpsertWithWhereUniqueWithoutLeagueInput | LeagueMemberUpsertWithWhereUniqueWithoutLeagueInput[]
+    createMany?: LeagueMemberCreateManyLeagueInputEnvelope
+    set?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    disconnect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    delete?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    connect?: LeagueMemberWhereUniqueInput | LeagueMemberWhereUniqueInput[]
+    update?: LeagueMemberUpdateWithWhereUniqueWithoutLeagueInput | LeagueMemberUpdateWithWhereUniqueWithoutLeagueInput[]
+    updateMany?: LeagueMemberUpdateManyWithWhereWithoutLeagueInput | LeagueMemberUpdateManyWithWhereWithoutLeagueInput[]
+    deleteMany?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+  }
+
+  export type RoundUncheckedUpdateManyWithoutLeagueNestedInput = {
+    create?: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput> | RoundCreateWithoutLeagueInput[] | RoundUncheckedCreateWithoutLeagueInput[]
+    connectOrCreate?: RoundCreateOrConnectWithoutLeagueInput | RoundCreateOrConnectWithoutLeagueInput[]
+    upsert?: RoundUpsertWithWhereUniqueWithoutLeagueInput | RoundUpsertWithWhereUniqueWithoutLeagueInput[]
+    createMany?: RoundCreateManyLeagueInputEnvelope
+    set?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    disconnect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    delete?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    connect?: RoundWhereUniqueInput | RoundWhereUniqueInput[]
+    update?: RoundUpdateWithWhereUniqueWithoutLeagueInput | RoundUpdateWithWhereUniqueWithoutLeagueInput[]
+    updateMany?: RoundUpdateManyWithWhereWithoutLeagueInput | RoundUpdateManyWithWhereWithoutLeagueInput[]
+    deleteMany?: RoundScalarWhereInput | RoundScalarWhereInput[]
+  }
+
+  export type LeagueCreateNestedOneWithoutMembersInput = {
+    create?: XOR<LeagueCreateWithoutMembersInput, LeagueUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: LeagueCreateOrConnectWithoutMembersInput
+    connect?: LeagueWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutLeagueMembershipsInput = {
+    create?: XOR<UserCreateWithoutLeagueMembershipsInput, UserUncheckedCreateWithoutLeagueMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeagueMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumMemberRoleFieldUpdateOperationsInput = {
+    set?: $Enums.MemberRole
+  }
+
+  export type LeagueUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<LeagueCreateWithoutMembersInput, LeagueUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: LeagueCreateOrConnectWithoutMembersInput
+    upsert?: LeagueUpsertWithoutMembersInput
+    connect?: LeagueWhereUniqueInput
+    update?: XOR<XOR<LeagueUpdateToOneWithWhereWithoutMembersInput, LeagueUpdateWithoutMembersInput>, LeagueUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutLeagueMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutLeagueMembershipsInput, UserUncheckedCreateWithoutLeagueMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeagueMembershipsInput
+    upsert?: UserUpsertWithoutLeagueMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLeagueMembershipsInput, UserUpdateWithoutLeagueMembershipsInput>, UserUncheckedUpdateWithoutLeagueMembershipsInput>
+  }
+
+  export type LeagueCreateNestedOneWithoutRoundsInput = {
+    create?: XOR<LeagueCreateWithoutRoundsInput, LeagueUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: LeagueCreateOrConnectWithoutRoundsInput
+    connect?: LeagueWhereUniqueInput
+  }
+
+  export type SubmissionCreateNestedManyWithoutRoundInput = {
+    create?: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput> | SubmissionCreateWithoutRoundInput[] | SubmissionUncheckedCreateWithoutRoundInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutRoundInput | SubmissionCreateOrConnectWithoutRoundInput[]
+    createMany?: SubmissionCreateManyRoundInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type SubmissionUncheckedCreateNestedManyWithoutRoundInput = {
+    create?: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput> | SubmissionCreateWithoutRoundInput[] | SubmissionUncheckedCreateWithoutRoundInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutRoundInput | SubmissionCreateOrConnectWithoutRoundInput[]
+    createMany?: SubmissionCreateManyRoundInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type EnumRoundStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RoundStatus
+  }
+
+  export type LeagueUpdateOneRequiredWithoutRoundsNestedInput = {
+    create?: XOR<LeagueCreateWithoutRoundsInput, LeagueUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: LeagueCreateOrConnectWithoutRoundsInput
+    upsert?: LeagueUpsertWithoutRoundsInput
+    connect?: LeagueWhereUniqueInput
+    update?: XOR<XOR<LeagueUpdateToOneWithWhereWithoutRoundsInput, LeagueUpdateWithoutRoundsInput>, LeagueUncheckedUpdateWithoutRoundsInput>
+  }
+
+  export type SubmissionUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput> | SubmissionCreateWithoutRoundInput[] | SubmissionUncheckedCreateWithoutRoundInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutRoundInput | SubmissionCreateOrConnectWithoutRoundInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutRoundInput | SubmissionUpsertWithWhereUniqueWithoutRoundInput[]
+    createMany?: SubmissionCreateManyRoundInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutRoundInput | SubmissionUpdateWithWhereUniqueWithoutRoundInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutRoundInput | SubmissionUpdateManyWithWhereWithoutRoundInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type SubmissionUncheckedUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput> | SubmissionCreateWithoutRoundInput[] | SubmissionUncheckedCreateWithoutRoundInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutRoundInput | SubmissionCreateOrConnectWithoutRoundInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutRoundInput | SubmissionUpsertWithWhereUniqueWithoutRoundInput[]
+    createMany?: SubmissionCreateManyRoundInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutRoundInput | SubmissionUpdateWithWhereUniqueWithoutRoundInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutRoundInput | SubmissionUpdateManyWithWhereWithoutRoundInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type RoundCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<RoundCreateWithoutSubmissionsInput, RoundUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutSubmissionsInput
+    connect?: RoundWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type VoteCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput> | VoteCreateWithoutSubmissionInput[] | VoteUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSubmissionInput | VoteCreateOrConnectWithoutSubmissionInput[]
+    createMany?: VoteCreateManySubmissionInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type CommentCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput> | CommentCreateWithoutSubmissionInput[] | CommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutSubmissionInput | CommentCreateOrConnectWithoutSubmissionInput[]
+    createMany?: CommentCreateManySubmissionInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type VoteUncheckedCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput> | VoteCreateWithoutSubmissionInput[] | VoteUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSubmissionInput | VoteCreateOrConnectWithoutSubmissionInput[]
+    createMany?: VoteCreateManySubmissionInputEnvelope
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput> | CommentCreateWithoutSubmissionInput[] | CommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutSubmissionInput | CommentCreateOrConnectWithoutSubmissionInput[]
+    createMany?: CommentCreateManySubmissionInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type RoundUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<RoundCreateWithoutSubmissionsInput, RoundUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutSubmissionsInput
+    upsert?: RoundUpsertWithoutSubmissionsInput
+    connect?: RoundWhereUniqueInput
+    update?: XOR<XOR<RoundUpdateToOneWithWhereWithoutSubmissionsInput, RoundUpdateWithoutSubmissionsInput>, RoundUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
+    upsert?: UserUpsertWithoutSubmissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmissionsInput, UserUpdateWithoutSubmissionsInput>, UserUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type VoteUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput> | VoteCreateWithoutSubmissionInput[] | VoteUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSubmissionInput | VoteCreateOrConnectWithoutSubmissionInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutSubmissionInput | VoteUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: VoteCreateManySubmissionInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutSubmissionInput | VoteUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutSubmissionInput | VoteUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type CommentUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput> | CommentCreateWithoutSubmissionInput[] | CommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutSubmissionInput | CommentCreateOrConnectWithoutSubmissionInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutSubmissionInput | CommentUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: CommentCreateManySubmissionInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutSubmissionInput | CommentUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutSubmissionInput | CommentUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type VoteUncheckedUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput> | VoteCreateWithoutSubmissionInput[] | VoteUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: VoteCreateOrConnectWithoutSubmissionInput | VoteCreateOrConnectWithoutSubmissionInput[]
+    upsert?: VoteUpsertWithWhereUniqueWithoutSubmissionInput | VoteUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: VoteCreateManySubmissionInputEnvelope
+    set?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    disconnect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    delete?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    connect?: VoteWhereUniqueInput | VoteWhereUniqueInput[]
+    update?: VoteUpdateWithWhereUniqueWithoutSubmissionInput | VoteUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: VoteUpdateManyWithWhereWithoutSubmissionInput | VoteUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: VoteScalarWhereInput | VoteScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutSubmissionNestedInput = {
+    create?: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput> | CommentCreateWithoutSubmissionInput[] | CommentUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutSubmissionInput | CommentCreateOrConnectWithoutSubmissionInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutSubmissionInput | CommentUpsertWithWhereUniqueWithoutSubmissionInput[]
+    createMany?: CommentCreateManySubmissionInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutSubmissionInput | CommentUpdateWithWhereUniqueWithoutSubmissionInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutSubmissionInput | CommentUpdateManyWithWhereWithoutSubmissionInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutVotesInput = {
+    create?: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVotesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SubmissionCreateNestedOneWithoutVotesInput = {
+    create?: XOR<SubmissionCreateWithoutVotesInput, SubmissionUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: SubmissionCreateOrConnectWithoutVotesInput
+    connect?: SubmissionWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutVotesNestedInput = {
+    create?: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVotesInput
+    upsert?: UserUpsertWithoutVotesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVotesInput, UserUpdateWithoutVotesInput>, UserUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type SubmissionUpdateOneRequiredWithoutVotesNestedInput = {
+    create?: XOR<SubmissionCreateWithoutVotesInput, SubmissionUncheckedCreateWithoutVotesInput>
+    connectOrCreate?: SubmissionCreateOrConnectWithoutVotesInput
+    upsert?: SubmissionUpsertWithoutVotesInput
+    connect?: SubmissionWhereUniqueInput
+    update?: XOR<XOR<SubmissionUpdateToOneWithWhereWithoutVotesInput, SubmissionUpdateWithoutVotesInput>, SubmissionUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type SubmissionCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<SubmissionCreateWithoutCommentsInput, SubmissionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: SubmissionCreateOrConnectWithoutCommentsInput
+    connect?: SubmissionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SubmissionUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<SubmissionCreateWithoutCommentsInput, SubmissionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: SubmissionCreateOrConnectWithoutCommentsInput
+    upsert?: SubmissionUpsertWithoutCommentsInput
+    connect?: SubmissionWhereUniqueInput
+    update?: XOR<XOR<SubmissionUpdateToOneWithWhereWithoutCommentsInput, SubmissionUpdateWithoutCommentsInput>, SubmissionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
+    upsert?: UserUpsertWithoutCommentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6911,6 +18091,84 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumLeagueStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.LeagueStatus | EnumLeagueStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLeagueStatusFilter<$PrismaModel> | $Enums.LeagueStatus
+  }
+
+  export type NestedEnumLeagueStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LeagueStatus | EnumLeagueStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LeagueStatus[] | ListEnumLeagueStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLeagueStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeagueStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLeagueStatusFilter<$PrismaModel>
+    _max?: NestedEnumLeagueStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumMemberRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleFilter<$PrismaModel> | $Enums.MemberRole
+  }
+
+  export type NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.MemberRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMemberRoleFilter<$PrismaModel>
+    _max?: NestedEnumMemberRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoundStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RoundStatus | EnumRoundStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoundStatusFilter<$PrismaModel> | $Enums.RoundStatus
+  }
+
+  export type NestedEnumRoundStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RoundStatus | EnumRoundStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RoundStatus[] | ListEnumRoundStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoundStatusWithAggregatesFilter<$PrismaModel> | $Enums.RoundStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoundStatusFilter<$PrismaModel>
+    _max?: NestedEnumRoundStatusFilter<$PrismaModel>
+  }
+
   export type SessionCreateWithoutUserInput = {
     id: string
     expiresAt: Date | string
@@ -6981,6 +18239,164 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LeagueCreateWithoutCreatorInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    members?: LeagueMemberCreateNestedManyWithoutLeagueInput
+    rounds?: RoundCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueUncheckedCreateWithoutCreatorInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    members?: LeagueMemberUncheckedCreateNestedManyWithoutLeagueInput
+    rounds?: RoundUncheckedCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueCreateOrConnectWithoutCreatorInput = {
+    where: LeagueWhereUniqueInput
+    create: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type LeagueCreateManyCreatorInputEnvelope = {
+    data: LeagueCreateManyCreatorInput | LeagueCreateManyCreatorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeagueMemberCreateWithoutUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    league: LeagueCreateNestedOneWithoutMembersInput
+  }
+
+  export type LeagueMemberUncheckedCreateWithoutUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    leagueId: string
+  }
+
+  export type LeagueMemberCreateOrConnectWithoutUserInput = {
+    where: LeagueMemberWhereUniqueInput
+    create: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type LeagueMemberCreateManyUserInputEnvelope = {
+    data: LeagueMemberCreateManyUserInput | LeagueMemberCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SubmissionCreateWithoutUserInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    round: RoundCreateNestedOneWithoutSubmissionsInput
+    votes?: VoteCreateNestedManyWithoutSubmissionInput
+    comments?: CommentCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutUserInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+    votes?: VoteUncheckedCreateNestedManyWithoutSubmissionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionCreateOrConnectWithoutUserInput = {
+    where: SubmissionWhereUniqueInput
+    create: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SubmissionCreateManyUserInputEnvelope = {
+    data: SubmissionCreateManyUserInput | SubmissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VoteCreateWithoutVoterInput = {
+    id?: string
+    points: number
+    roundId: string
+    submission: SubmissionCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateWithoutVoterInput = {
+    id?: string
+    points: number
+    roundId: string
+    submissionId: string
+  }
+
+  export type VoteCreateOrConnectWithoutVoterInput = {
+    where: VoteWhereUniqueInput
+    create: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput>
+  }
+
+  export type VoteCreateManyVoterInputEnvelope = {
+    data: VoteCreateManyVoterInput | VoteCreateManyVoterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommentCreateWithoutUserInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submission: SubmissionCreateNestedOneWithoutCommentsInput
+  }
+
+  export type CommentUncheckedCreateWithoutUserInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submissionId: string
+  }
+
+  export type CommentCreateOrConnectWithoutUserInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
+  }
+
+  export type CommentCreateManyUserInputEnvelope = {
+    data: CommentCreateManyUserInput | CommentCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -7046,6 +18462,156 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Account"> | Date | string
   }
 
+  export type LeagueUpsertWithWhereUniqueWithoutCreatorInput = {
+    where: LeagueWhereUniqueInput
+    update: XOR<LeagueUpdateWithoutCreatorInput, LeagueUncheckedUpdateWithoutCreatorInput>
+    create: XOR<LeagueCreateWithoutCreatorInput, LeagueUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type LeagueUpdateWithWhereUniqueWithoutCreatorInput = {
+    where: LeagueWhereUniqueInput
+    data: XOR<LeagueUpdateWithoutCreatorInput, LeagueUncheckedUpdateWithoutCreatorInput>
+  }
+
+  export type LeagueUpdateManyWithWhereWithoutCreatorInput = {
+    where: LeagueScalarWhereInput
+    data: XOR<LeagueUpdateManyMutationInput, LeagueUncheckedUpdateManyWithoutCreatorInput>
+  }
+
+  export type LeagueScalarWhereInput = {
+    AND?: LeagueScalarWhereInput | LeagueScalarWhereInput[]
+    OR?: LeagueScalarWhereInput[]
+    NOT?: LeagueScalarWhereInput | LeagueScalarWhereInput[]
+    id?: StringFilter<"League"> | string
+    name?: StringFilter<"League"> | string
+    description?: StringNullableFilter<"League"> | string | null
+    createdAt?: DateTimeFilter<"League"> | Date | string
+    updatedAt?: DateTimeFilter<"League"> | Date | string
+    status?: EnumLeagueStatusFilter<"League"> | $Enums.LeagueStatus
+    inviteCode?: StringFilter<"League"> | string
+    songsPerRound?: IntFilter<"League"> | number
+    maxMembers?: IntFilter<"League"> | number
+    allowDownvotes?: BoolFilter<"League"> | boolean
+    downvotePointValue?: IntFilter<"League"> | number
+    upvotePointsPerRound?: IntFilter<"League"> | number
+    isPublic?: BoolFilter<"League"> | boolean
+    creatorId?: StringFilter<"League"> | string
+  }
+
+  export type LeagueMemberUpsertWithWhereUniqueWithoutUserInput = {
+    where: LeagueMemberWhereUniqueInput
+    update: XOR<LeagueMemberUpdateWithoutUserInput, LeagueMemberUncheckedUpdateWithoutUserInput>
+    create: XOR<LeagueMemberCreateWithoutUserInput, LeagueMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type LeagueMemberUpdateWithWhereUniqueWithoutUserInput = {
+    where: LeagueMemberWhereUniqueInput
+    data: XOR<LeagueMemberUpdateWithoutUserInput, LeagueMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LeagueMemberUpdateManyWithWhereWithoutUserInput = {
+    where: LeagueMemberScalarWhereInput
+    data: XOR<LeagueMemberUpdateManyMutationInput, LeagueMemberUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type LeagueMemberScalarWhereInput = {
+    AND?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+    OR?: LeagueMemberScalarWhereInput[]
+    NOT?: LeagueMemberScalarWhereInput | LeagueMemberScalarWhereInput[]
+    id?: StringFilter<"LeagueMember"> | string
+    joinedAt?: DateTimeFilter<"LeagueMember"> | Date | string
+    role?: EnumMemberRoleFilter<"LeagueMember"> | $Enums.MemberRole
+    leagueId?: StringFilter<"LeagueMember"> | string
+    userId?: StringFilter<"LeagueMember"> | string
+  }
+
+  export type SubmissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SubmissionWhereUniqueInput
+    update: XOR<SubmissionUpdateWithoutUserInput, SubmissionUncheckedUpdateWithoutUserInput>
+    create: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SubmissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SubmissionWhereUniqueInput
+    data: XOR<SubmissionUpdateWithoutUserInput, SubmissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SubmissionUpdateManyWithWhereWithoutUserInput = {
+    where: SubmissionScalarWhereInput
+    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SubmissionScalarWhereInput = {
+    AND?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+    OR?: SubmissionScalarWhereInput[]
+    NOT?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+    id?: StringFilter<"Submission"> | string
+    spotifyTrackId?: StringFilter<"Submission"> | string
+    trackName?: StringFilter<"Submission"> | string
+    artistName?: StringFilter<"Submission"> | string
+    albumName?: StringFilter<"Submission"> | string
+    albumArtUrl?: StringFilter<"Submission"> | string
+    previewUrl?: StringNullableFilter<"Submission"> | string | null
+    trackDurationMs?: IntFilter<"Submission"> | number
+    createdAt?: DateTimeFilter<"Submission"> | Date | string
+    roundId?: StringFilter<"Submission"> | string
+    userId?: StringFilter<"Submission"> | string
+  }
+
+  export type VoteUpsertWithWhereUniqueWithoutVoterInput = {
+    where: VoteWhereUniqueInput
+    update: XOR<VoteUpdateWithoutVoterInput, VoteUncheckedUpdateWithoutVoterInput>
+    create: XOR<VoteCreateWithoutVoterInput, VoteUncheckedCreateWithoutVoterInput>
+  }
+
+  export type VoteUpdateWithWhereUniqueWithoutVoterInput = {
+    where: VoteWhereUniqueInput
+    data: XOR<VoteUpdateWithoutVoterInput, VoteUncheckedUpdateWithoutVoterInput>
+  }
+
+  export type VoteUpdateManyWithWhereWithoutVoterInput = {
+    where: VoteScalarWhereInput
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyWithoutVoterInput>
+  }
+
+  export type VoteScalarWhereInput = {
+    AND?: VoteScalarWhereInput | VoteScalarWhereInput[]
+    OR?: VoteScalarWhereInput[]
+    NOT?: VoteScalarWhereInput | VoteScalarWhereInput[]
+    id?: StringFilter<"Vote"> | string
+    points?: IntFilter<"Vote"> | number
+    roundId?: StringFilter<"Vote"> | string
+    voterId?: StringFilter<"Vote"> | string
+    submissionId?: StringFilter<"Vote"> | string
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutUserInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
+    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutUserInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutUserInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CommentScalarWhereInput = {
+    AND?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    OR?: CommentScalarWhereInput[]
+    NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    id?: StringFilter<"Comment"> | string
+    text?: StringFilter<"Comment"> | string
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    submissionId?: StringFilter<"Comment"> | string
+    userId?: StringFilter<"Comment"> | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     name: string
@@ -7055,6 +18621,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -7066,6 +18637,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -7093,6 +18669,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -7104,6 +18685,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -7115,6 +18701,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -7126,6 +18717,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -7153,6 +18749,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -7164,6 +18765,1058 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCreatedLeaguesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedLeaguesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedLeaguesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedLeaguesInput, UserUncheckedCreateWithoutCreatedLeaguesInput>
+  }
+
+  export type LeagueMemberCreateWithoutLeagueInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    user: UserCreateNestedOneWithoutLeagueMembershipsInput
+  }
+
+  export type LeagueMemberUncheckedCreateWithoutLeagueInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    userId: string
+  }
+
+  export type LeagueMemberCreateOrConnectWithoutLeagueInput = {
+    where: LeagueMemberWhereUniqueInput
+    create: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput>
+  }
+
+  export type LeagueMemberCreateManyLeagueInputEnvelope = {
+    data: LeagueMemberCreateManyLeagueInput | LeagueMemberCreateManyLeagueInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RoundCreateWithoutLeagueInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissions?: SubmissionCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundUncheckedCreateWithoutLeagueInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundCreateOrConnectWithoutLeagueInput = {
+    where: RoundWhereUniqueInput
+    create: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput>
+  }
+
+  export type RoundCreateManyLeagueInputEnvelope = {
+    data: RoundCreateManyLeagueInput | RoundCreateManyLeagueInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCreatedLeaguesInput = {
+    update: XOR<UserUpdateWithoutCreatedLeaguesInput, UserUncheckedUpdateWithoutCreatedLeaguesInput>
+    create: XOR<UserCreateWithoutCreatedLeaguesInput, UserUncheckedCreateWithoutCreatedLeaguesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedLeaguesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedLeaguesInput, UserUncheckedUpdateWithoutCreatedLeaguesInput>
+  }
+
+  export type UserUpdateWithoutCreatedLeaguesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedLeaguesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type LeagueMemberUpsertWithWhereUniqueWithoutLeagueInput = {
+    where: LeagueMemberWhereUniqueInput
+    update: XOR<LeagueMemberUpdateWithoutLeagueInput, LeagueMemberUncheckedUpdateWithoutLeagueInput>
+    create: XOR<LeagueMemberCreateWithoutLeagueInput, LeagueMemberUncheckedCreateWithoutLeagueInput>
+  }
+
+  export type LeagueMemberUpdateWithWhereUniqueWithoutLeagueInput = {
+    where: LeagueMemberWhereUniqueInput
+    data: XOR<LeagueMemberUpdateWithoutLeagueInput, LeagueMemberUncheckedUpdateWithoutLeagueInput>
+  }
+
+  export type LeagueMemberUpdateManyWithWhereWithoutLeagueInput = {
+    where: LeagueMemberScalarWhereInput
+    data: XOR<LeagueMemberUpdateManyMutationInput, LeagueMemberUncheckedUpdateManyWithoutLeagueInput>
+  }
+
+  export type RoundUpsertWithWhereUniqueWithoutLeagueInput = {
+    where: RoundWhereUniqueInput
+    update: XOR<RoundUpdateWithoutLeagueInput, RoundUncheckedUpdateWithoutLeagueInput>
+    create: XOR<RoundCreateWithoutLeagueInput, RoundUncheckedCreateWithoutLeagueInput>
+  }
+
+  export type RoundUpdateWithWhereUniqueWithoutLeagueInput = {
+    where: RoundWhereUniqueInput
+    data: XOR<RoundUpdateWithoutLeagueInput, RoundUncheckedUpdateWithoutLeagueInput>
+  }
+
+  export type RoundUpdateManyWithWhereWithoutLeagueInput = {
+    where: RoundScalarWhereInput
+    data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyWithoutLeagueInput>
+  }
+
+  export type RoundScalarWhereInput = {
+    AND?: RoundScalarWhereInput | RoundScalarWhereInput[]
+    OR?: RoundScalarWhereInput[]
+    NOT?: RoundScalarWhereInput | RoundScalarWhereInput[]
+    id?: StringFilter<"Round"> | string
+    roundNumber?: IntFilter<"Round"> | number
+    themeName?: StringFilter<"Round"> | string
+    themeDescription?: StringNullableFilter<"Round"> | string | null
+    status?: EnumRoundStatusFilter<"Round"> | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFilter<"Round"> | Date | string
+    votingDeadline?: DateTimeFilter<"Round"> | Date | string
+    playlistUrl?: StringNullableFilter<"Round"> | string | null
+    createdAt?: DateTimeFilter<"Round"> | Date | string
+    updatedAt?: DateTimeFilter<"Round"> | Date | string
+    leagueId?: StringFilter<"Round"> | string
+  }
+
+  export type LeagueCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creator: UserCreateNestedOneWithoutCreatedLeaguesInput
+    rounds?: RoundCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueUncheckedCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creatorId: string
+    rounds?: RoundUncheckedCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueCreateOrConnectWithoutMembersInput = {
+    where: LeagueWhereUniqueInput
+    create: XOR<LeagueCreateWithoutMembersInput, LeagueUncheckedCreateWithoutMembersInput>
+  }
+
+  export type UserCreateWithoutLeagueMembershipsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLeagueMembershipsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLeagueMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLeagueMembershipsInput, UserUncheckedCreateWithoutLeagueMembershipsInput>
+  }
+
+  export type LeagueUpsertWithoutMembersInput = {
+    update: XOR<LeagueUpdateWithoutMembersInput, LeagueUncheckedUpdateWithoutMembersInput>
+    create: XOR<LeagueCreateWithoutMembersInput, LeagueUncheckedCreateWithoutMembersInput>
+    where?: LeagueWhereInput
+  }
+
+  export type LeagueUpdateToOneWithWhereWithoutMembersInput = {
+    where?: LeagueWhereInput
+    data: XOR<LeagueUpdateWithoutMembersInput, LeagueUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type LeagueUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creator?: UserUpdateOneRequiredWithoutCreatedLeaguesNestedInput
+    rounds?: RoundUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creatorId?: StringFieldUpdateOperationsInput | string
+    rounds?: RoundUncheckedUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type UserUpsertWithoutLeagueMembershipsInput = {
+    update: XOR<UserUpdateWithoutLeagueMembershipsInput, UserUncheckedUpdateWithoutLeagueMembershipsInput>
+    create: XOR<UserCreateWithoutLeagueMembershipsInput, UserUncheckedCreateWithoutLeagueMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLeagueMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLeagueMembershipsInput, UserUncheckedUpdateWithoutLeagueMembershipsInput>
+  }
+
+  export type UserUpdateWithoutLeagueMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLeagueMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type LeagueCreateWithoutRoundsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creator: UserCreateNestedOneWithoutCreatedLeaguesInput
+    members?: LeagueMemberCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueUncheckedCreateWithoutRoundsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+    creatorId: string
+    members?: LeagueMemberUncheckedCreateNestedManyWithoutLeagueInput
+  }
+
+  export type LeagueCreateOrConnectWithoutRoundsInput = {
+    where: LeagueWhereUniqueInput
+    create: XOR<LeagueCreateWithoutRoundsInput, LeagueUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type SubmissionCreateWithoutRoundInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutSubmissionsInput
+    votes?: VoteCreateNestedManyWithoutSubmissionInput
+    comments?: CommentCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutRoundInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    userId: string
+    votes?: VoteUncheckedCreateNestedManyWithoutSubmissionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionCreateOrConnectWithoutRoundInput = {
+    where: SubmissionWhereUniqueInput
+    create: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type SubmissionCreateManyRoundInputEnvelope = {
+    data: SubmissionCreateManyRoundInput | SubmissionCreateManyRoundInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeagueUpsertWithoutRoundsInput = {
+    update: XOR<LeagueUpdateWithoutRoundsInput, LeagueUncheckedUpdateWithoutRoundsInput>
+    create: XOR<LeagueCreateWithoutRoundsInput, LeagueUncheckedCreateWithoutRoundsInput>
+    where?: LeagueWhereInput
+  }
+
+  export type LeagueUpdateToOneWithWhereWithoutRoundsInput = {
+    where?: LeagueWhereInput
+    data: XOR<LeagueUpdateWithoutRoundsInput, LeagueUncheckedUpdateWithoutRoundsInput>
+  }
+
+  export type LeagueUpdateWithoutRoundsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creator?: UserUpdateOneRequiredWithoutCreatedLeaguesNestedInput
+    members?: LeagueMemberUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueUncheckedUpdateWithoutRoundsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    creatorId?: StringFieldUpdateOperationsInput | string
+    members?: LeagueMemberUncheckedUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type SubmissionUpsertWithWhereUniqueWithoutRoundInput = {
+    where: SubmissionWhereUniqueInput
+    update: XOR<SubmissionUpdateWithoutRoundInput, SubmissionUncheckedUpdateWithoutRoundInput>
+    create: XOR<SubmissionCreateWithoutRoundInput, SubmissionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type SubmissionUpdateWithWhereUniqueWithoutRoundInput = {
+    where: SubmissionWhereUniqueInput
+    data: XOR<SubmissionUpdateWithoutRoundInput, SubmissionUncheckedUpdateWithoutRoundInput>
+  }
+
+  export type SubmissionUpdateManyWithWhereWithoutRoundInput = {
+    where: SubmissionScalarWhereInput
+    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutRoundInput>
+  }
+
+  export type RoundCreateWithoutSubmissionsInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    league: LeagueCreateNestedOneWithoutRoundsInput
+  }
+
+  export type RoundUncheckedCreateWithoutSubmissionsInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leagueId: string
+  }
+
+  export type RoundCreateOrConnectWithoutSubmissionsInput = {
+    where: RoundWhereUniqueInput
+    create: XOR<RoundCreateWithoutSubmissionsInput, RoundUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type UserCreateWithoutSubmissionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSubmissionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSubmissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type VoteCreateWithoutSubmissionInput = {
+    id?: string
+    points: number
+    roundId: string
+    voter: UserCreateNestedOneWithoutVotesInput
+  }
+
+  export type VoteUncheckedCreateWithoutSubmissionInput = {
+    id?: string
+    points: number
+    roundId: string
+    voterId: string
+  }
+
+  export type VoteCreateOrConnectWithoutSubmissionInput = {
+    where: VoteWhereUniqueInput
+    create: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type VoteCreateManySubmissionInputEnvelope = {
+    data: VoteCreateManySubmissionInput | VoteCreateManySubmissionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommentCreateWithoutSubmissionInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCommentsInput
+  }
+
+  export type CommentUncheckedCreateWithoutSubmissionInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type CommentCreateOrConnectWithoutSubmissionInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type CommentCreateManySubmissionInputEnvelope = {
+    data: CommentCreateManySubmissionInput | CommentCreateManySubmissionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RoundUpsertWithoutSubmissionsInput = {
+    update: XOR<RoundUpdateWithoutSubmissionsInput, RoundUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<RoundCreateWithoutSubmissionsInput, RoundUncheckedCreateWithoutSubmissionsInput>
+    where?: RoundWhereInput
+  }
+
+  export type RoundUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: RoundWhereInput
+    data: XOR<RoundUpdateWithoutSubmissionsInput, RoundUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type RoundUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    league?: LeagueUpdateOneRequiredWithoutRoundsNestedInput
+  }
+
+  export type RoundUncheckedUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leagueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutSubmissionsInput = {
+    update: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type UserUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type VoteUpsertWithWhereUniqueWithoutSubmissionInput = {
+    where: VoteWhereUniqueInput
+    update: XOR<VoteUpdateWithoutSubmissionInput, VoteUncheckedUpdateWithoutSubmissionInput>
+    create: XOR<VoteCreateWithoutSubmissionInput, VoteUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type VoteUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: VoteWhereUniqueInput
+    data: XOR<VoteUpdateWithoutSubmissionInput, VoteUncheckedUpdateWithoutSubmissionInput>
+  }
+
+  export type VoteUpdateManyWithWhereWithoutSubmissionInput = {
+    where: VoteScalarWhereInput
+    data: XOR<VoteUpdateManyMutationInput, VoteUncheckedUpdateManyWithoutSubmissionInput>
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutSubmissionInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutSubmissionInput, CommentUncheckedUpdateWithoutSubmissionInput>
+    create: XOR<CommentCreateWithoutSubmissionInput, CommentUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutSubmissionInput, CommentUncheckedUpdateWithoutSubmissionInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutSubmissionInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutSubmissionInput>
+  }
+
+  export type UserCreateWithoutVotesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutVotesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutVotesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+  }
+
+  export type SubmissionCreateWithoutVotesInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    round: RoundCreateNestedOneWithoutSubmissionsInput
+    user: UserCreateNestedOneWithoutSubmissionsInput
+    comments?: CommentCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutVotesInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+    userId: string
+    comments?: CommentUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionCreateOrConnectWithoutVotesInput = {
+    where: SubmissionWhereUniqueInput
+    create: XOR<SubmissionCreateWithoutVotesInput, SubmissionUncheckedCreateWithoutVotesInput>
+  }
+
+  export type UserUpsertWithoutVotesInput = {
+    update: XOR<UserUpdateWithoutVotesInput, UserUncheckedUpdateWithoutVotesInput>
+    create: XOR<UserCreateWithoutVotesInput, UserUncheckedCreateWithoutVotesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVotesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVotesInput, UserUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type UserUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SubmissionUpsertWithoutVotesInput = {
+    update: XOR<SubmissionUpdateWithoutVotesInput, SubmissionUncheckedUpdateWithoutVotesInput>
+    create: XOR<SubmissionCreateWithoutVotesInput, SubmissionUncheckedCreateWithoutVotesInput>
+    where?: SubmissionWhereInput
+  }
+
+  export type SubmissionUpdateToOneWithWhereWithoutVotesInput = {
+    where?: SubmissionWhereInput
+    data: XOR<SubmissionUpdateWithoutVotesInput, SubmissionUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type SubmissionUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    round?: RoundUpdateOneRequiredWithoutSubmissionsNestedInput
+    user?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+    comments?: CommentUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutVotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    comments?: CommentUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionCreateWithoutCommentsInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    round: RoundCreateNestedOneWithoutSubmissionsInput
+    user: UserCreateNestedOneWithoutSubmissionsInput
+    votes?: VoteCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+    userId: string
+    votes?: VoteUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionCreateOrConnectWithoutCommentsInput = {
+    where: SubmissionWhereUniqueInput
+    create: XOR<SubmissionCreateWithoutCommentsInput, SubmissionUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type UserCreateWithoutCommentsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+    votes?: VoteCreateNestedManyWithoutVoterInput
+  }
+
+  export type UserUncheckedCreateWithoutCommentsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    createdLeagues?: LeagueUncheckedCreateNestedManyWithoutCreatorInput
+    leagueMemberships?: LeagueMemberUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    votes?: VoteUncheckedCreateNestedManyWithoutVoterInput
+  }
+
+  export type UserCreateOrConnectWithoutCommentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type SubmissionUpsertWithoutCommentsInput = {
+    update: XOR<SubmissionUpdateWithoutCommentsInput, SubmissionUncheckedUpdateWithoutCommentsInput>
+    create: XOR<SubmissionCreateWithoutCommentsInput, SubmissionUncheckedCreateWithoutCommentsInput>
+    where?: SubmissionWhereInput
+  }
+
+  export type SubmissionUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: SubmissionWhereInput
+    data: XOR<SubmissionUpdateWithoutCommentsInput, SubmissionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type SubmissionUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    round?: RoundUpdateOneRequiredWithoutSubmissionsNestedInput
+    user?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+    votes?: VoteUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    votes?: VoteUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type UserUpsertWithoutCommentsInput = {
+    update: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
+    create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type UserUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    votes?: VoteUpdateManyWithoutVoterNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    createdLeagues?: LeagueUncheckedUpdateManyWithoutCreatorNestedInput
+    leagueMemberships?: LeagueMemberUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    votes?: VoteUncheckedUpdateManyWithoutVoterNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -7189,6 +19842,56 @@ export namespace Prisma {
     password?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type LeagueCreateManyCreatorInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.LeagueStatus
+    inviteCode: string
+    songsPerRound?: number
+    maxMembers?: number
+    allowDownvotes?: boolean
+    downvotePointValue?: number
+    upvotePointsPerRound?: number
+    isPublic?: boolean
+  }
+
+  export type LeagueMemberCreateManyUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    leagueId: string
+  }
+
+  export type SubmissionCreateManyUserInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    roundId: string
+  }
+
+  export type VoteCreateManyVoterInput = {
+    id?: string
+    points: number
+    roundId: string
+    submissionId: string
+  }
+
+  export type CommentCreateManyUserInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    submissionId: string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -7264,6 +19967,358 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeagueUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    members?: LeagueMemberUpdateManyWithoutLeagueNestedInput
+    rounds?: RoundUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueUncheckedUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    members?: LeagueMemberUncheckedUpdateManyWithoutLeagueNestedInput
+    rounds?: RoundUncheckedUpdateManyWithoutLeagueNestedInput
+  }
+
+  export type LeagueUncheckedUpdateManyWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumLeagueStatusFieldUpdateOperationsInput | $Enums.LeagueStatus
+    inviteCode?: StringFieldUpdateOperationsInput | string
+    songsPerRound?: IntFieldUpdateOperationsInput | number
+    maxMembers?: IntFieldUpdateOperationsInput | number
+    allowDownvotes?: BoolFieldUpdateOperationsInput | boolean
+    downvotePointValue?: IntFieldUpdateOperationsInput | number
+    upvotePointsPerRound?: IntFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type LeagueMemberUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    league?: LeagueUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type LeagueMemberUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    leagueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LeagueMemberUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    leagueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubmissionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    round?: RoundUpdateOneRequiredWithoutSubmissionsNestedInput
+    votes?: VoteUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+    votes?: VoteUncheckedUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteUpdateWithoutVoterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    submission?: SubmissionUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateWithoutVoterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteUncheckedUpdateManyWithoutVoterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: SubmissionUpdateOneRequiredWithoutCommentsNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LeagueMemberCreateManyLeagueInput = {
+    id?: string
+    joinedAt?: Date | string
+    role?: $Enums.MemberRole
+    userId: string
+  }
+
+  export type RoundCreateManyLeagueInput = {
+    id?: string
+    roundNumber: number
+    themeName: string
+    themeDescription?: string | null
+    status?: $Enums.RoundStatus
+    submissionDeadline: Date | string
+    votingDeadline: Date | string
+    playlistUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LeagueMemberUpdateWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    user?: UserUpdateOneRequiredWithoutLeagueMembershipsNestedInput
+  }
+
+  export type LeagueMemberUncheckedUpdateWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LeagueMemberUncheckedUpdateManyWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type RoundUpdateWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: SubmissionUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundUncheckedUpdateWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: SubmissionUncheckedUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundUncheckedUpdateManyWithoutLeagueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roundNumber?: IntFieldUpdateOperationsInput | number
+    themeName?: StringFieldUpdateOperationsInput | string
+    themeDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRoundStatusFieldUpdateOperationsInput | $Enums.RoundStatus
+    submissionDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    votingDeadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    playlistUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionCreateManyRoundInput = {
+    id?: string
+    spotifyTrackId: string
+    trackName: string
+    artistName: string
+    albumName: string
+    albumArtUrl: string
+    previewUrl?: string | null
+    trackDurationMs: number
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type SubmissionUpdateWithoutRoundInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+    votes?: VoteUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutRoundInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    votes?: VoteUncheckedUpdateManyWithoutSubmissionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateManyWithoutRoundInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spotifyTrackId?: StringFieldUpdateOperationsInput | string
+    trackName?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumName?: StringFieldUpdateOperationsInput | string
+    albumArtUrl?: StringFieldUpdateOperationsInput | string
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    trackDurationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteCreateManySubmissionInput = {
+    id?: string
+    points: number
+    roundId: string
+    voterId: string
+  }
+
+  export type CommentCreateManySubmissionInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    userId: string
+  }
+
+  export type VoteUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voter?: UserUpdateOneRequiredWithoutVotesNestedInput
+  }
+
+  export type VoteUncheckedUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VoteUncheckedUpdateManyWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    roundId?: StringFieldUpdateOperationsInput | string
+    voterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CommentUncheckedUpdateManyWithoutSubmissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -167,6 +167,82 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.LeagueScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  status: 'status',
+  inviteCode: 'inviteCode',
+  songsPerRound: 'songsPerRound',
+  maxMembers: 'maxMembers',
+  allowDownvotes: 'allowDownvotes',
+  downvotePointValue: 'downvotePointValue',
+  upvotePointsPerRound: 'upvotePointsPerRound',
+  isPublic: 'isPublic',
+  creatorId: 'creatorId'
+};
+
+exports.Prisma.LeagueMemberScalarFieldEnum = {
+  id: 'id',
+  joinedAt: 'joinedAt',
+  role: 'role',
+  leagueId: 'leagueId',
+  userId: 'userId'
+};
+
+exports.Prisma.RoundScalarFieldEnum = {
+  id: 'id',
+  roundNumber: 'roundNumber',
+  themeName: 'themeName',
+  themeDescription: 'themeDescription',
+  status: 'status',
+  submissionDeadline: 'submissionDeadline',
+  votingDeadline: 'votingDeadline',
+  playlistUrl: 'playlistUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  leagueId: 'leagueId'
+};
+
+exports.Prisma.SubmissionScalarFieldEnum = {
+  id: 'id',
+  spotifyTrackId: 'spotifyTrackId',
+  trackName: 'trackName',
+  artistName: 'artistName',
+  albumName: 'albumName',
+  albumArtUrl: 'albumArtUrl',
+  previewUrl: 'previewUrl',
+  trackDurationMs: 'trackDurationMs',
+  createdAt: 'createdAt',
+  roundId: 'roundId',
+  userId: 'userId'
+};
+
+exports.Prisma.VoteScalarFieldEnum = {
+  id: 'id',
+  points: 'points',
+  roundId: 'roundId',
+  voterId: 'voterId',
+  submissionId: 'submissionId'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  createdAt: 'createdAt',
+  submissionId: 'submissionId',
+  userId: 'userId'
+};
+
+exports.Prisma.ThemeTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -181,13 +257,38 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.LeagueStatus = exports.$Enums.LeagueStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
 
+exports.MemberRole = exports.$Enums.MemberRole = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+};
+
+exports.RoundStatus = exports.$Enums.RoundStatus = {
+  SUBMISSION: 'SUBMISSION',
+  LISTENING: 'LISTENING',
+  VOTING: 'VOTING',
+  RESULTS: 'RESULTS',
+  COMPLETED: 'COMPLETED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  League: 'League',
+  LeagueMember: 'LeagueMember',
+  Round: 'Round',
+  Submission: 'Submission',
+  Vote: 'Vote',
+  Comment: 'Comment',
+  ThemeTemplate: 'ThemeTemplate'
 };
 
 /**

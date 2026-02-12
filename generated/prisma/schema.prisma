@@ -26,6 +26,13 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  // Music league relations
+  createdLeagues    League[]
+  leagueMemberships LeagueMember[]
+  submissions       Submission[]
+  votes             Vote[]
+  comments          Comment[]
+
   @@unique([email])
   @@map("user")
 }
@@ -73,4 +80,154 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+// ─── Music League Models ─────────────────────────────────
+
+enum LeagueStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum RoundStatus {
+  SUBMISSION
+  LISTENING
+  VOTING
+  RESULTS
+  COMPLETED
+}
+
+model League {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  status      LeagueStatus @default(ACTIVE)
+  inviteCode  String       @unique
+
+  // Settings
+  songsPerRound        Int     @default(1)
+  maxMembers           Int     @default(20)
+  allowDownvotes       Boolean @default(false)
+  downvotePointValue   Int     @default(-1)
+  upvotePointsPerRound Int     @default(10)
+  isPublic             Boolean @default(false)
+
+  // Relations
+  creatorId String
+  creator   User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  members   LeagueMember[]
+  rounds    Round[]
+
+  @@index([creatorId])
+  @@index([inviteCode])
+  @@map("league")
+}
+
+model LeagueMember {
+  id       String     @id @default(cuid())
+  joinedAt DateTime   @default(now())
+  role     MemberRole @default(MEMBER)
+
+  leagueId String
+  league   League @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([leagueId, userId])
+  @@index([userId])
+  @@map("league_member")
+}
+
+model Round {
+  id                 String      @id @default(cuid())
+  roundNumber        Int
+  themeName          String
+  themeDescription   String?
+  status             RoundStatus @default(SUBMISSION)
+  submissionDeadline DateTime
+  votingDeadline     DateTime
+  playlistUrl        String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  leagueId    String
+  league      League       @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  submissions Submission[]
+
+  @@index([leagueId])
+  @@map("round")
+}
+
+model Submission {
+  id              String   @id @default(cuid())
+  spotifyTrackId  String
+  trackName       String
+  artistName      String
+  albumName       String
+  albumArtUrl     String
+  previewUrl      String?
+  trackDurationMs Int
+  createdAt       DateTime @default(now())
+
+  roundId  String
+  round    Round     @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  votes    Vote[]
+  comments Comment[]
+
+  @@unique([roundId, userId, spotifyTrackId])
+  @@index([roundId])
+  @@index([userId])
+  @@map("submission")
+}
+
+model Vote {
+  id     String @id @default(cuid())
+  points Int
+
+  roundId      String
+  voterId      String
+  voter        User       @relation(fields: [voterId], references: [id], onDelete: Cascade)
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roundId, voterId, submissionId])
+  @@index([submissionId])
+  @@index([voterId])
+  @@map("vote")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([submissionId, userId])
+  @@index([submissionId])
+  @@index([userId])
+  @@map("comment")
+}
+
+model ThemeTemplate {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  category    String
+
+  @@map("theme_template")
 }
