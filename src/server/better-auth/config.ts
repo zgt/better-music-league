@@ -19,6 +19,10 @@ export const auth = betterAuth({
       clientId: env.BETTER_AUTH_DISCORD_CLIENT_ID,
       clientSecret: env.BETTER_AUTH_DISCORD_CLIENT_SECRET,
     },
+    spotify: {
+      clientId: env.SPOTIFY_CLIENT_ID,
+      clientSecret: env.SPOTIFY_CLIENT_SECRET,
+    },
   },
   plugins: [nextCookies()],
 });
