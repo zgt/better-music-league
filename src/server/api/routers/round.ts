@@ -11,6 +11,7 @@ import {
   notifyVotingOpen,
   notifyResultsAvailable,
 } from "~/server/email/notifications";
+import { createPlaylistForUser } from "~/server/spotify/user-client";
 
 const PHASE_ORDER = [
   "SUBMISSION",
@@ -329,6 +330,31 @@ export const roundRouter = createTRPCRouter({
       });
     }),
 
+  getLatestRound: protectedProcedure
+    .input(z.object({ leagueId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const member = await ctx.db.leagueMember.findUnique({
+        where: {
+          leagueId_userId: {
+            leagueId: input.leagueId,
+            userId: ctx.session.user.id,
+          },
+        },
+      });
+
+      if (!member) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Not a member of this league",
+        });
+      }
+
+      return ctx.db.round.findFirst({
+        where: { leagueId: input.leagueId },
+        orderBy: { roundNumber: "desc" },
+      });
+    }),
+
   setPlaylistUrl: protectedProcedure
     .input(
       z.object({
@@ -364,6 +390,79 @@ export const roundRouter = createTRPCRouter({
         where: { id: input.roundId },
         data: { playlistUrl: input.playlistUrl || null },
       });
+    }),
+
+  generatePlaylist: protectedProcedure
+    .input(z.object({ roundId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const round = await ctx.db.round.findUnique({
+        where: { id: input.roundId },
+        include: {
+          league: {
+            include: { members: { select: { userId: true, role: true } } },
+          },
+          submissions: {
+            select: { spotifyTrackId: true },
+          },
+        },
+      });
+
+      if (!round) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Round not found" });
+      }
+
+      // Verify OWNER/ADMIN
+      const member = round.league.members.find(
+        (m) => m.userId === ctx.session.user.id,
+      );
+      if (!member || (member.role !== "OWNER" && member.role !== "ADMIN")) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only owners and admins can generate playlists",
+        });
+      }
+
+      // Create playlist
+      const trackUris = round.submissions.map(
+        (s) => `spotify:track:${s.spotifyTrackId}`,
+      );
+
+      const playlistName = `${round.league.name} - Round ${round.roundNumber}: ${round.themeName}`;
+      const description = `Songs submitted for ${round.themeName}`;
+
+      try {
+        const playlistUrl = await createPlaylistForUser(
+          ctx.session.user.id,
+          playlistName,
+          description,
+          trackUris,
+        );
+
+        // Update round
+        await ctx.db.round.update({
+          where: { id: input.roundId },
+          data: { playlistUrl },
+        });
+
+        return { playlistUrl };
+      } catch (error) {
+        console.error("Error generating playlist:", error);
+        if (
+          error instanceof Error &&
+          error.message.includes("User does not have")
+        ) {
+          throw new TRPCError({
+            code: "PRECONDITION_FAILED",
+            message:
+              "You must connect your Spotify account to generate playlists.",
+          });
+        }
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            "Failed to generate playlist. Ensure your Spotify account is connected.",
+        });
+      }
     }),
 
   getPlaylistTracks: protectedProcedure

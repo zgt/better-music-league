@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { BookOpen } from "lucide-react";
 
@@ -41,6 +41,29 @@ export default function CreateRound() {
     toLocalDatetimeString(defaultVoting),
   );
   const [themeBrowserOpen, setThemeBrowserOpen] = useState(false);
+
+  const { data: latestRound } = api.round.getLatestRound.useQuery({
+    leagueId: params.leagueId,
+  });
+
+  useEffect(() => {
+    if (latestRound) {
+      const now = new Date();
+      const previousVotingEnd = new Date(latestRound.votingDeadline);
+
+      // Start from the later of now or previous round end
+      const baseDate = previousVotingEnd > now ? previousVotingEnd : now;
+
+      const newSubmission = new Date(baseDate);
+      newSubmission.setDate(newSubmission.getDate() + 3);
+
+      const newVoting = new Date(baseDate);
+      newVoting.setDate(newVoting.getDate() + 5);
+
+      setSubmissionDeadline(toLocalDatetimeString(newSubmission));
+      setVotingDeadline(toLocalDatetimeString(newVoting));
+    }
+  }, [latestRound]);
 
   const createRound = api.round.create.useMutation({
     onSuccess: (round) => {

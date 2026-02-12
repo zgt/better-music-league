@@ -38,6 +38,11 @@ export const userRouter = createTRPCRouter({
         image: true,
         createdAt: true,
         notificationPreferences: true,
+        accounts: {
+          select: {
+            providerId: true,
+          },
+        },
       },
     });
 

@@ -12,6 +12,7 @@ import {
   ListMusic,
   Music2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { api } from "~/trpc/react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -143,6 +144,19 @@ export default function RoundDetail() {
       void utils.round.getById.invalidate({ roundId: params.roundId });
       setPlaylistUrlSaved(true);
       setTimeout(() => setPlaylistUrlSaved(false), 2000);
+    },
+  });
+
+  const generatePlaylist = api.round.generatePlaylist.useMutation({
+    onSuccess: (data) => {
+      void utils.round.getById.invalidate({ roundId: params.roundId });
+      setPlaylistUrlInput(data.playlistUrl);
+      setPlaylistUrlSaved(true);
+      setTimeout(() => setPlaylistUrlSaved(false), 2000);
+      toast.success("Playlist generated successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
@@ -297,9 +311,21 @@ export default function RoundDetail() {
                     {setPlaylistUrl.error.message}
                   </p>
                 )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={() =>
+                    generatePlaylist.mutate({ roundId: params.roundId })
+                  }
+                  loading={generatePlaylist.isPending}
+                >
+                  <Music2 className="mr-2 h-4 w-4" />
+                  Auto-generate Playlist on Spotify
+                </Button>
                 <p className="text-muted-foreground text-xs">
-                  Create a playlist on Spotify, then paste the link here.
-                  Members will see this on the playlist page.
+                  Connect your Spotify account to auto-generate a playlist, or
+                  manually create one and paste the link above.
                 </p>
               </div>
 

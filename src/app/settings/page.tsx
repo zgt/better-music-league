@@ -152,6 +152,40 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
+      {/* Connected Accounts */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Connected Accounts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium">Spotify</p>
+              <p className="text-sm text-muted-foreground">
+                Connect your Spotify account to enable playlist generation.
+              </p>
+            </div>
+            {profile.accounts.some((a) => a.providerId === "spotify") ? (
+              <Button variant="outline" disabled>
+                Connected
+              </Button>
+            ) : (
+              <Button
+                variant="default"
+                onClick={async () => {
+                  await authClient.signIn.social({
+                    provider: "spotify",
+                    callbackURL: "/settings",
+                  });
+                }}
+              >
+                Connect Spotify
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Danger Zone */}
       <Card>
         <CardHeader>
