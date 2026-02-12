@@ -1,5 +1,8 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { leagueRouter } from "~/server/api/routers/league";
+import { roundRouter } from "~/server/api/routers/round";
 import { spotifyRouter } from "~/server/api/routers/spotify";
+import { themeRouter } from "~/server/api/routers/theme";
 
 /**
  * This is the primary router for your server.
@@ -7,7 +10,10 @@ import { spotifyRouter } from "~/server/api/routers/spotify";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
+  league: leagueRouter,
+  round: roundRouter,
   spotify: spotifyRouter,
+  theme: themeRouter,
 });
 
 // export type definition of API
