@@ -6,6 +6,11 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import {
+  notifyRoundStarted,
+  notifyVotingOpen,
+  notifyResultsAvailable,
+} from "~/server/email/notifications";
 
 const PHASE_ORDER = [
   "SUBMISSION",
@@ -70,7 +75,7 @@ export const roundRouter = createTRPCRouter({
 
       const roundNumber = (lastRound?.roundNumber ?? 0) + 1;
 
-      return ctx.db.round.create({
+      const round = await ctx.db.round.create({
         data: {
           leagueId: input.leagueId,
           roundNumber,
@@ -81,6 +86,11 @@ export const roundRouter = createTRPCRouter({
           status: "SUBMISSION",
         },
       });
+
+      // Send round-started notifications (fire and forget)
+      void notifyRoundStarted(round.id);
+
+      return round;
     }),
 
   getById: protectedProcedure
@@ -276,10 +286,19 @@ export const roundRouter = createTRPCRouter({
 
       const nextStatus = PHASE_ORDER[currentIndex + 1]!;
 
-      return ctx.db.round.update({
+      const updated = await ctx.db.round.update({
         where: { id: input.roundId },
         data: { status: nextStatus },
       });
+
+      // Send notifications based on new phase (fire and forget)
+      if (nextStatus === "VOTING") {
+        void notifyVotingOpen(updated.id);
+      } else if (nextStatus === "RESULTS") {
+        void notifyResultsAvailable(updated.id);
+      }
+
+      return updated;
     }),
 
   getCurrentRound: protectedProcedure

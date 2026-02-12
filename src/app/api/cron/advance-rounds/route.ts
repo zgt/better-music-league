@@ -1,6 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { db } from "~/server/db";
+import {
+  notifyVotingOpen,
+  notifyResultsAvailable,
+  sendSubmissionReminders,
+} from "~/server/email/notifications";
 
 export async function GET(req: NextRequest) {
   // Optionally verify a cron secret to prevent unauthorized access
@@ -24,9 +29,29 @@ export async function GET(req: NextRequest) {
   });
 
   // Advance LISTENING -> VOTING immediately
+  // Find rounds that are now LISTENING so we can notify
+  const listeningRounds = await db.round.findMany({
+    where: { status: "LISTENING" },
+    select: { id: true },
+  });
+
   const listeningAdvanced = await db.round.updateMany({
     where: { status: "LISTENING" },
     data: { status: "VOTING" },
+  });
+
+  // Send voting-open notifications
+  for (const round of listeningRounds) {
+    void notifyVotingOpen(round.id);
+  }
+
+  // Find rounds about to advance to RESULTS so we can notify
+  const votingRounds = await db.round.findMany({
+    where: {
+      status: "VOTING",
+      votingDeadline: { lte: now },
+    },
+    select: { id: true },
   });
 
   // Advance VOTING -> RESULTS when votingDeadline passes
@@ -37,6 +62,14 @@ export async function GET(req: NextRequest) {
     },
     data: { status: "RESULTS" },
   });
+
+  // Send results-available notifications
+  for (const round of votingRounds) {
+    void notifyResultsAvailable(round.id);
+  }
+
+  // Send submission reminders for rounds with deadlines within 24 hours
+  void sendSubmissionReminders();
 
   return NextResponse.json({
     advanced: {
