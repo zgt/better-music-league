@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Music2, Play, Pause, Search, Trash2, X } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Button } from "~/app/_components/ui/button";
-import { Card } from "~/app/_components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 
 interface SubmitSongProps {
   roundId: string;
@@ -55,7 +55,7 @@ function PreviewPlayer({ url }: { url: string }) {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent-hover"
+        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90"
       >
         {playing ? (
           <Pause className="h-3.5 w-3.5" />
@@ -155,190 +155,199 @@ export function SubmitSong({ roundId, songsPerRound }: SubmitSongProps) {
     <div className="space-y-4">
       {/* My submissions */}
       {mySubmissions && mySubmissions.length > 0 && (
-        <Card header={`Your Submissions (${submissionCount}/${songsPerRound})`}>
-          <div className="space-y-3">
-            {mySubmissions.map((sub) => (
-              <div
-                key={sub.id}
-                className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
-              >
-                {sub.albumArtUrl && (
-                  <Image
-                    src={sub.albumArtUrl}
-                    alt={sub.albumName}
-                    width={48}
-                    height={48}
-                    className="rounded"
-                  />
-                )}
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">
-                    {sub.trackName}
-                  </p>
-                  <p className="truncate text-xs text-text-muted">
-                    {sub.artistName} &middot; {sub.albumName}
-                  </p>
-                </div>
-                <span className="text-xs text-text-muted">
-                  {formatDuration(sub.trackDurationMs)}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => deleteMutation.mutate({ submissionId: sub.id })}
-                  loading={deleteMutation.isPending}
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Submissions ({submissionCount}/{songsPerRound})</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {mySubmissions.map((sub) => (
+                <div
+                  key={sub.id}
+                  className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
                 >
-                  <Trash2 className="h-4 w-4 text-danger" />
-                </Button>
-              </div>
-            ))}
-          </div>
+                  {sub.albumArtUrl && (
+                    <Image
+                      src={sub.albumArtUrl}
+                      alt={sub.albumName}
+                      width={48}
+                      height={48}
+                      className="rounded"
+                    />
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium">
+                      {sub.trackName}
+                    </p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {sub.artistName} &middot; {sub.albumName}
+                    </p>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {formatDuration(sub.trackDurationMs)}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => deleteMutation.mutate({ submissionId: sub.id })}
+                    loading={deleteMutation.isPending}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
         </Card>
       )}
 
       {/* Search + submit interface */}
       {canSubmit && !selectedTrack && (
         <Card>
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Music2 className="h-5 w-5 text-accent" />
-              <p className="text-sm font-medium">Search for a song</p>
-            </div>
-
-            <div ref={dropdownRef} className="relative">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setShowResults(true);
-                  }}
-                  onFocus={() => setShowResults(true)}
-                  placeholder="Search Spotify for a track..."
-                  className="w-full rounded-lg border border-border bg-bg-tertiary py-2 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                />
+          <CardContent className="pt-6">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Music2 className="h-5 w-5 text-primary" />
+                <p className="text-sm font-medium">Search for a song</p>
               </div>
 
-              {/* Search results dropdown */}
-              {showResults && debouncedQuery.length > 0 && (
-                <div className="absolute z-20 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-border bg-bg-secondary shadow-lg">
-                  {isSearching && (
-                    <div className="px-4 py-3 text-sm text-text-muted">
-                      Searching...
-                    </div>
-                  )}
-                  {!isSearching && searchResults?.length === 0 && (
-                    <div className="px-4 py-3 text-sm text-text-muted">
-                      No results found
-                    </div>
-                  )}
-                  {searchResults?.map((track) => (
-                    <button
-                      key={track.spotifyTrackId}
-                      type="button"
-                      onClick={() => handleSelect(track)}
-                      className="flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-bg-tertiary"
-                    >
-                      {track.albumArtUrl ? (
-                        <Image
-                          src={track.albumArtUrl}
-                          alt={track.albumName}
-                          width={40}
-                          height={40}
-                          className="rounded"
-                        />
-                      ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded bg-bg-tertiary">
-                          <Music2 className="h-4 w-4 text-text-muted" />
-                        </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium">
-                          {track.trackName}
-                        </p>
-                        <p className="truncate text-xs text-text-muted">
-                          {track.artistName} &middot; {track.albumName}
-                        </p>
-                      </div>
-                      <span className="shrink-0 text-xs text-text-muted">
-                        {formatDuration(track.trackDurationMs)}
-                      </span>
-                    </button>
-                  ))}
+              <div ref={dropdownRef} className="relative">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      setShowResults(true);
+                    }}
+                    onFocus={() => setShowResults(true)}
+                    placeholder="Search Spotify for a track..."
+                    className="w-full rounded-lg border border-border bg-muted py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:ring-ring focus:outline-none focus-visible:ring-1"
+                  />
                 </div>
-              )}
+
+                {/* Search results dropdown */}
+                {showResults && debouncedQuery.length > 0 && (
+                  <div className="absolute z-20 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-border bg-card shadow-lg">
+                    {isSearching && (
+                      <div className="px-4 py-3 text-sm text-muted-foreground">
+                        Searching...
+                      </div>
+                    )}
+                    {!isSearching && searchResults?.length === 0 && (
+                      <div className="px-4 py-3 text-sm text-muted-foreground">
+                        No results found
+                      </div>
+                    )}
+                    {searchResults?.map((track) => (
+                      <button
+                        key={track.spotifyTrackId}
+                        type="button"
+                        onClick={() => handleSelect(track)}
+                        className="flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-muted"
+                      >
+                        {track.albumArtUrl ? (
+                          <Image
+                            src={track.albumArtUrl}
+                            alt={track.albumName}
+                            width={40}
+                            height={40}
+                            className="rounded"
+                          />
+                        ) : (
+                          <div className="flex h-10 w-10 items-center justify-center rounded bg-muted">
+                            <Music2 className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-medium">
+                            {track.trackName}
+                          </p>
+                          <p className="truncate text-xs text-muted-foreground">
+                            {track.artistName} &middot; {track.albumName}
+                          </p>
+                        </div>
+                        <span className="shrink-0 text-xs text-muted-foreground">
+                          {formatDuration(track.trackDurationMs)}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       )}
 
       {/* Selected track confirmation */}
       {selectedTrack && (
         <Card>
-          <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              {selectedTrack.albumArtUrl ? (
-                <Image
-                  src={selectedTrack.albumArtUrl}
-                  alt={selectedTrack.albumName}
-                  width={120}
-                  height={120}
-                  className="rounded-lg"
-                />
-              ) : (
-                <div className="flex h-[120px] w-[120px] items-center justify-center rounded-lg bg-bg-tertiary">
-                  <Music2 className="h-8 w-8 text-text-muted" />
-                </div>
-              )}
-              <div className="min-w-0 flex-1 space-y-1">
-                <p className="text-lg font-semibold">{selectedTrack.trackName}</p>
-                <p className="text-sm text-text-muted">
-                  {selectedTrack.artistName}
-                </p>
-                <p className="text-sm text-text-muted">
-                  {selectedTrack.albumName}
-                </p>
-                <p className="text-xs text-text-muted">
-                  {formatDuration(selectedTrack.trackDurationMs)}
-                </p>
-                {selectedTrack.previewUrl && (
-                  <div className="pt-1">
-                    <PreviewPlayer url={selectedTrack.previewUrl} />
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                {selectedTrack.albumArtUrl ? (
+                  <Image
+                    src={selectedTrack.albumArtUrl}
+                    alt={selectedTrack.albumName}
+                    width={120}
+                    height={120}
+                    className="rounded-lg"
+                  />
+                ) : (
+                  <div className="flex h-[120px] w-[120px] items-center justify-center rounded-lg bg-muted">
+                    <Music2 className="h-8 w-8 text-muted-foreground" />
                   </div>
                 )}
+                <div className="min-w-0 flex-1 space-y-1">
+                  <p className="text-lg font-semibold">{selectedTrack.trackName}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedTrack.artistName}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedTrack.albumName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatDuration(selectedTrack.trackDurationMs)}
+                  </p>
+                  {selectedTrack.previewUrl && (
+                    <div className="pt-1">
+                      <PreviewPlayer url={selectedTrack.previewUrl} />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {submitMutation.error && (
+                <p className="text-sm text-destructive">
+                  {submitMutation.error.message}
+                </p>
+              )}
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleSubmit}
+                  loading={submitMutation.isPending}
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => setSelectedTrack(null)}
+                >
+                  <X className="h-4 w-4" />
+                  Cancel
+                </Button>
               </div>
             </div>
-
-            {submitMutation.error && (
-              <p className="text-sm text-danger">
-                {submitMutation.error.message}
-              </p>
-            )}
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleSubmit}
-                loading={submitMutation.isPending}
-              >
-                Submit
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedTrack(null)}
-              >
-                <X className="h-4 w-4" />
-                Cancel
-              </Button>
-            </div>
-          </div>
+          </CardContent>
         </Card>
       )}
 
       {/* All slots filled message */}
       {!canSubmit && mySubmissions && mySubmissions.length > 0 && !selectedTrack && (
-        <p className="text-center text-sm text-text-muted">
+        <p className="text-center text-sm text-muted-foreground">
           You&apos;ve submitted all {songsPerRound} song(s) for this round.
         </p>
       )}

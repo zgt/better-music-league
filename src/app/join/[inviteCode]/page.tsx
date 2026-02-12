@@ -4,8 +4,8 @@ import { useParams, useRouter } from "next/navigation";
 import { Users } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "~/app/_components/ui/card";
-import { Button } from "~/app/_components/ui/button";
+import { Card, CardContent } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
 
 export default function JoinLeague() {
   const params = useParams<{ inviteCode: string }>();
@@ -27,32 +27,34 @@ export default function JoinLeague() {
   return (
     <div className="mx-auto max-w-md px-4 py-16">
       <Card>
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-accent/10">
-            <Users className="h-7 w-7 text-accent" />
+        <CardContent className="pt-6">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+              <Users className="h-7 w-7 text-primary" />
+            </div>
+
+            <div>
+              <h1 className="text-xl font-bold">Join a League</h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                You&apos;ve been invited to join a music league
+              </p>
+            </div>
+
+            {joinLeague.error && !isAlreadyMember && (
+              <p className="text-sm text-destructive">{joinLeague.error.message}</p>
+            )}
+
+            {isAlreadyMember ? (
+              <p className="text-sm text-muted-foreground">
+                You&apos;re already a member of this league.
+              </p>
+            ) : (
+              <Button onClick={handleJoin} loading={joinLeague.isPending} className="w-full">
+                Join League
+              </Button>
+            )}
           </div>
-
-          <div>
-            <h1 className="text-xl font-bold">Join a League</h1>
-            <p className="mt-1 text-sm text-text-muted">
-              You&apos;ve been invited to join a music league
-            </p>
-          </div>
-
-          {joinLeague.error && !isAlreadyMember && (
-            <p className="text-sm text-danger">{joinLeague.error.message}</p>
-          )}
-
-          {isAlreadyMember ? (
-            <p className="text-sm text-text-muted">
-              You&apos;re already a member of this league.
-            </p>
-          ) : (
-            <Button onClick={handleJoin} loading={joinLeague.isPending} className="w-full">
-              Join League
-            </Button>
-          )}
-        </div>
+        </CardContent>
       </Card>
     </div>
   );

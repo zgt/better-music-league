@@ -2,16 +2,33 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Copy, Check, Music2, Settings, Plus, LogOut, Trash2, Trophy, Users } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "~/app/_components/ui/card";
-import { Button } from "~/app/_components/ui/button";
-import { Badge } from "~/app/_components/ui/badge";
-import { Input } from "~/app/_components/ui/input";
-import { Modal } from "~/app/_components/ui/modal";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
+import { FormInput } from "~/components/ui/form-input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "~/components/ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Textarea } from "~/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
+import { Separator } from "~/components/ui/separator";
 import { LeagueStandings } from "~/app/_components/results/league-standings";
 
 const roleLabels: Record<string, string> = {
@@ -79,8 +96,8 @@ export default function LeagueDetail() {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-bg-tertiary" />
-          <div className="h-4 w-72 rounded bg-bg-tertiary" />
+          <div className="h-8 w-48 rounded bg-muted" />
+          <div className="h-4 w-72 rounded bg-muted" />
         </div>
       </div>
     );
@@ -90,18 +107,18 @@ export default function LeagueDetail() {
     return (
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary">
-            <Users className="h-6 w-6 text-text-muted" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+            <Users className="h-6 w-6 text-muted-foreground" />
           </div>
           <div>
-            <p className="font-medium text-text-secondary">League not found</p>
-            <p className="mt-1 text-sm text-text-muted">
+            <p className="font-medium text-muted-foreground">League not found</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               This league doesn&apos;t exist or you&apos;re not a member.
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
           >
             Back to Dashboard
           </Link>
@@ -128,9 +145,9 @@ export default function LeagueDetail() {
         <div>
           <h1 className="text-2xl font-bold">{league.name}</h1>
           {league.description && (
-            <p className="mt-1 text-text-muted">{league.description}</p>
+            <p className="mt-1 text-muted-foreground">{league.description}</p>
           )}
-          <p className="mt-2 flex items-center gap-1.5 text-sm text-text-muted">
+          <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
             <Users className="h-4 w-4" />
             {league._count.members} member{league._count.members !== 1 && "s"}
           </p>
@@ -144,30 +161,32 @@ export default function LeagueDetail() {
 
       {/* Invite Link */}
       <Card className="mb-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-medium text-text-primary">Invite Link</p>
-            <p className="mt-0.5 text-sm text-text-muted break-all">{inviteUrl}</p>
+        <CardContent className="pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-foreground">Invite Link</p>
+              <p className="mt-0.5 text-sm text-muted-foreground break-all">{inviteUrl}</p>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="secondary" size="sm" onClick={handleCopyInvite}>
+                {copied ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+                {copied ? "Copied" : "Copy"}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => regenerateCode.mutate({ leagueId: league.id })}
+                loading={regenerateCode.isPending}
+              >
+                Regenerate
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Button variant="secondary" size="sm" onClick={handleCopyInvite}>
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
-              {copied ? "Copied" : "Copy"}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => regenerateCode.mutate({ leagueId: league.id })}
-              loading={regenerateCode.isPending}
-            >
-              Regenerate
-            </Button>
-          </div>
-        </div>
+        </CardContent>
       </Card>
 
       <div className="grid gap-6 lg:grid-cols-3">
@@ -177,10 +196,10 @@ export default function LeagueDetail() {
           <LeagueStandings leagueId={league.id} />
 
           {/* Rounds */}
-          <Card
-            header={
+          <Card>
+            <CardHeader>
               <div className="flex items-center justify-between">
-                <span>Rounds</span>
+                <CardTitle>Rounds</CardTitle>
                 <Link href={`/leagues/${league.id}/rounds/create`}>
                   <Button size="sm">
                     <Plus className="h-3.5 w-3.5" />
@@ -188,89 +207,89 @@ export default function LeagueDetail() {
                   </Button>
                 </Link>
               </div>
-            }
-          >
-            {league.rounds.length > 0 ? (
-              <div className="space-y-3">
-                {league.rounds.map((round) => {
-                  const isScored = round.status === "RESULTS" || round.status === "COMPLETED";
-                  const winner = isScored ? getRoundWinner(round.submissions) : null;
+            </CardHeader>
+            <CardContent>
+              {league.rounds.length > 0 ? (
+                <div className="space-y-3">
+                  {league.rounds.map((round) => {
+                    const isScored = round.status === "RESULTS" || round.status === "COMPLETED";
+                    const winner = isScored ? getRoundWinner(round.submissions) : null;
+                    const phase = statusToBadgePhase[round.status] ?? "results";
 
-                  return (
-                    <Link
-                      key={round.id}
-                      href={`/leagues/${league.id}/rounds/${round.id}`}
-                      className="flex items-center justify-between rounded-lg border border-border/50 p-3 transition-colors hover:bg-bg-tertiary"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium">
-                          Round {round.roundNumber}: {round.themeName}
-                        </p>
-                        {winner && (
-                          <p className="mt-0.5 flex items-center gap-1 text-sm text-text-muted">
-                            <Trophy className="h-3 w-3 text-yellow-500" />
-                            {winner.userName} &middot; {winner.trackName}
+                    return (
+                      <Link
+                        key={round.id}
+                        href={`/leagues/${league.id}/rounds/${round.id}`}
+                        className="flex items-center justify-between rounded-lg border border-border/50 p-3 transition-colors hover:bg-muted"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium">
+                            Round {round.roundNumber}: {round.themeName}
                           </p>
-                        )}
-                        {!winner && round.themeDescription && (
-                          <p className="mt-0.5 text-sm text-text-muted">
-                            {round.themeDescription}
-                          </p>
-                        )}
-                      </div>
-                      <Badge phase={statusToBadgePhase[round.status] ?? "results"} />
-                    </Link>
-                  );
-                })}
+                          {winner && (
+                            <p className="mt-0.5 flex items-center gap-1 text-sm text-muted-foreground">
+                              <Trophy className="h-3 w-3 text-yellow-500" />
+                              {winner.userName} &middot; {winner.trackName}
+                            </p>
+                          )}
+                          {!winner && round.themeDescription && (
+                            <p className="mt-0.5 text-sm text-muted-foreground">
+                              {round.themeDescription}
+                            </p>
+                          )}
+                        </div>
+                        <Badge variant={phase}>{phase.charAt(0).toUpperCase() + phase.slice(1)}</Badge>
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-3 py-6 text-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+                  <Music2 className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">No rounds yet</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    Create the first round to get the competition started.
+                  </p>
+                </div>
+                <Link href={`/leagues/${league.id}/rounds/create`}>
+                  <Button size="sm">
+                    <Plus className="h-3.5 w-3.5" />
+                    Create First Round
+                  </Button>
+                </Link>
               </div>
-            ) : (
-              <div className="flex flex-col items-center gap-3 py-6 text-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-bg-tertiary">
-                <Music2 className="h-5 w-5 text-text-muted" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-text-secondary">No rounds yet</p>
-                <p className="mt-0.5 text-xs text-text-muted">
-                  Create the first round to get the competition started.
-                </p>
-              </div>
-              <Link href={`/leagues/${league.id}/rounds/create`}>
-                <Button size="sm">
-                  <Plus className="h-3.5 w-3.5" />
-                  Create First Round
-                </Button>
-              </Link>
-            </div>
-            )}
+              )}
+            </CardContent>
           </Card>
         </div>
 
         {/* Right column: Members */}
         <div>
-          <Card header={`Members (${league._count.members})`}>
-            <div className="space-y-3">
-              {league.members.map((member) => (
-                <div key={member.id} className="flex items-center gap-3">
-                  {member.user.image ? (
-                    <Image
-                      src={member.user.image}
-                      alt=""
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
-                      {member.user.name?.charAt(0).toUpperCase() ?? "?"}
+          <Card>
+            <CardHeader>
+              <CardTitle>Members ({league._count.members})</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {league.members.map((member) => (
+                  <div key={member.id} className="flex items-center gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={member.user.image ?? undefined} />
+                      <AvatarFallback className="bg-primary text-sm font-bold text-primary-foreground">
+                        {member.user.name?.charAt(0).toUpperCase() ?? "?"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium">{member.user.name}</p>
+                      <p className="text-xs text-muted-foreground">{roleLabels[member.role]}</p>
                     </div>
-                  )}
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{member.user.name}</p>
-                    <p className="text-xs text-text-muted">{roleLabels[member.role]}</p>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </CardContent>
           </Card>
         </div>
       </div>
@@ -344,99 +363,97 @@ function SettingsModal({
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title="League Settings"
-      actions={
-        <>
+    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>League Settings</DialogTitle>
+        </DialogHeader>
+
+        <div className="flex flex-col gap-4">
+          <FormInput
+            id="settings-name"
+            label="League Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={100}
+          />
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="settings-desc">Description</Label>
+            <Textarea
+              id="settings-desc"
+              rows={2}
+              maxLength={500}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="settings-songs">Songs per Round</Label>
+            <Select
+              value={String(songsPerRound)}
+              onValueChange={(value) => setSongsPerRound(Number(value))}
+            >
+              <SelectTrigger id="settings-songs" className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <SelectItem key={n} value={String(n)}>
+                    {n}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <FormInput
+            id="settings-points"
+            label="Upvote Points per Round"
+            type="number"
+            min={1}
+            max={20}
+            value={upvotePoints}
+            onChange={(e) => setUpvotePoints(Number(e.target.value))}
+          />
+
+          <div className="flex items-center gap-3">
+            <Checkbox
+              id="settings-downvotes"
+              checked={allowDownvotes}
+              onCheckedChange={(checked) => setAllowDownvotes(checked === true)}
+            />
+            <Label htmlFor="settings-downvotes">Allow downvotes</Label>
+          </div>
+
+          {updateSettings.error && (
+            <p className="text-sm text-destructive">{updateSettings.error.message}</p>
+          )}
+
+          <Separator />
+
+          <div className="flex flex-col gap-2">
+            <Button variant="secondary" onClick={onLeave} loading={isLeaving}>
+              <LogOut className="h-4 w-4" />
+              Leave League
+            </Button>
+            <Button variant="destructive" onClick={onDelete} loading={isDeleting}>
+              <Trash2 className="h-4 w-4" />
+              Delete League
+            </Button>
+          </div>
+        </div>
+
+        <DialogFooter>
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={handleSave} loading={updateSettings.isPending}>
             Save Changes
           </Button>
-        </>
-      }
-    >
-      <div className="flex flex-col gap-4">
-        <Input
-          id="settings-name"
-          label="League Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          maxLength={100}
-        />
-
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="settings-desc" className="text-sm font-medium text-text-primary">
-            Description
-          </label>
-          <textarea
-            id="settings-desc"
-            className="rounded-lg border border-border bg-bg-tertiary px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-            rows={2}
-            maxLength={500}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="settings-songs" className="text-sm font-medium text-text-primary">
-            Songs per Round
-          </label>
-          <select
-            id="settings-songs"
-            className="rounded-lg border border-border bg-bg-tertiary px-3 py-2 text-sm text-text-primary transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-            value={songsPerRound}
-            onChange={(e) => setSongsPerRound(Number(e.target.value))}
-          >
-            {[1, 2, 3, 4, 5].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <Input
-          id="settings-points"
-          label="Upvote Points per Round"
-          type="number"
-          min={1}
-          max={20}
-          value={upvotePoints}
-          onChange={(e) => setUpvotePoints(Number(e.target.value))}
-        />
-
-        <label className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            checked={allowDownvotes}
-            onChange={(e) => setAllowDownvotes(e.target.checked)}
-            className="h-4 w-4 rounded border-border bg-bg-tertiary accent-accent"
-          />
-          <span className="text-sm text-text-primary">Allow downvotes</span>
-        </label>
-
-        {updateSettings.error && (
-          <p className="text-sm text-danger">{updateSettings.error.message}</p>
-        )}
-
-        <hr className="border-border" />
-
-        <div className="flex flex-col gap-2">
-          <Button variant="secondary" onClick={onLeave} loading={isLeaving}>
-            <LogOut className="h-4 w-4" />
-            Leave League
-          </Button>
-          <Button variant="danger" onClick={onDelete} loading={isDeleting}>
-            <Trash2 className="h-4 w-4" />
-            Delete League
-          </Button>
-        </div>
-      </div>
-    </Modal>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

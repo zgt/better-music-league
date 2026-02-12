@@ -1,31 +1,112 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-@theme {
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-bg-tertiary: #1a1a2e;
-  --color-bg-elevated: #22223a;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 
-  --color-accent: #7c3aed;
-  --color-accent-hover: #8b5cf6;
-  --color-accent-muted: #7c3aed33;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-
-  --color-text-primary: #f1f1f4;
-  --color-text-secondary: #9ca3af;
-  --color-text-muted: #6b7280;
-
-  --color-border: #2a2a3e;
-  --color-border-hover: #3a3a52;
+  /* Legacy color aliases for migration — maps old custom names to new shadcn vars */
+  --color-bg-primary: var(--background);
+  --color-bg-secondary: var(--card);
+  --color-bg-tertiary: var(--muted);
+  --color-bg-elevated: var(--secondary);
+  --color-accent-hover: var(--primary);
+  --color-accent-muted: oklch(0.696 0.17 162.48 / 20%);
+  --color-success: oklch(0.723 0.219 149.579);
+  --color-warning: oklch(0.768 0.188 70.08);
+  --color-danger: oklch(0.704 0.191 22.216);
+  --color-text-primary: var(--foreground);
+  --color-text-secondary: var(--muted-foreground);
+  --color-text-muted: oklch(0.556 0.01 163);
+  --color-border-hover: oklch(1 0 0 / 15%);
 }
 
-body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+/* Dark emerald theme — dark-only, values go on :root */
+:root {
+  --radius: 0.625rem;
+
+  /* Backgrounds: deep dark greens */
+  --background: oklch(0.16 0.02 163);
+  --foreground: oklch(0.96 0.015 163);
+
+  --card: oklch(0.19 0.025 163);
+  --card-foreground: oklch(0.96 0.015 163);
+
+  --popover: oklch(0.19 0.025 163);
+  --popover-foreground: oklch(0.96 0.015 163);
+
+  /* Primary: emerald accent */
+  --primary: oklch(0.696 0.17 162.48);
+  --primary-foreground: oklch(0.16 0.02 163);
+
+  /* Secondary: slightly lighter dark green */
+  --secondary: oklch(0.25 0.03 163);
+  --secondary-foreground: oklch(0.96 0.015 163);
+
+  /* Muted: dark green with low chroma */
+  --muted: oklch(0.22 0.025 163);
+  --muted-foreground: oklch(0.65 0.02 163);
+
+  /* Accent: emerald-tinted surface */
+  --accent: oklch(0.25 0.035 163);
+  --accent-foreground: oklch(0.96 0.015 163);
+
+  /* Destructive: red */
+  --destructive: oklch(0.704 0.191 22.216);
+
+  /* Borders & inputs */
+  --border: oklch(0.30 0.03 163);
+  --input: oklch(0.28 0.03 163);
+  --ring: oklch(0.696 0.17 162.48);
+
+  /* Charts */
+  --chart-1: oklch(0.696 0.17 162.48);
+  --chart-2: oklch(0.768 0.188 70.08);
+  --chart-3: oklch(0.627 0.265 303.9);
+  --chart-4: oklch(0.577 0.245 27.325);
+  --chart-5: oklch(0.488 0.243 264.376);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

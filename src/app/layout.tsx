@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { HeaderServer } from "./_components/layout/header-server";
+import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -41,11 +42,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`dark ${geist.variable}`}>
       <body>
         <TRPCReactProvider>
           <HeaderServer />
           <main>{children}</main>
+          <Toaster />
         </TRPCReactProvider>
       </body>
     </html>

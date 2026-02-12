@@ -6,18 +6,19 @@ import Link from "next/link";
 import { Plus, TicketCheck, Users, Clock, ArrowRight } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "../_components/ui/card";
-import { Button } from "../_components/ui/button";
-import { Input } from "../_components/ui/input";
-import { Badge } from "../_components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
+import { FormInput } from "~/components/ui/form-input";
+import { Skeleton } from "~/components/ui/skeleton";
 
-const statusToBadgePhase: Record<string, "submission" | "listening" | "voting" | "results"> = {
+const statusToBadgePhase = {
   SUBMISSION: "submission",
   LISTENING: "listening",
   VOTING: "voting",
   RESULTS: "results",
   COMPLETED: "results",
-};
+} as const;
 
 function formatDeadline(date: Date): string {
   const now = new Date();
@@ -71,12 +72,12 @@ export default function Dashboard() {
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold">Your Leagues</h1>
-        <Link href="/leagues/create">
-          <Button>
+        <Button asChild>
+          <Link href="/leagues/create">
             <Plus className="h-4 w-4" />
             Create League
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
@@ -85,10 +86,12 @@ export default function Dashboard() {
           {isLoading ? (
             <div className="space-y-4">
               {[1, 2].map((i) => (
-                <div key={i} className="animate-pulse rounded-xl border border-border bg-bg-secondary p-5">
-                  <div className="h-5 w-32 rounded bg-bg-tertiary" />
-                  <div className="mt-3 h-4 w-24 rounded bg-bg-tertiary" />
-                </div>
+                <Card key={i}>
+                  <CardContent className="pt-6">
+                    <Skeleton className="h-5 w-32" />
+                    <Skeleton className="mt-3 h-4 w-24" />
+                  </CardContent>
+                </Card>
               ))}
             </div>
           ) : leagues && leagues.length > 0 ? (
@@ -97,29 +100,33 @@ export default function Dashboard() {
                 const activeRound = league.rounds[0];
                 return (
                   <Link key={league.id} href={`/leagues/${league.id}`}>
-                    <Card hover className="cursor-pointer">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-semibold">{league.name}</h3>
-                          <div className="mt-1 flex items-center gap-3 text-sm text-text-muted">
-                            <span className="flex items-center gap-1">
-                              <Users className="h-3.5 w-3.5" />
-                              {league._count.members}
-                            </span>
-                            {activeRound && (
-                              <span>
-                                {activeRound.themeName}
+                    <Card className="cursor-pointer transition-colors hover:border-border/80 hover:bg-accent">
+                      <CardContent className="pt-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold">{league.name}</h3>
+                            <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Users className="h-3.5 w-3.5" />
+                                {league._count.members}
                               </span>
+                              {activeRound && (
+                                <span>
+                                  {activeRound.themeName}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {activeRound && (
+                              <Badge variant={statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results"}>
+                                {(statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results").charAt(0).toUpperCase() + (statusToBadgePhase[activeRound.status as keyof typeof statusToBadgePhase] ?? "results").slice(1)}
+                              </Badge>
                             )}
+                            <ArrowRight className="h-4 w-4 text-muted-foreground" />
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          {activeRound && (
-                            <Badge phase={statusToBadgePhase[activeRound.status] ?? "results"} />
-                          )}
-                          <ArrowRight className="h-4 w-4 text-text-muted" />
-                        </div>
-                      </div>
+                      </CardContent>
                     </Card>
                   </Link>
                 );
@@ -127,17 +134,19 @@ export default function Dashboard() {
             </div>
           ) : (
             <Card>
-              <div className="flex flex-col items-center gap-4 py-8 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary">
-                  <TicketCheck className="h-6 w-6 text-text-muted" />
+              <CardContent className="pt-6">
+                <div className="flex flex-col items-center gap-4 py-8 text-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                    <TicketCheck className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-muted-foreground">No leagues yet</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Create one or join with an invite code.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium text-text-secondary">No leagues yet</p>
-                  <p className="mt-1 text-sm text-text-muted">
-                    Create one or join with an invite code.
-                  </p>
-                </div>
-              </div>
+              </CardContent>
             </Card>
           )}
         </div>
@@ -145,50 +154,60 @@ export default function Dashboard() {
         {/* Right sidebar */}
         <div className="space-y-6">
           {/* Join League */}
-          <Card header="Join a League">
-            <form onSubmit={handleJoin} className="flex flex-col gap-3">
-              <Input
-                id="invite-code"
-                placeholder="Paste invite code..."
-                description="Get an invite code from a league admin"
-                value={inviteCode}
-                onChange={(e) => setInviteCode(e.target.value)}
-              />
-              {joinLeague.error && (
-                <p className="text-sm text-danger">{joinLeague.error.message}</p>
-              )}
-              <Button
-                type="submit"
-                variant="secondary"
-                className="self-start"
-                loading={joinLeague.isPending}
-              >
-                Join League
-              </Button>
-            </form>
+          <Card>
+            <CardHeader>
+              <CardTitle>Join a League</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleJoin} className="flex flex-col gap-3">
+                <FormInput
+                  id="invite-code"
+                  placeholder="Paste invite code..."
+                  description="Get an invite code from a league admin"
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                />
+                {joinLeague.error && (
+                  <p className="text-sm text-destructive">{joinLeague.error.message}</p>
+                )}
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  className="self-start"
+                  loading={joinLeague.isPending}
+                >
+                  Join League
+                </Button>
+              </form>
+            </CardContent>
           </Card>
 
           {/* Upcoming Deadlines */}
           {deadlines.length > 0 && (
-            <Card header="Upcoming Deadlines">
-              <div className="space-y-3">
-                {deadlines.map((d) => (
-                  <Link
-                    key={d.roundId}
-                    href={`/leagues/${d.leagueId}`}
-                    className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-bg-tertiary"
-                  >
-                    <Clock className="mt-0.5 h-4 w-4 shrink-0 text-text-muted" />
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">{d.themeName}</p>
-                      <p className="text-xs text-text-muted">
-                        {d.leagueName} &middot; {d.status === "SUBMISSION" ? "Submit" : "Vote"} &middot;{" "}
-                        {formatDeadline(d.deadline)}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Upcoming Deadlines</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {deadlines.map((d) => (
+                    <Link
+                      key={d.roundId}
+                      href={`/leagues/${d.leagueId}`}
+                      className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-muted"
+                    >
+                      <Clock className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium">{d.themeName}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {d.leagueName} &middot; {d.status === "SUBMISSION" ? "Submit" : "Vote"} &middot;{" "}
+                          {formatDeadline(d.deadline)}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </CardContent>
             </Card>
           )}
         </div>

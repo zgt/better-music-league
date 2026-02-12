@@ -4,7 +4,12 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { ExternalLink, Music2, Pause, Play } from "lucide-react";
 
-import { Card } from "~/app/_components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 
 interface TrackItem {
   id: string;
@@ -66,7 +71,7 @@ function TrackPreviewPlayer({
       <button
         type="button"
         onClick={toggle}
-        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent-hover"
+        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90"
       >
         {isPlaying ? (
           <Pause className="h-3.5 w-3.5" />
@@ -84,72 +89,79 @@ export function TrackList({ tracks }: { tracks: TrackItem[] }) {
   if (tracks.length === 0) {
     return (
       <Card>
-        <div className="flex flex-col items-center gap-3 py-4 text-center">
-          <Music2 className="h-8 w-8 text-text-muted" />
-          <p className="text-sm text-text-muted">No tracks submitted yet.</p>
-        </div>
+        <CardContent className="pt-6">
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <Music2 className="h-8 w-8 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">No tracks submitted yet.</p>
+          </div>
+        </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card header={`Playlist (${tracks.length} tracks)`}>
-      <div className="space-y-3">
-        {tracks.map((track) => (
-          <div
-            key={track.id}
-            className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
-          >
-            {track.albumArtUrl ? (
-              <Image
-                src={track.albumArtUrl}
-                alt={track.albumName}
-                width={48}
-                height={48}
-                className="rounded"
-              />
-            ) : (
-              <div className="flex h-12 w-12 items-center justify-center rounded bg-bg-tertiary">
-                <Music2 className="h-5 w-5 text-text-muted" />
-              </div>
-            )}
-
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">{track.trackName}</p>
-              <p className="truncate text-xs text-text-muted">
-                {track.artistName} &middot; {track.albumName}
-              </p>
-            </div>
-
-            <span className="shrink-0 text-xs text-text-muted">
-              {formatDuration(track.trackDurationMs)}
-            </span>
-
-            {track.previewUrl && (
-              <TrackPreviewPlayer
-                url={track.previewUrl}
-                trackId={track.id}
-                activeTrackId={activeTrackId}
-                onPlay={setActiveTrackId}
-              />
-            )}
-
-            <a
-              href={`https://open.spotify.com/track/${track.spotifyTrackId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-text-muted transition-colors hover:bg-bg-tertiary hover:text-text-primary"
-              title="Open in Spotify"
+    <Card>
+      <CardHeader>
+        <CardTitle>{`Playlist (${tracks.length} tracks)`}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          {tracks.map((track) => (
+            <div
+              key={track.id}
+              className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
             >
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
+              {track.albumArtUrl ? (
+                <Image
+                  src={track.albumArtUrl}
+                  alt={track.albumName}
+                  width={48}
+                  height={48}
+                  className="rounded"
+                />
+              ) : (
+                <div className="flex h-12 w-12 items-center justify-center rounded bg-muted">
+                  <Music2 className="h-5 w-5 text-muted-foreground" />
+                </div>
+              )}
 
-            {track.isOwn && (
-              <span className="text-xs text-text-muted">(yours)</span>
-            )}
-          </div>
-        ))}
-      </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium">{track.trackName}</p>
+                <p className="truncate text-xs text-muted-foreground">
+                  {track.artistName} &middot; {track.albumName}
+                </p>
+              </div>
+
+              <span className="shrink-0 text-xs text-muted-foreground">
+                {formatDuration(track.trackDurationMs)}
+              </span>
+
+              {track.previewUrl && (
+                <TrackPreviewPlayer
+                  url={track.previewUrl}
+                  trackId={track.id}
+                  activeTrackId={activeTrackId}
+                  onPlay={setActiveTrackId}
+                />
+              )}
+
+              <a
+                href={`https://open.spotify.com/track/${track.spotifyTrackId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                title="Open in Spotify"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
+              {track.isOwn && (
+                <span className="text-xs text-muted-foreground">(yours)</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </CardContent>
     </Card>
   );
 }

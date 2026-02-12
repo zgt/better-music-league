@@ -14,11 +14,17 @@ import {
 } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "~/app/_components/ui/card";
-import { Button } from "~/app/_components/ui/button";
-import { Badge } from "~/app/_components/ui/badge";
-import { Modal } from "~/app/_components/ui/modal";
-import { Input } from "~/app/_components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle as DialogTitleComp,
+  DialogFooter,
+} from "~/components/ui/dialog";
+import { FormInput } from "~/components/ui/form-input";
 import { SubmitSong } from "~/app/_components/submission/submit-song";
 import { TrackList } from "~/app/_components/submission/track-list";
 import { VoteInterface } from "~/app/_components/voting/vote-interface";
@@ -80,7 +86,7 @@ function PhaseProgressBar({ status }: { status: string }) {
             {i > 0 && (
               <div
                 className={`h-0.5 w-4 sm:w-8 ${
-                  isPast ? "bg-accent" : "bg-border"
+                  isPast ? "bg-primary" : "bg-border"
                 }`}
               />
             )}
@@ -88,10 +94,10 @@ function PhaseProgressBar({ status }: { status: string }) {
               <div
                 className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium ${
                   isActive
-                    ? "bg-accent text-white"
+                    ? "bg-primary text-primary-foreground"
                     : isPast
-                      ? "bg-accent/20 text-accent"
-                      : "bg-bg-tertiary text-text-muted"
+                      ? "bg-primary/20 text-primary"
+                      : "bg-muted text-muted-foreground"
                 }`}
               >
                 {i + 1}
@@ -99,8 +105,8 @@ function PhaseProgressBar({ status }: { status: string }) {
               <span
                 className={`text-xs ${
                   isActive
-                    ? "font-medium text-text-primary"
-                    : "text-text-muted"
+                    ? "font-medium text-foreground"
+                    : "text-muted-foreground"
                 }`}
               >
                 {PHASE_LABELS[phase]}
@@ -160,9 +166,9 @@ export default function RoundDetail() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-bg-tertiary" />
-          <div className="h-4 w-72 rounded bg-bg-tertiary" />
-          <div className="h-32 rounded-xl bg-bg-tertiary" />
+          <div className="h-8 w-48 rounded bg-muted" />
+          <div className="h-4 w-72 rounded bg-muted" />
+          <div className="h-32 rounded-xl bg-muted" />
         </div>
       </div>
     );
@@ -172,18 +178,18 @@ export default function RoundDetail() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary">
-            <Music2 className="h-6 w-6 text-text-muted" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+            <Music2 className="h-6 w-6 text-muted-foreground" />
           </div>
           <div>
-            <p className="font-medium text-text-secondary">Round not found</p>
-            <p className="mt-1 text-sm text-text-muted">
+            <p className="font-medium text-muted-foreground">Round not found</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               This round doesn&apos;t exist or you don&apos;t have access.
             </p>
           </div>
           <Link
             href={`/leagues/${params.leagueId}`}
-            className="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+            className="text-sm font-medium text-primary transition-colors hover:text-primary/80"
           >
             Back to League
           </Link>
@@ -196,12 +202,14 @@ export default function RoundDetail() {
   const canAdvance =
     isAdmin && round.status !== "COMPLETED";
 
+  const phase = statusToBadgePhase[round.status] ?? "results";
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {/* Back link */}
       <Link
         href={`/leagues/${params.leagueId}`}
-        className="mb-4 inline-flex items-center gap-1 text-sm text-text-muted transition-colors hover:text-text-primary"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to league
@@ -211,39 +219,40 @@ export default function RoundDetail() {
       <div className="mb-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm text-text-muted">
+            <p className="text-sm text-muted-foreground">
               Round {round.roundNumber} &middot; {round.leagueName}
             </p>
             <h1 className="mt-1 text-2xl font-bold">{round.themeName}</h1>
             {round.themeDescription && (
-              <p className="mt-1 text-text-muted">{round.themeDescription}</p>
+              <p className="mt-1 text-muted-foreground">{round.themeDescription}</p>
             )}
           </div>
-          <Badge
-            phase={statusToBadgePhase[round.status] ?? "results"}
-            className="mt-1"
-          />
+          <Badge variant={phase} className="mt-1">
+            {phase.charAt(0).toUpperCase() + phase.slice(1)}
+          </Badge>
         </div>
       </div>
 
       {/* Phase progress */}
       <Card className="mb-6">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <PhaseProgressBar status={round.status} />
+        <CardContent className="pt-6">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <PhaseProgressBar status={round.status} />
 
-          {activeDeadline && countdown !== "Ended" && (
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="h-4 w-4 text-text-muted" />
-              <span className="text-text-muted">
-                {round.status === "SUBMISSION"
-                  ? "Submissions close"
-                  : "Voting closes"}{" "}
-                in
-              </span>
-              <span className="font-mono font-medium">{countdown}</span>
-            </div>
-          )}
-        </div>
+            {activeDeadline && countdown !== "Ended" && (
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">
+                  {round.status === "SUBMISSION"
+                    ? "Submissions close"
+                    : "Voting closes"}{" "}
+                  in
+                </span>
+                <span className="font-mono font-medium">{countdown}</span>
+              </div>
+            )}
+          </div>
+        </CardContent>
       </Card>
 
       {/* Phase-specific content */}
@@ -251,78 +260,98 @@ export default function RoundDetail() {
 
       {/* Admin controls */}
       {isAdmin && (
-        <Card className="mt-6" header="Admin Controls">
-          <div className="space-y-4">
-            {/* Playlist URL */}
-            <div className="space-y-2">
-              <div className="flex items-end gap-2">
-                <div className="flex-1">
-                  <Input
-                    label="Spotify Playlist URL"
-                    placeholder="https://open.spotify.com/playlist/..."
-                    value={playlistUrlInput}
-                    onChange={(e) => setPlaylistUrlInput(e.target.value)}
-                  />
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Admin Controls</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {/* Playlist URL */}
+              <div className="space-y-2">
+                <div className="flex items-end gap-2">
+                  <div className="flex-1">
+                    <FormInput
+                      label="Spotify Playlist URL"
+                      placeholder="https://open.spotify.com/playlist/..."
+                      value={playlistUrlInput}
+                      onChange={(e) => setPlaylistUrlInput(e.target.value)}
+                    />
+                  </div>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() =>
+                      setPlaylistUrl.mutate({
+                        roundId: params.roundId,
+                        playlistUrl: playlistUrlInput,
+                      })
+                    }
+                    loading={setPlaylistUrl.isPending}
+                  >
+                    {playlistUrlSaved ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      "Save"
+                    )}
+                  </Button>
                 </div>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() =>
-                    setPlaylistUrl.mutate({
-                      roundId: params.roundId,
-                      playlistUrl: playlistUrlInput,
-                    })
-                  }
-                  loading={setPlaylistUrl.isPending}
-                >
-                  {playlistUrlSaved ? (
-                    <Check className="h-4 w-4" />
-                  ) : (
-                    "Save"
-                  )}
-                </Button>
-              </div>
-              {setPlaylistUrl.error && (
-                <p className="text-xs text-danger">
-                  {setPlaylistUrl.error.message}
-                </p>
-              )}
-              <p className="text-xs text-text-muted">
-                Create a playlist on Spotify, then paste the link here. Members
-                will see this on the playlist page.
-              </p>
-            </div>
-
-            {/* Advance phase */}
-            {canAdvance && (
-              <div className="flex items-center justify-between border-t border-border/50 pt-4">
-                <div>
-                  <p className="text-sm font-medium">Advance Phase</p>
-                  <p className="text-xs text-text-muted">
-                    Move the round to the next phase
+                {setPlaylistUrl.error && (
+                  <p className="text-xs text-destructive">
+                    {setPlaylistUrl.error.message}
                   </p>
-                </div>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setConfirmAdvance(true)}
-                >
-                  Advance Phase
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  Create a playlist on Spotify, then paste the link here. Members
+                  will see this on the playlist page.
+                </p>
               </div>
-            )}
-          </div>
+
+              {/* Advance phase */}
+              {canAdvance && (
+                <div className="flex items-center justify-between border-t border-border/50 pt-4">
+                  <div>
+                    <p className="text-sm font-medium">Advance Phase</p>
+                    <p className="text-xs text-muted-foreground">
+                      Move the round to the next phase
+                    </p>
+                  </div>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setConfirmAdvance(true)}
+                  >
+                    Advance Phase
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardContent>
         </Card>
       )}
 
-      {/* Advance confirmation modal */}
-      <Modal
+      {/* Advance confirmation dialog */}
+      <Dialog
         open={confirmAdvance}
-        onClose={() => setConfirmAdvance(false)}
-        title="Advance Phase?"
-        actions={
-          <>
+        onOpenChange={(open) => {
+          if (!open) setConfirmAdvance(false);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitleComp>Advance Phase?</DialogTitleComp>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            This will move the round from{" "}
+            <span className="font-medium">{PHASE_LABELS[round.status]}</span> to
+            the next phase. This cannot be undone.
+          </p>
+          {advancePhase.error && (
+            <p className="mt-2 text-sm text-destructive">
+              {advancePhase.error.message}
+            </p>
+          )}
+          <DialogFooter>
             <Button variant="ghost" onClick={() => setConfirmAdvance(false)}>
               Cancel
             </Button>
@@ -332,20 +361,9 @@ export default function RoundDetail() {
             >
               Advance
             </Button>
-          </>
-        }
-      >
-        <p className="text-sm text-text-secondary">
-          This will move the round from{" "}
-          <span className="font-medium">{PHASE_LABELS[round.status]}</span> to
-          the next phase. This cannot be undone.
-        </p>
-        {advancePhase.error && (
-          <p className="mt-2 text-sm text-danger">
-            {advancePhase.error.message}
-          </p>
-        )}
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -383,20 +401,22 @@ function PhaseContent({
     return (
       <div className="space-y-4">
         <Card>
-          <div className="flex items-center gap-3 py-2 text-center">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-muted">
-              <Music2 className="h-5 w-5 text-accent" />
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3 py-2 text-center">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                <Music2 className="h-5 w-5 text-primary" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium">Submission Phase</p>
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-medium">
+                    {round.submissionCount}/{round.memberCount}
+                  </span>{" "}
+                  members have submitted
+                </p>
+              </div>
             </div>
-            <div className="text-left">
-              <p className="text-sm font-medium">Submission Phase</p>
-              <p className="text-xs text-text-muted">
-                <span className="font-medium">
-                  {round.submissionCount}/{round.memberCount}
-                </span>{" "}
-                members have submitted
-              </p>
-            </div>
-          </div>
+          </CardContent>
         </Card>
         <SubmitSong roundId={round.id} songsPerRound={round.songsPerRound} />
       </div>
@@ -408,42 +428,44 @@ function PhaseContent({
       <div className="space-y-4">
         {/* Playlist banner */}
         <Card>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-muted">
-                <ListMusic className="h-5 w-5 text-accent" />
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                  <ListMusic className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Listening Phase</p>
+                  <p className="text-xs text-muted-foreground">
+                    Listen to all {round.submissions.length} tracks before voting
+                    begins
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium">Listening Phase</p>
-                <p className="text-xs text-text-muted">
-                  Listen to all {round.submissions.length} tracks before voting
-                  begins
-                </p>
-              </div>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              {round.playlistUrl && (
-                <a
-                  href={round.playlistUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="flex shrink-0 items-center gap-2">
+                {round.playlistUrl && (
+                  <a
+                    href={round.playlistUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="default" size="sm">
+                      <ExternalLink className="h-4 w-4" />
+                      Spotify Playlist
+                    </Button>
+                  </a>
+                )}
+                <Link
+                  href={`/leagues/${round.leagueId}/rounds/${round.id}/playlist`}
                 >
-                  <Button variant="primary" size="sm">
-                    <ExternalLink className="h-4 w-4" />
-                    Spotify Playlist
+                  <Button variant="secondary" size="sm">
+                    <ListMusic className="h-4 w-4" />
+                    Full Playlist
                   </Button>
-                </a>
-              )}
-              <Link
-                href={`/leagues/${round.leagueId}/rounds/${round.id}/playlist`}
-              >
-                <Button variant="secondary" size="sm">
-                  <ListMusic className="h-4 w-4" />
-                  Full Playlist
-                </Button>
-              </Link>
+                </Link>
+              </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
 
         <TrackList

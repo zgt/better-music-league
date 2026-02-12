@@ -5,10 +5,18 @@ import { useParams, useRouter } from "next/navigation";
 import { BookOpen } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "~/app/_components/ui/card";
-import { Button } from "~/app/_components/ui/button";
-import { Input } from "~/app/_components/ui/input";
-import { Modal } from "~/app/_components/ui/modal";
+import { Card, CardContent } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { FormInput } from "~/components/ui/form-input";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Textarea } from "~/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
 
 function toLocalDatetimeString(date: Date): string {
   const pad = (n: number) => n.toString().padStart(2, "0");
@@ -68,95 +76,88 @@ export default function CreateRound() {
       <h1 className="mb-6 text-2xl font-bold">Create a New Round</h1>
 
       <Card>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5">
-            <label
-              htmlFor="theme-name"
-              className="text-sm font-medium text-text-primary"
-            >
-              Theme
-            </label>
-            <div className="flex gap-2">
-              <input
-                id="theme-name"
-                type="text"
-                required
-                maxLength={200}
-                placeholder="e.g. Guilty Pleasures"
-                value={themeName}
-                onChange={(e) => setThemeName(e.target.value)}
-                className="flex-1 rounded-lg border border-border bg-bg-tertiary px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+        <CardContent className="pt-6">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="theme-name">Theme</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="theme-name"
+                  type="text"
+                  required
+                  maxLength={200}
+                  placeholder="e.g. Guilty Pleasures"
+                  value={themeName}
+                  onChange={(e) => setThemeName(e.target.value)}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setThemeBrowserOpen(true)}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Browse
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="theme-desc">
+                Description{" "}
+                <span className="font-normal text-muted-foreground">(optional)</span>
+              </Label>
+              <Textarea
+                id="theme-desc"
+                rows={2}
+                maxLength={500}
+                placeholder="Describe the theme to help participants..."
+                value={themeDescription}
+                onChange={(e) => setThemeDescription(e.target.value)}
               />
+            </div>
+
+            <FormInput
+              id="submission-deadline"
+              label="Submission Deadline"
+              type="datetime-local"
+              required
+              value={submissionDeadline}
+              onChange={(e) => setSubmissionDeadline(e.target.value)}
+            />
+
+            <FormInput
+              id="voting-deadline"
+              label="Voting Deadline"
+              type="datetime-local"
+              required
+              value={votingDeadline}
+              onChange={(e) => setVotingDeadline(e.target.value)}
+              error={votingDeadline && submissionDeadline ? (validationError ?? undefined) : undefined}
+            />
+
+            {createRound.error && (
+              <p className="text-sm text-destructive">{createRound.error.message}</p>
+            )}
+
+            <div className="flex gap-3">
               <Button
                 type="button"
-                variant="secondary"
-                onClick={() => setThemeBrowserOpen(true)}
+                variant="ghost"
+                onClick={() => router.back()}
               >
-                <BookOpen className="h-4 w-4" />
-                Browse
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                loading={createRound.isPending}
+                disabled={!themeName.trim() || !!validationError}
+              >
+                Create Round
               </Button>
             </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label
-              htmlFor="theme-desc"
-              className="text-sm font-medium text-text-primary"
-            >
-              Description{" "}
-              <span className="font-normal text-text-muted">(optional)</span>
-            </label>
-            <textarea
-              id="theme-desc"
-              rows={2}
-              maxLength={500}
-              placeholder="Describe the theme to help participants..."
-              value={themeDescription}
-              onChange={(e) => setThemeDescription(e.target.value)}
-              className="rounded-lg border border-border bg-bg-tertiary px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-            />
-          </div>
-
-          <Input
-            id="submission-deadline"
-            label="Submission Deadline"
-            type="datetime-local"
-            required
-            value={submissionDeadline}
-            onChange={(e) => setSubmissionDeadline(e.target.value)}
-          />
-
-          <Input
-            id="voting-deadline"
-            label="Voting Deadline"
-            type="datetime-local"
-            required
-            value={votingDeadline}
-            onChange={(e) => setVotingDeadline(e.target.value)}
-            error={votingDeadline && submissionDeadline ? (validationError ?? undefined) : undefined}
-          />
-
-          {createRound.error && (
-            <p className="text-sm text-danger">{createRound.error.message}</p>
-          )}
-
-          <div className="flex gap-3">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => router.back()}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              loading={createRound.isPending}
-              disabled={!themeName.trim() || !!validationError}
-            >
-              Create Round
-            </Button>
-          </div>
-        </form>
+          </form>
+        </CardContent>
       </Card>
 
       <ThemeBrowserModal
@@ -186,39 +187,44 @@ function ThemeBrowserModal({
   });
 
   return (
-    <Modal open={open} onClose={onClose} title="Browse Themes">
-      {categories ? (
-        <div className="max-h-[60vh] space-y-5 overflow-y-auto">
-          {categories.map((cat) => (
-            <div key={cat.category}>
-              <h3 className="mb-2 text-sm font-semibold text-text-muted uppercase tracking-wide">
-                {cat.category}
-              </h3>
-              <div className="grid grid-cols-1 gap-2">
-                {cat.themes.map((theme) => (
-                  <button
-                    key={theme.name}
-                    type="button"
-                    onClick={() => onSelect(theme.name, theme.description)}
-                    className="cursor-pointer rounded-lg border border-border/50 p-3 text-left transition-colors hover:border-accent hover:bg-bg-tertiary"
-                  >
-                    <p className="text-sm font-medium text-text-primary">
-                      {theme.name}
-                    </p>
-                    <p className="mt-0.5 text-xs text-text-muted">
-                      {theme.description}
-                    </p>
-                  </button>
-                ))}
+    <Dialog open={open} onOpenChange={(o) => { if (!o) onClose(); }}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Browse Themes</DialogTitle>
+        </DialogHeader>
+        {categories ? (
+          <div className="max-h-[60vh] space-y-5 overflow-y-auto">
+            {categories.map((cat) => (
+              <div key={cat.category}>
+                <h3 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                  {cat.category}
+                </h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {cat.themes.map((theme) => (
+                    <button
+                      key={theme.name}
+                      type="button"
+                      onClick={() => onSelect(theme.name, theme.description)}
+                      className="cursor-pointer rounded-lg border border-border/50 p-3 text-left transition-colors hover:border-primary hover:bg-muted"
+                    >
+                      <p className="text-sm font-medium">
+                        {theme.name}
+                      </p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {theme.description}
+                      </p>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex items-center justify-center py-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-        </div>
-      )}
-    </Modal>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center py-8">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

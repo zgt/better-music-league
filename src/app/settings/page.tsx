@@ -5,41 +5,23 @@ import { useRouter } from "next/navigation";
 
 import { api } from "~/trpc/react";
 import { authClient } from "~/server/better-auth/client";
-import { Card } from "../_components/ui/card";
-import { Button } from "../_components/ui/button";
-import { Input } from "../_components/ui/input";
-import { Modal } from "../_components/ui/modal";
-
-function Toggle({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-}) {
-  return (
-    <label className="flex cursor-pointer items-center justify-between py-2">
-      <span className="text-sm">{label}</span>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
-          checked ? "bg-accent" : "bg-bg-tertiary"
-        }`}
-      >
-        <span
-          className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${
-            checked ? "translate-x-5" : "translate-x-0"
-          }`}
-        />
-      </button>
-    </label>
-  );
-}
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { FormInput } from "~/components/ui/form-input";
+import { Switch } from "~/components/ui/switch";
+import { Label } from "~/components/ui/label";
+import { Skeleton } from "~/components/ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -48,7 +30,6 @@ export default function SettingsPage() {
   const { data: profile, isLoading } = api.user.getProfile.useQuery();
 
   const [name, setName] = useState<string | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateProfile = api.user.updateProfile.useMutation({
     onSuccess: () => {
@@ -66,10 +47,10 @@ export default function SettingsPage() {
   if (isLoading) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8">
-        <div className="animate-pulse space-y-6">
-          <div className="h-6 w-40 rounded bg-bg-tertiary" />
-          <div className="h-48 rounded-xl bg-bg-secondary" />
-          <div className="h-48 rounded-xl bg-bg-secondary" />
+        <div className="space-y-6">
+          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-48 rounded-xl" />
+          <Skeleton className="h-48 rounded-xl" />
         </div>
       </div>
     );
@@ -99,96 +80,120 @@ export default function SettingsPage() {
       <h1 className="mb-6 text-2xl font-bold">Settings</h1>
 
       {/* Display Name */}
-      <Card header="Display Name" className="mb-6">
-        <div className="flex gap-3">
-          <div className="flex-1">
-            <Input
-              id="display-name"
-              value={displayName}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your display name"
-            />
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Display Name</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <FormInput
+                id="display-name"
+                value={displayName}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your display name"
+              />
+            </div>
+            <Button
+              variant="secondary"
+              onClick={handleSaveName}
+              loading={updateProfile.isPending}
+              disabled={!displayName.trim() || displayName === profile.name}
+            >
+              Save
+            </Button>
           </div>
-          <Button
-            variant="secondary"
-            onClick={handleSaveName}
-            loading={updateProfile.isPending}
-            disabled={!displayName.trim() || displayName === profile.name}
-          >
-            Save
-          </Button>
-        </div>
-        {updateProfile.isSuccess && (
-          <p className="mt-2 text-sm text-success">Updated.</p>
-        )}
+          {updateProfile.isSuccess && (
+            <p className="mt-2 text-sm text-success">Updated.</p>
+          )}
+        </CardContent>
       </Card>
 
       {/* Notification Preferences */}
-      <Card header="Email Notifications" className="mb-6">
-        <div className="divide-y divide-border">
-          <Toggle
-            label="Round starts"
-            checked={prefs.roundStart}
-            onChange={(v) => handleToggleNotification("roundStart", v)}
-          />
-          <Toggle
-            label="Submission deadline reminder"
-            checked={prefs.submissionDeadline}
-            onChange={(v) => handleToggleNotification("submissionDeadline", v)}
-          />
-          <Toggle
-            label="Voting opens"
-            checked={prefs.votingOpen}
-            onChange={(v) => handleToggleNotification("votingOpen", v)}
-          />
-          <Toggle
-            label="Results available"
-            checked={prefs.resultsAvailable}
-            onChange={(v) => handleToggleNotification("resultsAvailable", v)}
-          />
-        </div>
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Email Notifications</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="divide-y divide-border">
+            <div className="flex items-center justify-between py-3">
+              <Label htmlFor="round-start" className="cursor-pointer">Round starts</Label>
+              <Switch
+                id="round-start"
+                checked={prefs.roundStart}
+                onCheckedChange={(v) => handleToggleNotification("roundStart", v)}
+              />
+            </div>
+            <div className="flex items-center justify-between py-3">
+              <Label htmlFor="sub-deadline" className="cursor-pointer">Submission deadline reminder</Label>
+              <Switch
+                id="sub-deadline"
+                checked={prefs.submissionDeadline}
+                onCheckedChange={(v) => handleToggleNotification("submissionDeadline", v)}
+              />
+            </div>
+            <div className="flex items-center justify-between py-3">
+              <Label htmlFor="voting-open" className="cursor-pointer">Voting opens</Label>
+              <Switch
+                id="voting-open"
+                checked={prefs.votingOpen}
+                onCheckedChange={(v) => handleToggleNotification("votingOpen", v)}
+              />
+            </div>
+            <div className="flex items-center justify-between py-3">
+              <Label htmlFor="results-avail" className="cursor-pointer">Results available</Label>
+              <Switch
+                id="results-avail"
+                checked={prefs.resultsAvailable}
+                onCheckedChange={(v) => handleToggleNotification("resultsAvailable", v)}
+              />
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Danger Zone */}
-      <Card header="Danger Zone">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium">Delete account</p>
-            <p className="text-sm text-text-muted">
-              Permanently delete your account and all data.
-            </p>
+      <Card>
+        <CardHeader>
+          <CardTitle>Danger Zone</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium">Delete account</p>
+              <p className="text-sm text-muted-foreground">
+                Permanently delete your account and all data.
+              </p>
+            </div>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  Delete Account
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Account</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete your account? This action is
+                    permanent and cannot be undone. All your leagues, submissions, and
+                    votes will be removed.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => deleteAccount.mutate()}
+                    className="bg-destructive text-white hover:bg-destructive/90"
+                  >
+                    {deleteAccount.isPending ? "Deleting..." : "Delete My Account"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
-          <Button variant="danger" size="sm" onClick={() => setShowDeleteModal(true)}>
-            Delete Account
-          </Button>
-        </div>
+        </CardContent>
       </Card>
-
-      <Modal
-        open={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        title="Delete Account"
-        actions={
-          <>
-            <Button variant="ghost" onClick={() => setShowDeleteModal(false)}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              loading={deleteAccount.isPending}
-              onClick={() => deleteAccount.mutate()}
-            >
-              Delete My Account
-            </Button>
-          </>
-        }
-      >
-        <p className="text-sm text-text-secondary">
-          Are you sure you want to delete your account? This action is
-          permanent and cannot be undone. All your leagues, submissions, and
-          votes will be removed.
-        </p>
-      </Modal>
     </div>
   );
 }

@@ -5,7 +5,8 @@ import Image from "next/image";
 import { ChevronDown, ChevronUp, ExternalLink, MessageCircle, Trophy } from "lucide-react";
 
 import { api } from "~/trpc/react";
-import { Card } from "~/app/_components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 type ResultEntry = {
   submission: {
@@ -37,9 +38,9 @@ export function RoundResults({ roundId }: { roundId: string }) {
     return (
       <div className="space-y-4">
         <div className="animate-pulse space-y-3">
-          <div className="h-40 rounded-xl bg-bg-tertiary" />
-          <div className="h-24 rounded-xl bg-bg-tertiary" />
-          <div className="h-24 rounded-xl bg-bg-tertiary" />
+          <div className="h-40 rounded-xl bg-muted" />
+          <div className="h-24 rounded-xl bg-muted" />
+          <div className="h-24 rounded-xl bg-muted" />
         </div>
       </div>
     );
@@ -48,7 +49,9 @@ export function RoundResults({ roundId }: { roundId: string }) {
   if (!results || results.length === 0) {
     return (
       <Card>
-        <p className="text-sm text-text-muted">No results available for this round.</p>
+        <CardContent className="pt-6">
+          <p className="text-sm text-muted-foreground">No results available for this round.</p>
+        </CardContent>
       </Card>
     );
   }
@@ -75,12 +78,17 @@ export function RoundResults({ roundId }: { roundId: string }) {
 
       {/* Full results */}
       {rest.length > 0 && (
-        <Card header="Full Results">
-          <div className="space-y-2">
-            {rest.map((entry, i) => (
-              <ResultRow key={entry.submission.id} entry={entry} rank={i + 3} />
-            ))}
-          </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Full Results</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {rest.map((entry, i) => (
+                <ResultRow key={entry.submission.id} entry={entry} rank={i + 3} />
+              ))}
+            </div>
+          </CardContent>
         </Card>
       )}
     </div>
@@ -124,14 +132,14 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
             <p className={`font-semibold ${isWinner ? "text-lg" : "text-base"}`}>
               {entry.submission.trackName}
             </p>
-            <p className="text-sm text-text-muted">{entry.submission.artistName}</p>
+            <p className="text-sm text-muted-foreground">{entry.submission.artistName}</p>
             <div className="mt-1 flex items-center gap-2">
               <Submitter user={entry.submitter} />
               <a
                 href={`https://open.spotify.com/track/${entry.submission.spotifyTrackId}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-text-primary"
+                className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
               >
                 <ExternalLink className="h-3 w-3" />
                 Spotify
@@ -144,7 +152,7 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
             <p className={`font-bold ${style.text} ${isWinner ? "text-2xl" : "text-xl"}`}>
               {entry.totalPoints}
             </p>
-            <p className="text-xs text-text-muted">pts</p>
+            <p className="text-xs text-muted-foreground">pts</p>
           </div>
         </div>
       </div>
@@ -152,7 +160,7 @@ function PodiumCard({ entry, rank }: { entry: ResultEntry; rank: number }) {
       {/* Expand toggle */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-center gap-1 border-t border-border/30 py-2 text-xs text-text-muted transition-colors hover:text-text-primary"
+        className="flex w-full items-center justify-center gap-1 border-t border-border/30 py-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
       >
         {expanded ? (
           <>
@@ -176,7 +184,7 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
   return (
     <div className="rounded-lg border border-border/50">
       <div className="flex items-center gap-3 p-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-bg-tertiary text-xs font-bold text-text-muted">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
           {rank + 1}
         </span>
         <Image
@@ -188,7 +196,7 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
         />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{entry.submission.trackName}</p>
-          <p className="truncate text-xs text-text-muted">
+          <p className="truncate text-xs text-muted-foreground">
             {entry.submission.artistName}
             {" \u00b7 "}
             {entry.submitter.name}
@@ -197,7 +205,7 @@ function ResultRow({ entry, rank }: { entry: ResultEntry; rank: number }) {
         <span className="text-sm font-semibold">{entry.totalPoints} pts</span>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="rounded p-1 text-text-muted transition-colors hover:text-text-primary"
+          className="rounded p-1 text-muted-foreground transition-colors hover:text-foreground"
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
@@ -215,24 +223,29 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
     <div className="border-t border-border/30 px-4 py-3">
       {/* Votes */}
       <div className="mb-3">
-        <p className="mb-2 text-xs font-medium text-text-muted uppercase tracking-wider">
+        <p className="mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Votes
         </p>
         <div className="flex flex-wrap gap-2">
           {sortedVotes.map((v) => (
             <div
               key={v.voter.id}
-              className="flex items-center gap-1.5 rounded-full bg-bg-tertiary px-2.5 py-1"
+              className="flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1"
             >
-              <Avatar user={v.voter} size={16} />
+              <Avatar className="h-4 w-4">
+                <AvatarImage src={v.voter.image ?? undefined} />
+                <AvatarFallback className="bg-primary text-primary-foreground text-[8px]">
+                  {v.voter.name?.charAt(0).toUpperCase() ?? "?"}
+                </AvatarFallback>
+              </Avatar>
               <span className="text-xs">{v.voter.name}</span>
               <span
                 className={`text-xs font-bold ${
                   v.points > 0
                     ? "text-success"
                     : v.points < 0
-                      ? "text-danger"
-                      : "text-text-muted"
+                      ? "text-destructive"
+                      : "text-muted-foreground"
                 }`}
               >
                 {v.points > 0 ? `+${v.points}` : v.points}
@@ -240,7 +253,7 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
             </div>
           ))}
           {sortedVotes.length === 0 && (
-            <p className="text-xs text-text-muted">No votes received</p>
+            <p className="text-xs text-muted-foreground">No votes received</p>
           )}
         </div>
       </div>
@@ -248,17 +261,22 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
       {/* Comments */}
       {hasComments && (
         <div>
-          <p className="mb-2 text-xs font-medium text-text-muted uppercase tracking-wider">
+          <p className="mb-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
             <MessageCircle className="mr-1 inline h-3 w-3" />
             Comments
           </p>
           <div className="space-y-2">
             {entry.comments.map((c) => (
               <div key={c.commenter.id} className="flex gap-2">
-                <Avatar user={c.commenter} size={20} />
+                <Avatar className="h-5 w-5">
+                  <AvatarImage src={c.commenter.image ?? undefined} />
+                  <AvatarFallback className="bg-primary text-primary-foreground text-[8px]">
+                    {c.commenter.name?.charAt(0).toUpperCase() ?? "?"}
+                  </AvatarFallback>
+                </Avatar>
                 <div className="min-w-0 flex-1">
                   <span className="text-xs font-medium">{c.commenter.name}</span>
-                  <p className="text-xs text-text-muted">{c.text}</p>
+                  <p className="text-xs text-muted-foreground">{c.text}</p>
                 </div>
               </div>
             ))}
@@ -269,33 +287,15 @@ function VoteAndCommentDetails({ entry }: { entry: ResultEntry }) {
   );
 }
 
-function Avatar({ user, size }: { user: { name: string; image: string | null }; size: number }) {
-  if (user.image) {
-    return (
-      <Image
-        src={user.image}
-        alt=""
-        width={size}
-        height={size}
-        className="shrink-0 rounded-full"
-      />
-    );
-  }
-
-  return (
-    <div
-      className="flex shrink-0 items-center justify-center rounded-full bg-accent text-white"
-      style={{ width: size, height: size, fontSize: size * 0.45 }}
-    >
-      {user.name?.charAt(0).toUpperCase() ?? "?"}
-    </div>
-  );
-}
-
 function Submitter({ user }: { user: { name: string; image: string | null } }) {
   return (
-    <span className="inline-flex items-center gap-1 text-xs text-text-muted">
-      <Avatar user={user} size={16} />
+    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+      <Avatar className="h-4 w-4">
+        <AvatarImage src={user.image ?? undefined} />
+        <AvatarFallback className="bg-primary text-primary-foreground text-[8px]">
+          {user.name?.charAt(0).toUpperCase() ?? "?"}
+        </AvatarFallback>
+      </Avatar>
       {user.name}
     </span>
   );

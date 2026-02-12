@@ -14,15 +14,15 @@ export default async function Home() {
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center px-4">
       <div className="flex max-w-lg flex-col items-center gap-8 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-muted">
-          <Music className="h-8 w-8 text-accent-hover" />
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/20">
+          <Music className="h-8 w-8 text-primary" />
         </div>
 
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Better Music League
           </h1>
-          <p className="text-lg text-text-secondary">
+          <p className="text-lg text-muted-foreground">
             Compete with friends to find the best music
           </p>
         </div>
