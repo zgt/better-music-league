@@ -11,6 +11,8 @@ import { Card } from "~/app/_components/ui/card";
 import { Button } from "~/app/_components/ui/button";
 import { Badge } from "~/app/_components/ui/badge";
 import { Modal } from "~/app/_components/ui/modal";
+import { SubmitSong } from "~/app/_components/submission/submit-song";
+import { TrackList } from "~/app/_components/submission/track-list";
 
 const PHASES = ["SUBMISSION", "LISTENING", "VOTING", "RESULTS"] as const;
 const PHASE_LABELS: Record<string, string> = {
@@ -258,7 +260,9 @@ function PhaseContent({
   round,
 }: {
   round: {
+    id: string;
     status: string;
+    songsPerRound: number;
     submissions: {
       id: string;
       trackName: string;
@@ -266,6 +270,8 @@ function PhaseContent({
       albumName: string;
       albumArtUrl: string;
       spotifyTrackId: string;
+      previewUrl?: string | null;
+      trackDurationMs?: number;
       submitter: { id: string; name: string; image: string | null } | null;
       totalPoints: number;
       isOwn: boolean;
@@ -277,73 +283,66 @@ function PhaseContent({
 }) {
   if (round.status === "SUBMISSION") {
     return (
-      <Card>
-        <div className="flex flex-col items-center gap-3 py-4 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-muted">
-            <Music2 className="h-6 w-6 text-accent" />
+      <div className="space-y-4">
+        <Card>
+          <div className="flex items-center gap-3 py-2 text-center">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-muted">
+              <Music2 className="h-5 w-5 text-accent" />
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-medium">Submission Phase</p>
+              <p className="text-xs text-text-muted">
+                <span className="font-medium">
+                  {round.submissionCount}/{round.memberCount}
+                </span>{" "}
+                members have submitted
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="font-medium">Submission Phase</p>
-            <p className="mt-1 text-sm text-text-muted">
-              Waiting for submissions...{" "}
-              <span className="font-medium">
-                {round.submissionCount}/{round.memberCount}
-              </span>{" "}
-              submitted
-            </p>
-          </div>
-          {round.submissions.some((s) => s.isOwn) ? (
-            <p className="text-sm text-success">You&apos;ve submitted!</p>
-          ) : (
-            <p className="text-sm text-text-muted">
-              Submission form coming in Phase 6
-            </p>
-          )}
-        </div>
-      </Card>
+        </Card>
+        <SubmitSong roundId={round.id} songsPerRound={round.songsPerRound} />
+      </div>
     );
   }
 
-  if (round.status === "LISTENING" || round.status === "VOTING") {
+  if (round.status === "LISTENING") {
     return (
-      <Card header={round.status === "LISTENING" ? "Playlist" : "Tracks"}>
-        {round.submissions.length > 0 ? (
-          <div className="space-y-3">
-            {round.submissions.map((sub) => (
-              <div
-                key={sub.id}
-                className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
-              >
-                <Image
-                  src={sub.albumArtUrl}
-                  alt={sub.albumName}
-                  width={48}
-                  height={48}
-                  className="rounded"
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">
-                    {sub.trackName}
-                  </p>
-                  <p className="truncate text-xs text-text-muted">
-                    {sub.artistName} &middot; {sub.albumName}
-                  </p>
-                </div>
-                {sub.isOwn && (
-                  <span className="text-xs text-text-muted">(yours)</span>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm text-text-muted">No submissions yet.</p>
-        )}
-        {round.status === "VOTING" && (
-          <p className="mt-4 text-center text-sm text-text-muted">
-            Voting interface coming in Phase 7
-          </p>
-        )}
-      </Card>
+      <TrackList
+        tracks={round.submissions.map((s) => ({
+          id: s.id,
+          trackName: s.trackName,
+          artistName: s.artistName,
+          albumName: s.albumName,
+          albumArtUrl: s.albumArtUrl,
+          spotifyTrackId: s.spotifyTrackId,
+          previewUrl: s.previewUrl ?? null,
+          trackDurationMs: s.trackDurationMs ?? 0,
+          isOwn: s.isOwn,
+        }))}
+      />
+    );
+  }
+
+  if (round.status === "VOTING") {
+    return (
+      <div className="space-y-4">
+        <TrackList
+          tracks={round.submissions.map((s) => ({
+            id: s.id,
+            trackName: s.trackName,
+            artistName: s.artistName,
+            albumName: s.albumName,
+            albumArtUrl: s.albumArtUrl,
+            spotifyTrackId: s.spotifyTrackId,
+            previewUrl: s.previewUrl ?? null,
+            trackDurationMs: s.trackDurationMs ?? 0,
+            isOwn: s.isOwn,
+          }))}
+        />
+        <p className="text-center text-sm text-text-muted">
+          Voting interface coming in Phase 7
+        </p>
+      </div>
     );
   }
 

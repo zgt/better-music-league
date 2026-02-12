@@ -195,6 +195,7 @@ export const roundRouter = createTRPCRouter({
         playlistUrl: round.playlistUrl,
         leagueId: round.leagueId,
         leagueName: round.league.name,
+        songsPerRound: round.league.songsPerRound,
         submissions: submissions.filter(
           (s): s is NonNullable<typeof s> => s !== null,
         ),
