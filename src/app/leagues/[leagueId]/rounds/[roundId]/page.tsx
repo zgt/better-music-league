@@ -13,6 +13,7 @@ import { Badge } from "~/app/_components/ui/badge";
 import { Modal } from "~/app/_components/ui/modal";
 import { SubmitSong } from "~/app/_components/submission/submit-song";
 import { TrackList } from "~/app/_components/submission/track-list";
+import { VoteInterface } from "~/app/_components/voting/vote-interface";
 
 const PHASES = ["SUBMISSION", "LISTENING", "VOTING", "RESULTS"] as const;
 const PHASE_LABELS: Record<string, string> = {
@@ -279,6 +280,9 @@ function PhaseContent({
     submissionCount: number;
     memberCount: number;
     leagueId: string;
+    upvotePointsPerRound: number;
+    allowDownvotes: boolean;
+    downvotePointValue: number;
   };
 }) {
   if (round.status === "SUBMISSION") {
@@ -325,24 +329,24 @@ function PhaseContent({
 
   if (round.status === "VOTING") {
     return (
-      <div className="space-y-4">
-        <TrackList
-          tracks={round.submissions.map((s) => ({
-            id: s.id,
-            trackName: s.trackName,
-            artistName: s.artistName,
-            albumName: s.albumName,
-            albumArtUrl: s.albumArtUrl,
-            spotifyTrackId: s.spotifyTrackId,
-            previewUrl: s.previewUrl ?? null,
-            trackDurationMs: s.trackDurationMs ?? 0,
-            isOwn: s.isOwn,
-          }))}
-        />
-        <p className="text-center text-sm text-text-muted">
-          Voting interface coming in Phase 7
-        </p>
-      </div>
+      <VoteInterface
+        roundId={round.id}
+        submissions={round.submissions.map((s) => ({
+          id: s.id,
+          trackName: s.trackName,
+          artistName: s.artistName,
+          albumName: s.albumName,
+          albumArtUrl: s.albumArtUrl,
+          spotifyTrackId: s.spotifyTrackId,
+          previewUrl: s.previewUrl,
+          trackDurationMs: s.trackDurationMs,
+          isOwn: s.isOwn,
+        }))}
+        upvotePointsPerRound={round.upvotePointsPerRound}
+        allowDownvotes={round.allowDownvotes}
+        downvotePointValue={round.downvotePointValue}
+        memberCount={round.memberCount}
+      />
     );
   }
 

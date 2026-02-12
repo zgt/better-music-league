@@ -4,6 +4,7 @@ import { roundRouter } from "~/server/api/routers/round";
 import { spotifyRouter } from "~/server/api/routers/spotify";
 import { submissionRouter } from "~/server/api/routers/submission";
 import { themeRouter } from "~/server/api/routers/theme";
+import { voteRouter } from "~/server/api/routers/vote";
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   spotify: spotifyRouter,
   submission: submissionRouter,
   theme: themeRouter,
+  vote: voteRouter,
 });
 
 // export type definition of API
