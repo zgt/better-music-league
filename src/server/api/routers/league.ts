@@ -74,6 +74,14 @@ export const leagueRouter = createTRPCRouter({
           },
           rounds: {
             orderBy: { roundNumber: "desc" },
+            include: {
+              submissions: {
+                include: {
+                  user: { select: { id: true, name: true, image: true } },
+                  votes: { select: { points: true } },
+                },
+              },
+            },
           },
           _count: { select: { members: true } },
         },
@@ -197,9 +205,12 @@ export const leagueRouter = createTRPCRouter({
         throw new TRPCError({ code: "FORBIDDEN", message: "Not a member" });
       }
 
-      // Get all completed rounds for this league
-      const completedRounds = await ctx.db.round.findMany({
-        where: { leagueId: input.leagueId, status: "COMPLETED" },
+      // Get all scored rounds (RESULTS or COMPLETED) for this league
+      const scoredRounds = await ctx.db.round.findMany({
+        where: {
+          leagueId: input.leagueId,
+          status: { in: ["RESULTS", "COMPLETED"] },
+        },
         include: {
           submissions: {
             include: {
@@ -213,39 +224,53 @@ export const leagueRouter = createTRPCRouter({
       // Aggregate points per user
       const userPoints = new Map<
         string,
-        { user: { id: string; name: string; image: string | null }; totalPoints: number; roundsWon: number }
+        {
+          user: { id: string; name: string; image: string | null };
+          totalPoints: number;
+          roundsWon: number;
+          roundsParticipated: number;
+        }
       >();
 
-      for (const round of completedRounds) {
+      for (const round of scoredRounds) {
         const roundScores = new Map<string, number>();
+        const participants = new Set<string>();
 
         for (const submission of round.submissions) {
           const points = submission.votes.reduce((sum, v) => sum + v.points, 0);
           const current = roundScores.get(submission.userId) ?? 0;
           roundScores.set(submission.userId, current + points);
+          participants.add(submission.userId);
 
           if (!userPoints.has(submission.userId)) {
             userPoints.set(submission.userId, {
               user: submission.user,
               totalPoints: 0,
               roundsWon: 0,
+              roundsParticipated: 0,
             });
           }
           const entry = userPoints.get(submission.userId)!;
           entry.totalPoints += points;
         }
 
-        // Determine round winner
-        let maxPoints = 0;
-        let winnerId: string | null = null;
-        for (const [userId, points] of roundScores) {
-          if (points > maxPoints) {
-            maxPoints = points;
-            winnerId = userId;
-          }
+        // Track participation
+        for (const userId of participants) {
+          const entry = userPoints.get(userId);
+          if (entry) entry.roundsParticipated += 1;
         }
-        if (winnerId && userPoints.has(winnerId)) {
-          userPoints.get(winnerId)!.roundsWon += 1;
+
+        // Determine round winner(s) (handle ties)
+        let maxPoints = 0;
+        for (const [, points] of roundScores) {
+          if (points > maxPoints) maxPoints = points;
+        }
+        if (maxPoints > 0) {
+          for (const [userId, points] of roundScores) {
+            if (points === maxPoints && userPoints.has(userId)) {
+              userPoints.get(userId)!.roundsWon += 1;
+            }
+          }
         }
       }
 
@@ -261,13 +286,20 @@ export const leagueRouter = createTRPCRouter({
             user: m.user,
             totalPoints: 0,
             roundsWon: 0,
+            roundsParticipated: 0,
           });
         }
       }
 
-      return Array.from(userPoints.values()).sort(
-        (a, b) => b.totalPoints - a.totalPoints,
-      );
+      return Array.from(userPoints.values())
+        .map((entry) => ({
+          ...entry,
+          avgPointsPerRound:
+            entry.roundsParticipated > 0
+              ? Math.round((entry.totalPoints / entry.roundsParticipated) * 10) / 10
+              : 0,
+        }))
+        .sort((a, b) => b.totalPoints - a.totalPoints);
     }),
 
   leave: protectedProcedure

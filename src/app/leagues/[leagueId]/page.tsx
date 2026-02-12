@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Copy, Check, Settings, Plus, LogOut, Trash2, Users } from "lucide-react";
+import { Copy, Check, Settings, Plus, LogOut, Trash2, Trophy, Users } from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { Card } from "~/app/_components/ui/card";
@@ -12,6 +12,7 @@ import { Button } from "~/app/_components/ui/button";
 import { Badge } from "~/app/_components/ui/badge";
 import { Input } from "~/app/_components/ui/input";
 import { Modal } from "~/app/_components/ui/modal";
+import { LeagueStandings } from "~/app/_components/results/league-standings";
 
 const roleLabels: Record<string, string> = {
   OWNER: "Owner",
@@ -27,6 +28,29 @@ const statusToBadgePhase: Record<string, "submission" | "listening" | "voting" |
   COMPLETED: "results",
 };
 
+function getRoundWinner(
+  submissions: {
+    user: { name: string };
+    trackName: string;
+    votes: { points: number }[];
+  }[],
+): { userName: string; trackName: string } | null {
+  if (submissions.length === 0) return null;
+
+  let winner = submissions[0]!;
+  let maxPoints = winner.votes.reduce((sum, v) => sum + v.points, 0);
+
+  for (const sub of submissions.slice(1)) {
+    const pts = sub.votes.reduce((sum, v) => sum + v.points, 0);
+    if (pts > maxPoints) {
+      maxPoints = pts;
+      winner = sub;
+    }
+  }
+
+  return { userName: winner.user.name, trackName: winner.trackName };
+}
+
 export default function LeagueDetail() {
   const params = useParams<{ leagueId: string }>();
   const router = useRouter();
@@ -37,10 +61,6 @@ export default function LeagueDetail() {
 
   const { data: league, isLoading } = api.league.getById.useQuery({
     id: params.leagueId,
-  });
-
-  const { data: standings } = api.league.getStandings.useQuery({
-    leagueId: params.leagueId,
   });
 
   const leaveLeague = api.league.leave.useMutation({
@@ -129,54 +149,10 @@ export default function LeagueDetail() {
       </Card>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Left column: Members + Standings */}
+        {/* Left column: Standings + Rounds */}
         <div className="space-y-6 lg:col-span-2">
           {/* Standings */}
-          <Card header="Standings">
-            {standings && standings.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border text-left text-text-muted">
-                      <th className="pb-2 font-medium">#</th>
-                      <th className="pb-2 font-medium">Player</th>
-                      <th className="pb-2 text-right font-medium">Points</th>
-                      <th className="pb-2 text-right font-medium">Wins</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {standings.map((entry, i) => (
-                      <tr key={entry.user.id} className="border-b border-border/50 last:border-0">
-                        <td className="py-2 text-text-muted">{i + 1}</td>
-                        <td className="py-2">
-                          <div className="flex items-center gap-2">
-                            {entry.user.image ? (
-                              <Image
-                                src={entry.user.image}
-                                alt=""
-                                width={24}
-                                height={24}
-                                className="rounded-full"
-                              />
-                            ) : (
-                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">
-                                {entry.user.name?.charAt(0).toUpperCase() ?? "?"}
-                              </div>
-                            )}
-                            <span>{entry.user.name}</span>
-                          </div>
-                        </td>
-                        <td className="py-2 text-right font-medium">{entry.totalPoints}</td>
-                        <td className="py-2 text-right">{entry.roundsWon}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="text-sm text-text-muted">No completed rounds yet.</p>
-            )}
-          </Card>
+          <LeagueStandings leagueId={league.id} />
 
           {/* Rounds */}
           <Card
@@ -194,25 +170,36 @@ export default function LeagueDetail() {
           >
             {league.rounds.length > 0 ? (
               <div className="space-y-3">
-                {league.rounds.map((round) => (
-                  <Link
-                    key={round.id}
-                    href={`/leagues/${league.id}/rounds/${round.id}`}
-                    className="flex items-center justify-between rounded-lg border border-border/50 p-3 transition-colors hover:bg-bg-tertiary"
-                  >
-                    <div>
-                      <p className="font-medium">
-                        Round {round.roundNumber}: {round.themeName}
-                      </p>
-                      {round.themeDescription && (
-                        <p className="mt-0.5 text-sm text-text-muted">
-                          {round.themeDescription}
+                {league.rounds.map((round) => {
+                  const isScored = round.status === "RESULTS" || round.status === "COMPLETED";
+                  const winner = isScored ? getRoundWinner(round.submissions) : null;
+
+                  return (
+                    <Link
+                      key={round.id}
+                      href={`/leagues/${league.id}/rounds/${round.id}`}
+                      className="flex items-center justify-between rounded-lg border border-border/50 p-3 transition-colors hover:bg-bg-tertiary"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium">
+                          Round {round.roundNumber}: {round.themeName}
                         </p>
-                      )}
-                    </div>
-                    <Badge phase={statusToBadgePhase[round.status] ?? "results"} />
-                  </Link>
-                ))}
+                        {winner && (
+                          <p className="mt-0.5 flex items-center gap-1 text-sm text-text-muted">
+                            <Trophy className="h-3 w-3 text-yellow-500" />
+                            {winner.userName} &middot; {winner.trackName}
+                          </p>
+                        )}
+                        {!winner && round.themeDescription && (
+                          <p className="mt-0.5 text-sm text-text-muted">
+                            {round.themeDescription}
+                          </p>
+                        )}
+                      </div>
+                      <Badge phase={statusToBadgePhase[round.status] ?? "results"} />
+                    </Link>
+                  );
+                })}
               </div>
             ) : (
               <p className="text-sm text-text-muted">No rounds yet. Create the first one!</p>

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ChevronRight, Clock, Music2 } from "lucide-react";
 
@@ -14,6 +13,7 @@ import { Modal } from "~/app/_components/ui/modal";
 import { SubmitSong } from "~/app/_components/submission/submit-song";
 import { TrackList } from "~/app/_components/submission/track-list";
 import { VoteInterface } from "~/app/_components/voting/vote-interface";
+import { RoundResults } from "~/app/_components/results/round-results";
 
 const PHASES = ["SUBMISSION", "LISTENING", "VOTING", "RESULTS"] as const;
 const PHASE_LABELS: Record<string, string> = {
@@ -351,53 +351,5 @@ function PhaseContent({
   }
 
   // RESULTS or COMPLETED
-  return (
-    <Card header="Results">
-      {round.submissions.length > 0 ? (
-        <div className="space-y-3">
-          {[...round.submissions]
-            .sort((a, b) => b.totalPoints - a.totalPoints)
-            .map((sub, i) => (
-              <div
-                key={sub.id}
-                className="flex items-center gap-3 rounded-lg border border-border/50 p-3"
-              >
-                <span
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                    i === 0
-                      ? "bg-warning/20 text-warning"
-                      : "bg-bg-tertiary text-text-muted"
-                  }`}
-                >
-                  {i + 1}
-                </span>
-                <Image
-                  src={sub.albumArtUrl}
-                  alt={sub.albumName}
-                  width={48}
-                  height={48}
-                  className="rounded"
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">
-                    {sub.trackName}
-                  </p>
-                  <p className="truncate text-xs text-text-muted">
-                    {sub.artistName}
-                    {sub.submitter && (
-                      <> &middot; submitted by {sub.submitter.name}</>
-                    )}
-                  </p>
-                </div>
-                <span className="text-sm font-semibold">
-                  {sub.totalPoints} pts
-                </span>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <p className="text-sm text-text-muted">No submissions in this round.</p>
-      )}
-    </Card>
-  );
+  return <RoundResults roundId={round.id} />;
 }
