@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogOut, Menu, Music, User, Settings } from "lucide-react";
 import { authClient, type Session } from "~/server/better-auth/client";
 
@@ -24,6 +25,13 @@ import {
 import { Separator } from "~/components/ui/separator";
 
 function UserDropdown({ session }: { session: Session }) {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.push("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,7 +62,7 @@ function UserDropdown({ session }: { session: Session }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => void authClient.signOut()}
+          onClick={handleSignOut}
           className="flex items-center gap-2"
         >
           <LogOut className="h-4 w-4" />
@@ -67,6 +75,13 @@ function UserDropdown({ session }: { session: Session }) {
 
 function MobileNav({ session: _session }: { session: Session }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    setOpen(false);
+    await authClient.signOut();
+    router.push("/");
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -112,10 +127,7 @@ function MobileNav({ session: _session }: { session: Session }) {
           </Link>
           <Separator className="my-2" />
           <button
-            onClick={() => {
-              setOpen(false);
-              void authClient.signOut();
-            }}
+            onClick={handleSignOut}
             className="text-muted-foreground hover:bg-accent hover:text-foreground flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
           >
             <LogOut className="h-4 w-4" />
