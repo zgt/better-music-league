@@ -329,6 +329,98 @@ export const roundRouter = createTRPCRouter({
       });
     }),
 
+  setPlaylistUrl: protectedProcedure
+    .input(
+      z.object({
+        roundId: z.string(),
+        playlistUrl: z.string().url().max(500).or(z.literal("")),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const round = await ctx.db.round.findUnique({
+        where: { id: input.roundId },
+        include: {
+          league: {
+            include: { members: { select: { userId: true, role: true } } },
+          },
+        },
+      });
+
+      if (!round) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Round not found" });
+      }
+
+      const member = round.league.members.find(
+        (m) => m.userId === ctx.session.user.id,
+      );
+      if (!member || (member.role !== "OWNER" && member.role !== "ADMIN")) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only owners and admins can set playlist URL",
+        });
+      }
+
+      return ctx.db.round.update({
+        where: { id: input.roundId },
+        data: { playlistUrl: input.playlistUrl || null },
+      });
+    }),
+
+  getPlaylistTracks: protectedProcedure
+    .input(z.object({ roundId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const round = await ctx.db.round.findUnique({
+        where: { id: input.roundId },
+        include: {
+          league: {
+            include: { members: { select: { userId: true, role: true } } },
+          },
+          submissions: {
+            select: {
+              id: true,
+              spotifyTrackId: true,
+              trackName: true,
+              artistName: true,
+              albumName: true,
+              albumArtUrl: true,
+              trackDurationMs: true,
+            },
+          },
+        },
+      });
+
+      if (!round) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Round not found" });
+      }
+
+      // Verify membership
+      const isMember = round.league.members.some(
+        (m) => m.userId === ctx.session.user.id,
+      );
+      if (!isMember) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this league",
+        });
+      }
+
+      // Only show tracks once past submission phase
+      if (round.status === "SUBMISSION") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Playlist not available during submission phase",
+        });
+      }
+
+      return {
+        roundNumber: round.roundNumber,
+        themeName: round.themeName,
+        playlistUrl: round.playlistUrl,
+        leagueId: round.leagueId,
+        tracks: round.submissions,
+      };
+    }),
+
   checkDeadlines: publicProcedure.mutation(async ({ ctx }) => {
     const now = new Date();
 

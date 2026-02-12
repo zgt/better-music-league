@@ -3,13 +3,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ChevronRight, Clock, Music2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  ChevronRight,
+  Clock,
+  ExternalLink,
+  ListMusic,
+  Music2,
+} from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { Card } from "~/app/_components/ui/card";
 import { Button } from "~/app/_components/ui/button";
 import { Badge } from "~/app/_components/ui/badge";
 import { Modal } from "~/app/_components/ui/modal";
+import { Input } from "~/app/_components/ui/input";
 import { SubmitSong } from "~/app/_components/submission/submit-song";
 import { TrackList } from "~/app/_components/submission/track-list";
 import { VoteInterface } from "~/app/_components/voting/vote-interface";
@@ -107,6 +116,8 @@ function PhaseProgressBar({ status }: { status: string }) {
 export default function RoundDetail() {
   const params = useParams<{ leagueId: string; roundId: string }>();
   const [confirmAdvance, setConfirmAdvance] = useState(false);
+  const [playlistUrlInput, setPlaylistUrlInput] = useState("");
+  const [playlistUrlSaved, setPlaylistUrlSaved] = useState(false);
 
   const utils = api.useUtils();
 
@@ -120,6 +131,21 @@ export default function RoundDetail() {
       setConfirmAdvance(false);
     },
   });
+
+  const setPlaylistUrl = api.round.setPlaylistUrl.useMutation({
+    onSuccess: () => {
+      void utils.round.getById.invalidate({ roundId: params.roundId });
+      setPlaylistUrlSaved(true);
+      setTimeout(() => setPlaylistUrlSaved(false), 2000);
+    },
+  });
+
+  // Sync playlist URL input with server state
+  useEffect(() => {
+    if (round?.playlistUrl) {
+      setPlaylistUrlInput(round.playlistUrl);
+    }
+  }, [round?.playlistUrl]);
 
   const activeDeadline =
     round?.status === "SUBMISSION"
@@ -224,23 +250,68 @@ export default function RoundDetail() {
       <PhaseContent round={round} />
 
       {/* Admin controls */}
-      {canAdvance && (
-        <Card className="mt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium">Admin Controls</p>
+      {isAdmin && (
+        <Card className="mt-6" header="Admin Controls">
+          <div className="space-y-4">
+            {/* Playlist URL */}
+            <div className="space-y-2">
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <Input
+                    label="Spotify Playlist URL"
+                    placeholder="https://open.spotify.com/playlist/..."
+                    value={playlistUrlInput}
+                    onChange={(e) => setPlaylistUrlInput(e.target.value)}
+                  />
+                </div>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    setPlaylistUrl.mutate({
+                      roundId: params.roundId,
+                      playlistUrl: playlistUrlInput,
+                    })
+                  }
+                  loading={setPlaylistUrl.isPending}
+                >
+                  {playlistUrlSaved ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
+              </div>
+              {setPlaylistUrl.error && (
+                <p className="text-xs text-danger">
+                  {setPlaylistUrl.error.message}
+                </p>
+              )}
               <p className="text-xs text-text-muted">
-                Manually advance the round to the next phase
+                Create a playlist on Spotify, then paste the link here. Members
+                will see this on the playlist page.
               </p>
             </div>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => setConfirmAdvance(true)}
-            >
-              Advance Phase
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+
+            {/* Advance phase */}
+            {canAdvance && (
+              <div className="flex items-center justify-between border-t border-border/50 pt-4">
+                <div>
+                  <p className="text-sm font-medium">Advance Phase</p>
+                  <p className="text-xs text-text-muted">
+                    Move the round to the next phase
+                  </p>
+                </div>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setConfirmAdvance(true)}
+                >
+                  Advance Phase
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </Card>
       )}
@@ -302,6 +373,7 @@ function PhaseContent({
     submissionCount: number;
     memberCount: number;
     leagueId: string;
+    playlistUrl: string | null;
     upvotePointsPerRound: number;
     allowDownvotes: boolean;
     downvotePointValue: number;
@@ -333,19 +405,61 @@ function PhaseContent({
 
   if (round.status === "LISTENING") {
     return (
-      <TrackList
-        tracks={round.submissions.map((s) => ({
-          id: s.id,
-          trackName: s.trackName,
-          artistName: s.artistName,
-          albumName: s.albumName,
-          albumArtUrl: s.albumArtUrl,
-          spotifyTrackId: s.spotifyTrackId,
-          previewUrl: s.previewUrl ?? null,
-          trackDurationMs: s.trackDurationMs ?? 0,
-          isOwn: s.isOwn,
-        }))}
-      />
+      <div className="space-y-4">
+        {/* Playlist banner */}
+        <Card>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-muted">
+                <ListMusic className="h-5 w-5 text-accent" />
+              </div>
+              <div>
+                <p className="text-sm font-medium">Listening Phase</p>
+                <p className="text-xs text-text-muted">
+                  Listen to all {round.submissions.length} tracks before voting
+                  begins
+                </p>
+              </div>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              {round.playlistUrl && (
+                <a
+                  href={round.playlistUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="primary" size="sm">
+                    <ExternalLink className="h-4 w-4" />
+                    Spotify Playlist
+                  </Button>
+                </a>
+              )}
+              <Link
+                href={`/leagues/${round.leagueId}/rounds/${round.id}/playlist`}
+              >
+                <Button variant="secondary" size="sm">
+                  <ListMusic className="h-4 w-4" />
+                  Full Playlist
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </Card>
+
+        <TrackList
+          tracks={round.submissions.map((s) => ({
+            id: s.id,
+            trackName: s.trackName,
+            artistName: s.artistName,
+            albumName: s.albumName,
+            albumArtUrl: s.albumArtUrl,
+            spotifyTrackId: s.spotifyTrackId,
+            previewUrl: s.previewUrl ?? null,
+            trackDurationMs: s.trackDurationMs ?? 0,
+            isOwn: s.isOwn,
+          }))}
+        />
+      </div>
     );
   }
 
