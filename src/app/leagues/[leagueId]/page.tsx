@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { authClient } from "~/server/better-auth/client";
 import { api } from "~/trpc/react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
@@ -88,6 +89,7 @@ export default function LeagueDetail() {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const utils = api.useUtils();
+  const { data: session } = authClient.useSession();
 
   const { data: league, isLoading } = api.league.getById.useQuery({
     id: params.leagueId,
@@ -141,6 +143,9 @@ export default function LeagueDetail() {
       </div>
     );
   }
+
+  const isOwner =
+    league.members.find((m) => m.userId === session?.user.id)?.role === "OWNER";
 
   const inviteUrl =
     typeof window !== "undefined"
@@ -202,6 +207,7 @@ export default function LeagueDetail() {
                 size="sm"
                 onClick={() => regenerateCode.mutate({ leagueId: league.id })}
                 loading={regenerateCode.isPending}
+                disabled={!isOwner}
               >
                 Regenerate
               </Button>
@@ -221,12 +227,14 @@ export default function LeagueDetail() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Rounds</CardTitle>
-                <Link href={`/leagues/${league.id}/rounds/create`}>
-                  <Button size="sm">
-                    <Plus className="h-3.5 w-3.5" />
-                    Create Round
-                  </Button>
-                </Link>
+                {isOwner && (
+                  <Link href={`/leagues/${league.id}/rounds/create`}>
+                    <Button size="sm">
+                      <Plus className="h-3.5 w-3.5" />
+                      Create Round
+                    </Button>
+                  </Link>
+                )}
               </div>
             </CardHeader>
             <CardContent>
@@ -283,12 +291,14 @@ export default function LeagueDetail() {
                       Create the first round to get the competition started.
                     </p>
                   </div>
-                  <Link href={`/leagues/${league.id}/rounds/create`}>
-                    <Button size="sm">
-                      <Plus className="h-3.5 w-3.5" />
-                      Create First Round
-                    </Button>
-                  </Link>
+                  {isOwner && (
+                    <Link href={`/leagues/${league.id}/rounds/create`}>
+                      <Button size="sm">
+                        <Plus className="h-3.5 w-3.5" />
+                        Create First Round
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -332,6 +342,7 @@ export default function LeagueDetail() {
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         league={league}
+        isOwner={isOwner}
         onLeave={() => leaveLeague.mutate({ leagueId: league.id })}
         onDelete={() => {
           if (
@@ -357,6 +368,7 @@ function SettingsModal({
   onDelete,
   isLeaving,
   isDeleting,
+  isOwner,
 }: {
   open: boolean;
   onClose: () => void;
@@ -373,6 +385,7 @@ function SettingsModal({
   onDelete: () => void;
   isLeaving: boolean;
   isDeleting: boolean;
+  isOwner: boolean;
 }) {
   const utils = api.useUtils();
   const [name, setName] = useState(league.name);
@@ -412,67 +425,79 @@ function SettingsModal({
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
-          <FormInput
-            id="settings-name"
-            label="League Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            maxLength={100}
-          />
+          {isOwner ? (
+            <>
+              <FormInput
+                id="settings-name"
+                label="League Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={100}
+              />
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="settings-desc">Description</Label>
-            <Textarea
-              id="settings-desc"
-              rows={2}
-              maxLength={500}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="settings-desc">Description</Label>
+                <Textarea
+                  id="settings-desc"
+                  rows={2}
+                  maxLength={500}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="settings-songs">Songs per Round</Label>
-            <Select
-              value={String(songsPerRound)}
-              onValueChange={(value) => setSongsPerRound(Number(value))}
-            >
-              <SelectTrigger id="settings-songs" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <SelectItem key={n} value={String(n)}>
-                    {n}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="settings-songs">Songs per Round</Label>
+                <Select
+                  value={String(songsPerRound)}
+                  onValueChange={(value) => setSongsPerRound(Number(value))}
+                >
+                  <SelectTrigger id="settings-songs" className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <SelectItem key={n} value={String(n)}>
+                        {n}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <FormInput
-            id="settings-points"
-            label="Upvote Points per Round"
-            type="number"
-            min={1}
-            max={20}
-            value={upvotePoints}
-            onChange={(e) => setUpvotePoints(Number(e.target.value))}
-          />
+              <FormInput
+                id="settings-points"
+                label="Upvote Points per Round"
+                type="number"
+                min={1}
+                max={20}
+                value={upvotePoints}
+                onChange={(e) => setUpvotePoints(Number(e.target.value))}
+              />
 
-          <div className="flex items-center gap-3">
-            <Checkbox
-              id="settings-downvotes"
-              checked={allowDownvotes}
-              onCheckedChange={(checked) => setAllowDownvotes(checked === true)}
-            />
-            <Label htmlFor="settings-downvotes">Allow downvotes</Label>
-          </div>
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="settings-downvotes"
+                  checked={allowDownvotes}
+                  onCheckedChange={(checked) =>
+                    setAllowDownvotes(checked === true)
+                  }
+                />
+                <Label htmlFor="settings-downvotes">Allow downvotes</Label>
+              </div>
 
-          {updateSettings.error && (
-            <p className="text-destructive text-sm">
-              {updateSettings.error.message}
-            </p>
+              {updateSettings.error && (
+                <p className="text-destructive text-sm">
+                  {updateSettings.error.message}
+                </p>
+              )}
+            </>
+          ) : (
+            <div className="py-2">
+              <p className="text-muted-foreground text-sm">
+                You are a member of this league.
+              </p>
+            </div>
           )}
 
           <Separator />
@@ -482,14 +507,16 @@ function SettingsModal({
               <LogOut className="h-4 w-4" />
               Leave League
             </Button>
-            <Button
-              variant="destructive"
-              onClick={onDelete}
-              loading={isDeleting}
-            >
-              <Trash2 className="h-4 w-4" />
-              Delete League
-            </Button>
+            {isOwner && (
+              <Button
+                variant="destructive"
+                onClick={onDelete}
+                loading={isDeleting}
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete League
+              </Button>
+            )}
           </div>
         </div>
 
@@ -497,9 +524,11 @@ function SettingsModal({
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave} loading={updateSettings.isPending}>
-            Save Changes
-          </Button>
+          {isOwner && (
+            <Button onClick={handleSave} loading={updateSettings.isPending}>
+              Save Changes
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
