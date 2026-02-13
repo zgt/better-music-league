@@ -103,14 +103,20 @@ export const roundRouter = createTRPCRouter({
           league: {
             include: {
               members: {
-                select: { userId: true, role: true },
+                include: {
+                  user: { select: { id: true, name: true, image: true } },
+                },
               },
             },
           },
           submissions: {
             include: {
               user: { select: { id: true, name: true, image: true } },
-              votes: true,
+              votes: {
+                include: {
+                  voter: { select: { id: true, name: true, image: true } },
+                },
+              },
             },
           },
         },
@@ -135,6 +141,20 @@ export const roundRouter = createTRPCRouter({
         round.league.members.find((m) => m.userId === ctx.session.user.id)
           ?.role ?? "MEMBER";
 
+      // Calculate member status
+      const submissionUserIds = new Set(round.submissions.map((s) => s.userId));
+      const voteUserIds = new Set(
+        round.submissions.flatMap((s) => s.votes.map((v) => v.voterId)),
+      );
+
+      const memberStatus = round.league.members.map((member) => ({
+        id: member.userId,
+        name: member.user.name,
+        image: member.user.image,
+        hasSubmitted: submissionUserIds.has(member.userId),
+        hasVoted: voteUserIds.has(member.userId),
+      }));
+
       // Shape submissions based on phase
       const submissions = round.submissions.map((sub) => {
         const totalPoints = sub.votes.reduce((sum, v) => sum + v.points, 0);
@@ -154,6 +174,7 @@ export const roundRouter = createTRPCRouter({
               submitter: sub.user,
               totalPoints: 0,
               isOwn: true,
+              votes: [], // Hide votes
             };
           }
           return null; // Hide other submissions during SUBMISSION
@@ -176,6 +197,7 @@ export const roundRouter = createTRPCRouter({
             submitter: null,
             totalPoints: 0,
             isOwn: sub.userId === ctx.session.user.id,
+            votes: [], // Hide votes
           };
         }
 
@@ -192,6 +214,12 @@ export const roundRouter = createTRPCRouter({
           submitter: sub.user,
           totalPoints,
           isOwn: sub.userId === ctx.session.user.id,
+          votes: sub.votes.map((v) => ({
+            id: v.id,
+            points: v.points,
+            voterId: v.voterId,
+            voterName: v.voter.name,
+          })),
         };
       });
 
@@ -215,6 +243,7 @@ export const roundRouter = createTRPCRouter({
         ),
         submissionCount: round.submissions.length,
         memberCount: round.league.members.length,
+        memberStatus,
         userRole,
       };
     }),

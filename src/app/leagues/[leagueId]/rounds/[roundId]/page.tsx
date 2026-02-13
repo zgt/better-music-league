@@ -30,6 +30,7 @@ import { SubmitSong } from "~/app/_components/submission/submit-song";
 import { TrackList } from "~/app/_components/submission/track-list";
 import { VoteInterface } from "~/app/_components/voting/vote-interface";
 import { RoundResults } from "~/app/_components/results/round-results";
+import { RoundStatusBoard } from "./_components/round-status-board";
 
 const PHASES = ["SUBMISSION", "LISTENING", "VOTING", "RESULTS"] as const;
 const PHASE_LABELS: Record<string, string> = {
@@ -218,7 +219,7 @@ export default function RoundDetail() {
   const phase = statusToBadgePhase[round.status] ?? "results";
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       {/* Back link */}
       <Link
         href={`/leagues/${params.leagueId}`}
@@ -270,88 +271,107 @@ export default function RoundDetail() {
         </CardContent>
       </Card>
 
-      {/* Phase-specific content */}
-      <PhaseContent round={round} />
+      <div className="grid gap-4 lg:grid-cols-3">
+        {/* Main Content */}
+        <div className="lg:col-span-2">
+          <PhaseContent round={round} />
+        </div>
 
-      {/* Admin controls */}
-      {isAdmin && (
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Admin Controls</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {/* Playlist URL */}
-              <div className="space-y-2">
-                <div className="flex items-end gap-2">
-                  <div className="flex-1">
-                    <FormInput
-                      label="Spotify Playlist URL"
-                      placeholder="https://open.spotify.com/playlist/..."
-                      value={playlistUrlInput}
-                      onChange={(e) => setPlaylistUrlInput(e.target.value)}
-                    />
-                  </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() =>
-                      setPlaylistUrl.mutate({
-                        roundId: params.roundId,
-                        playlistUrl: playlistUrlInput,
-                      })
-                    }
-                    loading={setPlaylistUrl.isPending}
-                  >
-                    {playlistUrlSaved ? <Check className="h-4 w-4" /> : "Save"}
-                  </Button>
-                </div>
-                {setPlaylistUrl.error && (
-                  <p className="text-destructive text-xs">
-                    {setPlaylistUrl.error.message}
-                  </p>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={() =>
-                    generatePlaylist.mutate({ roundId: params.roundId })
-                  }
-                  loading={generatePlaylist.isPending}
-                >
-                  <Music2 className="mr-2 h-4 w-4" />
-                  Auto-generate Playlist on Spotify
-                </Button>
-                <p className="text-muted-foreground text-xs">
-                  Connect your Spotify account to auto-generate a playlist, or
-                  manually create one and paste the link above.
-                </p>
-              </div>
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Status Board */}
+          {round.status !== "COMPLETED" && round.status !== "RESULTS" && (
+            <RoundStatusBoard
+              memberStatus={round.memberStatus}
+              status={round.status}
+            />
+          )}
 
-              {/* Advance phase */}
-              {canAdvance && (
-                <div className="border-border/50 flex items-center justify-between border-t pt-4">
-                  <div>
-                    <p className="text-sm font-medium">Advance Phase</p>
+          {/* Admin Controls */}
+          {isAdmin && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Admin Controls</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Playlist URL */}
+                  <div className="space-y-2">
+                    <div className="flex items-end gap-2">
+                      <div className="flex-1">
+                        <FormInput
+                          label="Spotify Playlist URL"
+                          placeholder="https://open.spotify.com/playlist/..."
+                          value={playlistUrlInput}
+                          onChange={(e) => setPlaylistUrlInput(e.target.value)}
+                        />
+                      </div>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() =>
+                          setPlaylistUrl.mutate({
+                            roundId: params.roundId,
+                            playlistUrl: playlistUrlInput,
+                          })
+                        }
+                        loading={setPlaylistUrl.isPending}
+                      >
+                        {playlistUrlSaved ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          "Save"
+                        )}
+                      </Button>
+                    </div>
+                    {setPlaylistUrl.error && (
+                      <p className="text-destructive text-xs">
+                        {setPlaylistUrl.error.message}
+                      </p>
+                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() =>
+                        generatePlaylist.mutate({ roundId: params.roundId })
+                      }
+                      loading={generatePlaylist.isPending}
+                    >
+                      <Music2 className="mr-2 h-4 w-4" />
+                      Auto-generate Playlist on Spotify
+                    </Button>
                     <p className="text-muted-foreground text-xs">
-                      Move the round to the next phase
+                      Connect your Spotify account to auto-generate a playlist, or
+                      manually create one and paste the link above.
                     </p>
                   </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setConfirmAdvance(true)}
-                  >
-                    Advance Phase
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
+
+                  {/* Advance phase */}
+                  {canAdvance && (
+                    <div className="border-border/50 flex items-center justify-between border-t pt-4">
+                      <div>
+                        <p className="text-sm font-medium">Advance Phase</p>
+                        <p className="text-muted-foreground text-xs">
+                          Move the round to the next phase
+                        </p>
+                      </div>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => setConfirmAdvance(true)}
+                      >
+                        Advance Phase
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
 
       {/* Advance confirmation dialog */}
       <Dialog
@@ -413,6 +433,13 @@ function PhaseContent({
     }[];
     submissionCount: number;
     memberCount: number;
+    memberStatus: {
+      id: string;
+      name: string;
+      image: string | null;
+      hasSubmitted: boolean;
+      hasVoted: boolean;
+    }[];
     leagueId: string;
     playlistUrl: string | null;
     upvotePointsPerRound: number;
